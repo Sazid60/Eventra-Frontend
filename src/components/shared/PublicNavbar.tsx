@@ -20,7 +20,7 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
   const pathname = usePathname();
 
   const navItems = [
-    { href: "/events", role: "COMMON", label: "View All Events" },
+    { href: "/all-events", role: "COMMON", label: "View All Events" },
     { href: "/about", role: "COMMON", label: "About" },
     { href: "/contact", role: "COMMON", label: "Contact" },
     { href: "/host/created-events", role: "HOST", label: "My Created Events" },

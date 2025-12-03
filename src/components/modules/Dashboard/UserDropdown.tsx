@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { logoutUser } from "@/services/auth/logoutUser";
 import { UserInfo } from "@/types/user.interface";
-import { Settings, User } from "lucide-react";
-import Link from "next/link";
+import Image from "next/image";
+
 
 interface UserDropdownProps {
   userInfo: UserInfo;
@@ -28,7 +28,13 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" className="rounded-full">
           <span className="text-sm font-semibold">
-            {userInfo.name.charAt(0).toUpperCase()}
+            <Image
+              src={userInfo.profilePhoto}
+              alt={`${userInfo.name}'s avatar`}
+              width={24}
+              height={24}
+              className="rounded-full"
+            />
           </span>
         </Button>
       </DropdownMenuTrigger>
@@ -42,19 +48,6 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href={"/my-profile"} className="cursor-pointer">
-            <User className="mr-2 h-4 w-4" />
-            Profile
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={"/change-password"} className="cursor-pointer">
-            <Settings className="mr-2 h-4 w-4" />
-            Change Password
-          </Link>
-        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleLogout}

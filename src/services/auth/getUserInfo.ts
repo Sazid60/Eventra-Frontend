@@ -36,7 +36,8 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
         }
 
         userInfo = {
-            name: result.data.admin?.name || result.data.doctor?.name || result.data.patient?.name || result.data.name || "Unknown User",
+            name: result.data.admin?.name || result.data.client?.name || result.data.host?.name || result.data.name || "Unknown User",
+            profilePhoto: result.data.admin?.profilePhoto || result.data.client?.profilePhoto || result.data.host?.profilePhoto || result.data.profilePhoto,
             ...result.data
         };
 
@@ -49,7 +50,7 @@ export const getUserInfo = async (): Promise<UserInfo | any> => {
             id: "",
             name: "Unknown User",
             email: "",
-            role: "PATIENT",
+            role: "CLIENT",
         };
     }
 

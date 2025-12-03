@@ -113,9 +113,16 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
             if (isValidRedirectForRole(requestedPath, userRole)) {
                 redirect(`${requestedPath}?loggedIn=true`);
             } else {
+                if (userRole === "CLIENT") {
+                    redirect(`/all-events?loggedIn=true`);
+                }
                 redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
             }
         } else {
+            // redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+            if (userRole === "CLIENT") {
+                redirect(`/all-events?loggedIn=true`);
+            }
             redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
         }
 

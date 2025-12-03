@@ -47,9 +47,7 @@ export async function proxy(request: NextRequest) {
     }
 
     const routerOwner = getRouteOwner(pathname);
-    //path = /doctor/appointments => "DOCTOR"
-    //path = /my-profile => "COMMON"
-    //path = /login => null
+
 
     const isAuth = isAuthRoute(pathname)
 
@@ -96,7 +94,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // Rule 5 : User is trying to access role based protected route
-    if (routerOwner === "ADMIN" || routerOwner === "CLIENT" ) {
+    if (routerOwner === "ADMIN" || routerOwner === "HOST" || routerOwner === "CLIENT") {
         if (userRole !== routerOwner) {
             return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
         }

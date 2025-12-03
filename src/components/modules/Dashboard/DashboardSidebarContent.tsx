@@ -1,5 +1,6 @@
 "use client";
 
+import Logo from "@/assets/icon/Logo";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { getIconComponent } from "@/lib/icon-mapper";
@@ -17,7 +18,6 @@ interface DashboardSidebarContentProps {
 }
 
 const DashboardSidebarContent = ({
-  userInfo,
   navItems,
   dashboardHome,
 }: DashboardSidebarContentProps) => {
@@ -27,7 +27,10 @@ const DashboardSidebarContent = ({
       {/* Logo/Brand */}
       <div className="flex h-16 items-center border-b px-6">
         <Link href={dashboardHome} className="flex items-center space-x-2">
-          <span className="text-xl font-bold text-primary">PH Healthcare</span>
+          <span className="text-xl font-bold text-primary flex items-center gap-2 pt-1">
+            <Logo  />
+            <h1>Eventra</h1>
+          </span>
         </Link>
       </div>
 
@@ -78,23 +81,6 @@ const DashboardSidebarContent = ({
           ))}
         </nav>
       </ScrollArea>
-
-      {/* User Info at Bottom */}
-      <div className="border-t p-4">
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-sm font-semibold text-primary">
-              {userInfo.name.charAt(0).toUpperCase()}
-            </span>
-          </div>
-          <div className="flex-1 overflow-hidden">
-            <p className="text-sm font-medium truncate">{userInfo.name}</p>
-            <p className="text-xs text-muted-foreground capitalize">
-              {userInfo.role.toLowerCase()}
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
