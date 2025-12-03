@@ -9,23 +9,23 @@ export type RouteConfig = {
 export const authRoutes = ["/login", "/register", "/forgot-password"];
 
 export const commonProtectedRoutes: RouteConfig = {
-    exact: ["/my-profile", "/settings", "/change-password", "/reset-password"],
-    patterns: [], // [/password/change-password, /password/reset-password => /password/*]
+    exact: ["/my-profile", "/settings", "/change-password", "/reset-password", "/my-events"],
+    patterns: [], 
 }
 
-// export const doctorProtectedRoutes: RouteConfig = {
-//     patterns: [/^\/doctor/], // Routes starting with /doctor/* , /assitants, /appointments/*
-//     exact: [], // "/assistants"
-// }
+export const hostProtectedRoutes: RouteConfig = {
+    patterns: [/^\/host/], 
+    exact: [], 
+}
 
 export const adminProtectedRoutes: RouteConfig = {
-    patterns: [/^\/admin/], // Routes starting with /admin/*
-    exact: [], // "/admins"
+    patterns: [/^\/admin/], 
+    exact: [], 
 }
 
 export const clientProtectedRoutes: RouteConfig = {
-    patterns: [/^\/dashboard/], // Routes starting with /dashboard/*
-    exact: [], // "/dashboard"
+    patterns: [/^\/dashboard/], 
+    exact: [], 
 }
 
 export const isAuthRoute = (pathname: string) => {
@@ -37,15 +37,18 @@ export const isRouteMatches = (pathname: string, routes: RouteConfig): boolean =
         return true;
     }
     return routes.patterns.some((pattern: RegExp) => pattern.test(pathname))
-    // if pathname === /dashboard/my-appointments => matches /^\/dashboard/ => true
+    
 }
 
-export const getRouteOwner = (pathname: string): "ADMIN" | "CLIENT" | "COMMON" | null => {
+export const getRouteOwner = (pathname: string): "ADMIN" | "CLIENT" | "COMMON" | "HOST" | null => {
     if (isRouteMatches(pathname, adminProtectedRoutes)) {
         return "ADMIN";
     }
     if (isRouteMatches(pathname, clientProtectedRoutes)) {
         return "CLIENT";
+    }
+    if (isRouteMatches(pathname, hostProtectedRoutes)) {
+        return "HOST";
     }
     if (isRouteMatches(pathname, commonProtectedRoutes)) {
         return "COMMON";
@@ -59,6 +62,9 @@ export const getDefaultDashboardRoute = (role: UserRole): string => {
     }
     if (role === "CLIENT") {
         return "/dashboard";
+    }
+    if (role === "HOST") {
+        return "/host/dashboard";
     }
     return "/";
 }

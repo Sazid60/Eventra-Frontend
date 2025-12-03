@@ -18,20 +18,20 @@ export default function PublicFooter() {
 
         {/* Navigation Links */}
         <ul className="flex justify-center gap-6 mt-6 text-sm">
-          <li><Link href="/events" className="text-zinc-300 hover:text-white">Explore Events</Link></li>
-          <li><Link href="/about" className="text-zinc-300 hover:text-white">About</Link></li>
-          <li><Link href="/contact" className="text-zinc-300 hover:text-white">Contact</Link></li>
+          <li><Link href="/events" className="text-zinc-300 hover:text-[#00ffea]">Explore Events</Link></li>
+          <li><Link href="/about" className="text-zinc-300 hover:text-[#00ffea]">About</Link></li>
+          <li><Link href="/contact" className="text-zinc-300 hover:text-[#00ffea]">Contact</Link></li>
         </ul>
 
         {/* Social icons (lucide-react) */}
         <div className="flex justify-center gap-6 mt-6">
-          <a href="#" aria-label="linkedin" className="text-zinc-300 hover:text-white">
+          <a href="#" aria-label="linkedin" className="text-zinc-300 hover:text-[#00ffea]">
             <Linkedin className="w-5 h-5" />
           </a>
-          <a href="#" aria-label="chat" className="text-zinc-300 hover:text-white">
+          <a href="#" aria-label="chat" className="text-zinc-300 hover:text-[#00ffea]">
             <MessageCircle className="w-5 h-5" />
           </a>
-          <a href="#" aria-label="phone" className="text-zinc-300 hover:text-white">
+          <a href="#" aria-label="phone" className="text-zinc-300 hover:text-[#00ffea]">
             <Phone className="w-5 h-5" />
           </a>
         </div>

@@ -1,80 +1,143 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose } from "../ui/sheet";
 import LogoutButton from "./LogoutButton";
-import { getCookie } from "@/services/auth/tokenHandlers";
+import Logo from "@/assets/icon/Logo";
+import { usePathname } from "next/navigation";
+import { getDefaultDashboardRoute } from "@/lib/auth-utils";
 
 
-const PublicNavbar = async () => {
+interface NavbarProps {
+  accessToken: string | null;
+  role: string | null;
+}
+
+const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
+  const pathname = usePathname();
+
   const navItems = [
-    { href: "#", label: "Consultation" },
-    { href: "#", label: "Health Plans" },
-    { href: "#", label: "Medicine" },
-    { href: "#", label: "Diagnostics" },
-    { href: "#", label: "NGOs" },
+    { href: "/events", role: "COMMON", label: "View All Events" },
+    { href: "/about", role: "COMMON", label: "About" },
+    { href: "/contact", role: "COMMON", label: "Contact" },
+    { href: "/host/created-events", role: "HOST", label: "My Created Events" },
+    { href: "/client/booked-events", role: "CLIENT", label: "My Booked Events" },
   ];
 
-  const accessToken = await getCookie("accessToken");
+  const dashboardRoute =
+    accessToken && role ? getDefaultDashboardRoute(role as any) : null;
+
+  // Filter role based routes + append dashboard
+  const filteredNav = [
+    ...navItems.filter((item) => {
+      if (item.role === "COMMON") return true;
+      if (!accessToken) return false;
+      return item.role === role;
+    }),
+    ...(accessToken && dashboardRoute
+      ? [{ href: dashboardRoute, label: "Dashboard", role }]
+      : []),
+  ];
+
+  const activeClass = (href: string) =>
+    pathname.startsWith(href)
+      ? "text-[#45aaa2] font-semibold"
+      : "text-foreground hover:text-[#45aaa2]";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur  dark:bg-background/95">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur dark:bg-background/95">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold text-primary">PH Doc</span>
+          <Logo />
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-          {navItems.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        {/* Desktop Menu */}
+        <div className="hidden xl:flex items-center space-x-6">
+          <nav className="flex items-center space-x-6 text-sm">
+            {filteredNav.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={`${activeClass(link.href)} transition-colors`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
 
-        <div className="hidden md:flex items-center space-x-2">
-          {accessToken ? (
-            <LogoutButton />
-          ) : (
-            <Link href="/login">
-              <Button>Login</Button>
-            </Link>
-          )}
+          <div className="flex items-center space-x-2">
+            {accessToken && role === "CLIENT" && (
+              <Link href="/become-host">
+                <Button style={{ background: "#45aaa2", color: "#fff" }} className="ml-2 hover:border">
+                  Become a Host
+                </Button>
+              </Link>
+            )}
+
+            {accessToken ? (
+              <LogoutButton />
+            ) : (
+              <div className="flex space-x-0">
+                <Link href="/login">
+                  <Button variant="ghost" className="text-[#45aaa2]">Login</Button>
+                </Link>
+                <Link href="/register">
+                  <Button variant="ghost" className="text-[#45aaa2]">Register</Button>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Mobile Menu */}
-
-        <div className="md:hidden">
+        <div className="xl:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline">
-                {" "}
-                <Menu />{" "}
-              </Button>
+              <Button variant="outline"><Menu /></Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px] p-4">
-              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <SheetTitle className="sr-only">Navigation</SheetTitle>
               <nav className="flex flex-col space-y-4 mt-8">
-                {navItems.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="text-lg font-medium"
-                  >
-                    {link.label}
-                  </Link>
+
+                {filteredNav.map((link) => (
+                  <SheetClose asChild key={link.label}>
+                    <Link href={link.href} className={`${activeClass(link.href)} text-sm`}>
+                      {link.label}
+                    </Link>
+                  </SheetClose>
                 ))}
-                <div className="border-t pt-4 flex flex-col space-y-4">
-                  <div className="flex justify-center"></div>
-                  <Link href="/login" className="text-lg font-medium">
-                    <Button>Login</Button>
-                  </Link>
-                </div>
+
+                {accessToken && role === "CLIENT" && (
+                  <SheetClose asChild>
+                    <Link href="/become-host">
+                      <Button style={{ background: "#45aaa2", color: "#fff" }} className="mt-1">
+                        Become a Host
+                      </Button>
+                    </Link>
+                  </SheetClose>
+                )}
+
+                {accessToken ? (
+                  <SheetClose asChild>
+                    <LogoutButton />
+                  </SheetClose>
+                ) : (
+                  <div className="border-t pt-4 flex space-y-4 space-x-4">
+                    <SheetClose asChild>
+                      <Link href="/login" className="text-lg font-medium text-[#45aaa2]">
+                        Login
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link href="/register" className="text-lg font-medium text-[#45aaa2]">
+                        Register
+                      </Link>
+                    </SheetClose>
+                  </div>
+                )}
               </nav>
             </SheetContent>
           </Sheet>

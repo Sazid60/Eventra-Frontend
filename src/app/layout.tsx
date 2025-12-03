@@ -64,8 +64,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PH-Health-Care",
-  description: "A healthcare application built with Next.js",
+  title: "Eventra- Connect & Explore",
+  description: "an event management platform to connect with locals for events, meetups, and activities.",
 };
 
 export default function RootLayout({
