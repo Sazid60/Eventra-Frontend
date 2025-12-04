@@ -5,10 +5,12 @@ export type Client = {
   name: string;
   email: string;
   profilePhoto?: string | null;
+  bio: string;
   contactNumber: string;
-  address: string;
+  location: string;
+  interests: string[];
   isDeleted: boolean;
   createdAt: Date;
   updatedAt: Date;
-  user: UserInfo; 
+  user: UserInfo;
 };

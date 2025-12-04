@@ -3,8 +3,13 @@ import z from "zod";
 
 export const registerClientValidationZodSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
-    address: z.string().optional(),
+    contactNumber: z.string().min(1, { message: "Contact Number is required" }),
+    location: z.string().min(1, { message: "Location is required" }),
+    bio: z.string().min(1, { message: "Bio is required" }),
+    interests: z.array(z.string()).min(1, { message: "At least one interest is required" }),
     email: z.email({ message: "Valid email is required" }),
+    profilePhoto: z
+        .instanceof(File).optional(),
     password: z.string().min(6, {
         error: "Password is required and must be at least 6 characters long",
     }).max(100, {

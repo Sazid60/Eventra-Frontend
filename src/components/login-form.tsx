@@ -56,16 +56,8 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
 
             <FieldDescription className="px-6 text-center">
               Don&apos;t have an account?{" "}
-              <a href="/register" className="text-blue-600 hover:underline">
+              <a href="/register" className="text-[#45aaa2] hover:underline">
                 Sign up
-              </a>
-            </FieldDescription>
-            <FieldDescription className="px-6 text-center">
-              <a
-                href="/forget-password"
-                className="text-blue-600 hover:underline"
-              >
-                Forgot password?
               </a>
             </FieldDescription>
           </Field>

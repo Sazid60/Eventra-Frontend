@@ -1,6 +1,7 @@
 import { UserRole } from "../lib/auth-utils";
 import { IAdmin } from "./admin.interface";
 import { Client } from "./client.interface";
+import { IHost } from "./host.interface";
 
 
 export interface UserInfo {
@@ -9,9 +10,11 @@ export interface UserInfo {
     email: string;
     role: UserRole;
     needPasswordChange: boolean;
-    status: "ACTIVE" | "BLOCKED" | "DELETED";
+    profilePhoto: string ;
+    status:   "ACTIVE" | "SUSPENDED" | "DELETED" | "PENDING";
     admin?: IAdmin;
-    client: Client,
+    client?: Client,
+    host?: IHost,
     createdAt: string;
     updatedAt: string;
 }
