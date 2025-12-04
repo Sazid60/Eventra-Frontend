@@ -49,13 +49,13 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur dark:bg-background/95">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <div className="flex h-16 items-center justify-between  max-w-7xl mx-auto">
         <Link href="/" className="flex items-center space-x-2">
           <Logo />
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden xl:flex items-center space-x-6">
+        <div className="hidden xl:flex items-center space-x-6 ">
           <nav className="flex items-center space-x-6 text-sm">
             {filteredNav.map((link) => (
               <Link
