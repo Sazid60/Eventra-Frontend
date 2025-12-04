@@ -203,7 +203,7 @@ export async function getNewAccessToken() {
                 }
             })
         } else {
-            throw new Error("No Set-Cookie header found");
+            throw new Error(result.message || "No Set-Cookie header found");
         }
 
         if (!accessTokenObject) {

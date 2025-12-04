@@ -6,14 +6,14 @@ import { useTransition } from "react";
 
 
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface TablePaginationProps {
   currentPage: number;
   totalPages: number;
 }
 
-const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
+const Pagination = ({ currentPage, totalPages }: TablePaginationProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const searchParams = useSearchParams();
@@ -27,17 +27,17 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
     });
   };
 
-  const changeLimit = (newLimit: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("limit", newLimit);
-    params.set("page", "1"); // Reset to first page when changing limit
+  // const changeLimit = (newLimit: string) => {
+  //   const params = new URLSearchParams(searchParams.toString());
+  //   params.set("limit", newLimit);
+  //   params.set("page", "1"); // Reset to first page when changing limit
 
-    startTransition(() => {
-      router.push(`?${params.toString()}`);
-    });
-  };
+  //   startTransition(() => {
+  //     router.push(`?${params.toString()}`);
+  //   });
+  // };
 
-  const currentLimit = searchParams.get("limit") || "10";
+  // const currentLimit = searchParams.get("limit") || "10";
 
   // if (totalPages <= 1) {
   //   return null;
@@ -99,7 +99,7 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
       </span>
 
       {/* Items per page selector */}
-      <div className="flex items-center gap-2">
+      {/* <div className="flex items-center gap-2">
         <span className="text-sm text-muted-foreground">Items per page:</span>
         <Select
           value={currentLimit}
@@ -110,17 +110,17 @@ const TablePagination = ({ currentPage, totalPages }: TablePaginationProps) => {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="1">1</SelectItem>
-            <SelectItem value="5">5</SelectItem>
-            <SelectItem value="10">10</SelectItem>
-            <SelectItem value="20">20</SelectItem>
-            <SelectItem value="50">50</SelectItem>
-            <SelectItem value="100">100</SelectItem>
+            <SelectItem value="3">3</SelectItem>
+            <SelectItem value="6">6</SelectItem>
+            <SelectItem value="9">9</SelectItem>
+            <SelectItem value="18">18</SelectItem>
+            <SelectItem value="36">36</SelectItem>
+            <SelectItem value="72">72</SelectItem>
           </SelectContent>
         </Select>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default TablePagination;
+export default Pagination;
