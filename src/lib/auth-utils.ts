@@ -11,7 +11,7 @@ export const authRoutes = ["/login", "/register", "/forgot-password"];
 export const commonProtectedRoutes: RouteConfig = {
     exact: ["/my-profile", "/settings", "/change-password", "/reset-password", "/my-events", "/payment"],
      patterns: [
-        /^\/all-events\/[^/]+$/, /^\/payment\/[^/]+$/
+        /^\/all-events\/[^/]+$/, /^\/payment\/[^/]+$/, /^\/created-events\/[^/]+$/, /^\/my-booked-events\/[^/]+$/
     ], 
 }
 

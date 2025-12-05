@@ -15,6 +15,7 @@ const DateFilter = ({ placeholder = "Date", paramName = "date" }: DateFilterProp
     const searchParams = useSearchParams();
     const initial = searchParams.get(paramName) || "";
 
+    console.log(placeholder)
     const [value, setValue] = useState<string>(initial);
 
     // Keep local value in sync when search params change externally
@@ -52,7 +53,7 @@ const DateFilter = ({ placeholder = "Date", paramName = "date" }: DateFilterProp
                 type="date"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                className="uppercase"
+                className="uppercase text-muted-foreground"
                 aria-label="SELECT DATE"
             />
         </div >

@@ -30,8 +30,8 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
 
   const navItems = [
     { href: "/all-events", role: "COMMON", label: "View All Events" },
-    { href: "/host/created-events", role: "HOST", label: "My Created Events" },
-    { href: "/client/booked-events", role: "CLIENT", label: "My Booked Events" },
+    { href: "/created-events", role: "HOST", label: "My Created Events" },
+    { href: "/my-booked-events", role: "CLIENT", label: "My Booked Events" },
     { href: "/about", role: "COMMON", label: "About" },
     { href: "/contact", role: "COMMON", label: "Contact" },
   ];

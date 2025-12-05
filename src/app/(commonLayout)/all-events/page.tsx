@@ -1,7 +1,7 @@
 import { getAllEvents } from "@/services/events/events";
 
 
-import EventCard from '@/components/event/EventCard';
+import EventCard from '@/components/modules/Events/EventCard';
 import ApiEvent from "@/types/event.interface";
 import Pagination from "@/components/shared/Pagination";
 import { queryStringFormatter } from "@/lib/formatters";

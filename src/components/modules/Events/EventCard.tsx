@@ -40,7 +40,7 @@ export default function EventCard({ event }: EventCardProps) {
         <Card className="overflow-hidden border rounded-lg p-0 bg-background hover:cursor-pointer hover:scale-101 transition-shadow duration 600 gap-2  ">
             {/* Image area with overlays */}
             <div className="relative w-full h-56">
-                <div className="relative w-full h-56 overflow-hidden rounded-b-lg border">
+                <div className="relative w-full h-56 overflow-hidden rounded-lg border">
                     <Image
                         src={image}
                         alt={title}

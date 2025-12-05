@@ -93,10 +93,9 @@ const Pagination = ({ currentPage, totalPages }: TablePaginationProps) => {
         <ChevronRight className="h-4 w-4 ml-1" />
       </Button>
 
-      <span className="text-sm text-muted-foreground ml-2">
-        {/* Page 9 of 20 */}
+      {/* <span className="text-sm text-muted-foreground ml-2">
         Page {currentPage} of {totalPages}
-      </span>
+      </span> */}
 
       {/* Items per page selector */}
       {/* <div className="flex items-center gap-2">
