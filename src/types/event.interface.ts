@@ -1,3 +1,5 @@
+import { Client } from "./client.interface";
+
 export type ApiEventHost = {
     id: string;
     name: string;
@@ -30,3 +32,15 @@ export type ApiEvent = {
 };
 
 export default ApiEvent;
+
+
+export interface IBookedEvent {
+    id: string
+    transactionId: string
+    eventId: string
+    clientId: string
+    createdAt: string
+    participantStatus: string
+    event: ApiEvent
+    client: Client
+}

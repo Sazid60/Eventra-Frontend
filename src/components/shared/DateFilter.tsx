@@ -52,7 +52,7 @@ const DateFilter = ({ placeholder = "Date", paramName = "date" }: DateFilterProp
                 type="date"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                className="uppercase"
+                className="uppercase text-muted-foreground"
                 aria-label="SELECT DATE"
             />
         </div >

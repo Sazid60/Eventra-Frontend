@@ -1,7 +1,7 @@
 import { UserInfo } from "./user.interface";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export type IHost = {
+export type Host = {
   id: string;
   name: string;
   email: string;

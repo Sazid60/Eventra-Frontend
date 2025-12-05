@@ -49,13 +49,13 @@ const SelectFilter = ({
       onValueChange={handleChange}
       disabled={isPending}
     >
-      <SelectTrigger>
-        <SelectValue placeholder={placeholder} />
+      <SelectTrigger  className="uppercase text-muted-foreground w-full">
+        <SelectValue className="uppercase text-muted-foreground" placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value={defaultValue}>{defaultValue}</SelectItem>
+        <SelectItem  className="uppercase text-muted-foreground" value={defaultValue}>{defaultValue}</SelectItem>
         {options.map((option) => (
-          <SelectItem key={option.value} value={option.value}>
+          <SelectItem className="uppercase text-muted-foreground" key={option.value} value={option.value}>
             {option.label}
           </SelectItem>
         ))}
