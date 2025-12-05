@@ -5,6 +5,7 @@ import Pagination from "@/components/shared/Pagination";
 import { queryStringFormatter } from "@/lib/formatters";
 import HostEventCardFilter from "@/components/modules/Events/HostEventCardFilter";
 import CreatedEventCard from "@/components/modules/Events/CreatedEventCard";
+import AddEventButton from "@/components/modules/Events/AddEventButton";
 
 const MyCreatedEventsPage = async ({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }>; }) => {
 
@@ -18,10 +19,15 @@ const MyCreatedEventsPage = async ({ searchParams }: { searchParams: Promise<{ [
 
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <h1 className="text-2xl font-semibold mb-6">My Created Events</h1>
-                <p className="text-sm text-muted-foreground mb-6">Manage your hosted events - filter by status, category, or date to organize your events.</p>
-
+            <div className="max-w-7xl mx-auto px-4 py-8 ">
+                <div className="flex flex-col md:flex-row md:justify-between items-center mb-6">
+                    {/* flex and justify between */}
+                    <div>
+                        <h1 className="text-2xl font-semibold mb-6">My Created Events</h1>
+                        <p className="text-sm text-muted-foreground mb-6">Manage your hosted events - filter by status, category, or date to organize your events.</p>
+                    </div>
+                    <AddEventButton />
+                </div>
                 <HostEventCardFilter />
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {Array.isArray(hostedEvents?.data?.eventRequests) && (hostedEvents.data.eventRequests as ApiEvent[]).length > 0 ? (

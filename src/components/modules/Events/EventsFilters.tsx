@@ -13,10 +13,10 @@ const EventsFilter = () => {
         {/* Email Filter */}
 
         <div className="flex items-center gap-2 ">
-          <SearchFilter paramName="searchTerm" placeholder="Title Search...." />
+          <SearchFilter paramName="searchTerm" placeholder="Title, Location Search...." />
 
           {/* Search Filter */}
-          <SearchFilter paramName="searchTerm" placeholder="Location Search...." />
+          {/* <SearchFilter paramName="searchTerm" placeholder="Location Search...." /> */}
         </div>
 
         <div className="flex flex-col md:flex-row mt-4 md:mt-0 md:space-x-1 space-y-2">
