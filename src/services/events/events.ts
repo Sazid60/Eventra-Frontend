@@ -2,6 +2,7 @@
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch";
+import { revalidateTag } from "next/cache";
 
 export async function getAllEvents(queryString?: string) {
     try {
@@ -28,6 +29,27 @@ export async function getMyBookedEvents(queryString?: string) {
             next: { tags: ["my-booked-events"] }
         })
         const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+
+export async function leaveEvent(id: string) {
+    try {
+        const response = await serverFetch.post(`/event/leave/${id}`, {
+            cache: "no-store"
+        });
+        const result = await response.json();
+        if (result.success) {
+            revalidateTag('my-booked-events', { expire: 0 });
+            revalidateTag('all-events', { expire: 0 });
+        }
         return result;
     } catch (error: any) {
         console.log(error);

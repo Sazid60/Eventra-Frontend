@@ -1,11 +1,13 @@
 "use client"
 import Image from "next/image";
-import React, { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Calendar, Clock } from "lucide-react";
 import { IBookedEvent } from "@/types/event.interface";
+import { leaveEvent } from "@/services/events/events";
+import { toast } from "sonner";
 
 type UserEventCardProps = {
     event: IBookedEvent;
@@ -24,6 +26,7 @@ export default function UserEventCard({ event }: UserEventCardProps) {
     // Extract the nested event data
     const eventData = event.event;
     const participantStatus = event.participantStatus;
+    const [isPending, setIsPending] = useState(false);
 
     const title = eventData?.title || "Untitled Event";
     const image = eventData?.image || "/images/event-placeholder.jpg";
@@ -31,6 +34,27 @@ export default function UserEventCard({ event }: UserEventCardProps) {
     const { date, time } = formatDate(eventData?.date);
     const fee = eventData?.joiningFee ?? 0;
     const capacity = eventData?.capacity ?? null;
+
+
+    const handleLeave = async () => {
+        setIsPending(true);
+        try {
+            const result = await leaveEvent(event.eventId);
+
+            if (result.success) {
+                toast.success("You have left the event successfully");
+                setIsPending(false)
+
+            } else {
+                toast.error(result.message || "Failed to leave event");
+                setIsPending(false)
+            }
+        } catch (error) {
+            toast.error("Something went wrong. Please try again.");
+            console.error(error);
+            setIsPending(false)
+        }
+    }
 
     const status = useMemo(() => {
         if (eventData?.status) return eventData.status;
@@ -109,17 +133,16 @@ export default function UserEventCard({ event }: UserEventCardProps) {
                             Transaction ID: <br /><span className="mt-1 font-semibold text-foreground">{event.transactionId}</span>
                         </div>
                     </div>
-
-                    {/* Leave button - conditional based on event status and participant status */}
                     <div className="ml-auto">
                         <Button
-                            disabled={eventData?.status === "COMPLETED" || participantStatus === "LEFT"}
-                            className={`text-white ${eventData?.status === "COMPLETED" || participantStatus === "LEFT"
-                                    ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed"
-                                    : "bg-red-600 hover:bg-red-700"
+                            onClick={handleLeave}
+                            disabled={eventData?.status === "COMPLETED" || participantStatus === "LEFT" || isPending}
+                            className={`text-white ${eventData?.status === "COMPLETED" || participantStatus === "LEFT" || isPending
+                                ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed"
+                                : "bg-red-600 hover:bg-red-700"
                                 }`}
                         >
-                            {participantStatus === "LEFT" ? "Left" : "Leave"}
+                            {isPending ? "Leaving..." : participantStatus === "LEFT" ? "Left" : "Leave"}
                         </Button>
                     </div>
                 </div>
