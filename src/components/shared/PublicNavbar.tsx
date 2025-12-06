@@ -158,7 +158,7 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
                 {accessToken && role === "CLIENT" && (
                   <SheetClose asChild>
                     <Link href="/become-host">
-                      <Button style={{ background: "#45aaa2", color: "#fff" }} className="mt-1">
+                      <Button style={{ background: "#45aaa2", color: "#fff" }} className="mt-1 w-full lg:w-auto">
                         Become a Host
                       </Button>
                     </Link>

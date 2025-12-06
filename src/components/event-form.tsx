@@ -155,6 +155,7 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                             id="date"
                             name="date"
                             type="datetime-local"
+                            min={new Date().toISOString().slice(0, 16)}
                             defaultValue={
                                 state?.formData?.date ||
                                 (isEdit && event?.date
