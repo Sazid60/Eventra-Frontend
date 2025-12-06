@@ -27,6 +27,7 @@ export default function UserEventCard({ event }: UserEventCardProps) {
     const eventData = event.event;
     const participantStatus = event.participantStatus;
     const [isPending, setIsPending] = useState(false);
+    const isCompleted = eventData?.status === "COMPLETED";
 
     const title = eventData?.title || "Untitled Event";
     const image = eventData?.image || "/images/event-placeholder.jpg";
@@ -55,6 +56,10 @@ export default function UserEventCard({ event }: UserEventCardProps) {
             setIsPending(false)
         }
     }
+
+    const handleAddReview = () => {
+        toast.info("Review submission coming soon.");
+    };
 
     const status = useMemo(() => {
         if (eventData?.status) return eventData.status;
@@ -134,16 +139,25 @@ export default function UserEventCard({ event }: UserEventCardProps) {
                         </div>
                     </div>
                     <div className="ml-auto">
-                        <Button
-                            onClick={handleLeave}
-                            disabled={eventData?.status === "COMPLETED" || participantStatus === "LEFT" || isPending}
-                            className={`text-white ${eventData?.status === "COMPLETED" || participantStatus === "LEFT" || isPending
-                                ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed"
-                                : "bg-red-600 hover:bg-red-700"
-                                }`}
-                        >
-                            {isPending ? "Leaving..." : participantStatus === "LEFT" ? "Left" : "Leave"}
-                        </Button>
+                        {isCompleted ? (
+                            <Button
+                                onClick={handleAddReview}
+                                className="text-white bg-blue-600 hover:bg-blue-700"
+                            >
+                                Add Review
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={handleLeave}
+                                disabled={participantStatus === "LEFT" || isPending}
+                                className={`text-white ${participantStatus === "LEFT" || isPending
+                                    ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed"
+                                    : "bg-red-600 hover:bg-red-700"
+                                    }`}
+                            >
+                                {isPending ? "Leaving..." : participantStatus === "LEFT" ? "Left" : "Leave"}
+                            </Button>
+                        )}
                     </div>
                 </div>
             </CardContent>

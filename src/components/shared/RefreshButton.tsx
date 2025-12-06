@@ -29,10 +29,11 @@ const RefreshButton = ({
       variant={variant}
       onClick={handleRefresh}
       disabled={isPending}
+      className="bg-background hover:bg-background text-muted-foreground"
     >
       <RefreshCcw
         className={`h-4 w-4 ${isPending ? "animate-spin" : ""} ${
-          showLabel ? "mr-2" : ""
+          showLabel ? "mr-1" : ""
         }`}
       />
       {showLabel && "Refresh"}

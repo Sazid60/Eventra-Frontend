@@ -44,3 +44,23 @@ export interface IBookedEvent {
     event: ApiEvent
     client: Client
 }
+
+export type ApiParticipantClient = {
+    id: string;
+    name: string;
+    email: string;
+    profilePhoto?: string | null;
+    contactNumber?: string | null;
+    location?: string | null;
+    bio?: string | null;
+    interests?: string[];
+};
+
+export type ApiParticipantInfo = {
+    id: string;
+    joinedAt: string;
+    clientId: string;
+    client: ApiParticipantClient;
+};
+
+export type ApiParticipantInfoList = ApiParticipantInfo[];

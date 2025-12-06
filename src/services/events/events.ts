@@ -51,6 +51,8 @@ export async function leaveEvent(id: string) {
         if (result.success) {
             revalidateTag('my-booked-events', { expire: 0 });
             revalidateTag('all-events', { expire: 0 });
+            revalidateTag('event-participants', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -87,6 +89,63 @@ export async function getEventApplications(queryString?: string) {
             next: { tags: ["event-applications"] }
         });
         const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+export async function getSingleEvent(id: string) {
+    try {
+        const response = await serverFetch.get(`/event/${id}`, {
+            cache: "force-cache",
+            next: { tags: ["single-event"] }
+        });
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+export async function getEventParticipants(id: string, queryString?: string) {
+    try {
+        const response = await serverFetch.get(`/event/participants/${id}${queryString ? `?${queryString}` : ""}`, {
+            cache: "force-cache",
+            next: { tags: ["event-participants"] }
+        });
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+
+export async function joinEvent(id: string) {
+    try {
+        const response = await serverFetch.post(`/event/join/${id}`, {
+            cache: "no-store"
+        });
+        const result = await response.json();
+        if (result.success) {
+            revalidateTag('my-booked-events', { expire: 0 });
+            revalidateTag('all-events', { expire: 0 });
+            revalidateTag('event-participants', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
+        }
         return result;
     } catch (error: any) {
         console.log(error);

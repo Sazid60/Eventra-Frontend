@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Calendar, Clock } from "lucide-react";
 import ApiEvent, { ApiEventHost } from "@/types/event.interface";
+import Link from "next/link";
 
 type Host = ApiEventHost;
 type EventCardProps = {
@@ -22,6 +23,7 @@ const formatDate = (iso?: string) => {
 };
 
 export default function EventCard({ event }: EventCardProps) {
+    console.log(event)
     const host: Host = (event?.host as Host) || ({} as Host);
     const title = event?.title || "Untitled Event";
     const image = event?.image || "/images/event-placeholder.jpg";
@@ -127,11 +129,11 @@ export default function EventCard({ event }: EventCardProps) {
 
                     {/* View Details */}
                     <div className="ml-auto">
-                        <Button
-                            className="text-white bg-[#45aaa2] hover:bg-[#3c8f88]"
-                        >
-                            View Details
-                        </Button>
+                        <Link href={`/all-events/${event.id}`} >
+                            <Button className="bg-[#45aaa2] text-white border hover:bg-[#3c8f88]">
+                                View Details
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </CardContent>
