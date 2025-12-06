@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Calendar, Clock } from "lucide-react";
 import ApiEvent from "@/types/event.interface";
-import { joinEvent } from "@/services/events/events";
+import { joinEvent, leaveEvent } from "@/services/events/events";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -14,25 +14,40 @@ type Props = {
     date?: string;
     time?: string;
     userRole?: string | null;
+    currentParticipantStatus?: string | null;
 };
 
-export default function EventDetailsCard({ event, date, time, userRole }: Props) {
+export default function EventDetailsCard({ event, date, time, userRole, currentParticipantStatus }: Props) {
     const [isPending, setIsPending] = useState(false);
     const router = useRouter();
 
     if (!event) return null;
-    // disable when booking pending, event not open, no capacity, or user is ADMIN/HOST
-    const isDisabled = isPending || event.status !== 'OPEN' || (typeof event.capacity === 'number' && event.capacity <= 0) || userRole === 'ADMIN' || userRole === 'HOST';
-    const buttonClass = isDisabled ? 'text-white bg-gray-400 hover:bg-gray-400 cursor-not-allowed' : 'text-white bg-[#45aaa2] hover:bg-[#3c8f88]';
-    const buttonLabel = isPending ? 'Booking...' : event.status !== 'OPEN' ? 'Not Available' : 'Book Event';
+    const isAdminOrHost = userRole === 'ADMIN' || userRole === 'HOST';
+    const isParticipantActive = currentParticipantStatus === 'PENDING' || currentParticipantStatus === 'CONFIRMED';
+    const canJoin = !currentParticipantStatus || currentParticipantStatus === 'LEFT';
+
+    const joinDisabled = isPending || isAdminOrHost || event.status !== 'OPEN' || (typeof event.capacity === 'number' && event.capacity <= 0) || !canJoin;
+    const leaveDisabled = isPending || isAdminOrHost;
+    const isLeaveAction = !canJoin && isParticipantActive;
+    const isActionDisabled = isLeaveAction ? leaveDisabled : joinDisabled;
+
+    const activeClass = isLeaveAction ? 'text-white bg-red-500 hover:bg-red-600' : 'text-white bg-[#45aaa2] hover:bg-[#3c8f88]';
+    const buttonClass = isActionDisabled ? 'text-white bg-gray-400 hover:bg-gray-400 cursor-not-allowed' : activeClass;
+
+    let buttonLabel = 'Book Event';
+    if (isPending) {
+        buttonLabel = isLeaveAction ? 'Leaving...' : 'Booking...';
+    } else if (isLeaveAction) {
+        buttonLabel = 'Leave Event';
+    } else if (event.status !== 'OPEN') {
+        buttonLabel = 'Not Available';
+    }
 
     const handleBook = async () => {
         if (!event?.id) return;
         setIsPending(true);
         try {
             const result = await joinEvent(event.id);
-
-            // backend returns shape: { success, message, data: { paymentUrl, newParticipant, payment, updatedEvent } }
             if (result?.success) {
                 const payload = result.data ?? result;
                 const paymentUrl = payload?.paymentUrl;
@@ -42,6 +57,26 @@ export default function EventDetailsCard({ event, date, time, userRole }: Props)
                 }
             } else {
                 toast.error(result?.message || "Failed to join event");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong. Please try again.");
+        } finally {
+            setIsPending(false);
+        }
+    };
+
+    const handleLeave = async () => {
+        if (!event?.id) return;
+        setIsPending(true);
+        try {
+            const result = await leaveEvent(event.id);
+
+            if (result.success) {
+                toast.success("You have left the event successfully");
+                try { router.refresh(); } catch { /* ignore */ }
+            } else {
+                toast.error(result.message || "Failed to leave event");
             }
         } catch (error) {
             console.error(error);
@@ -100,7 +135,11 @@ export default function EventDetailsCard({ event, date, time, userRole }: Props)
                 </div>
 
                 <div>
-                    <Button onClick={handleBook} disabled={isDisabled} className={buttonClass}>
+                    <Button
+                        onClick={isLeaveAction ? handleLeave : handleBook}
+                        disabled={isActionDisabled}
+                        className={buttonClass}
+                    >
                         {buttonLabel}
                     </Button>
                 </div>

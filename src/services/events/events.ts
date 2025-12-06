@@ -224,6 +224,9 @@ export async function completeEvent(id: string) {
         const result = await response.json();
         if (result.success) {
             revalidateTag('my-hosted-events', { expire: 0 });
+            revalidateTag('all-events', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
+            revalidateTag('event-participants', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -374,6 +377,8 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
         if (result.success) {
             revalidateTag('my-hosted-events', { expire: 0 });
             revalidateTag('all-events', { expire: 0 });
+            revalidateTag('event-participants', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
 
         }
 

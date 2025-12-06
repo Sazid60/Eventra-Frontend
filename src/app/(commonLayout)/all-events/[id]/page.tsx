@@ -27,6 +27,7 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
 
     const userInfo = await getUserInfo();
     const userRole = userInfo?.role ?? null;
+    const userEmail = userInfo?.email ?? null;
 
     console.log(result)
 
@@ -40,14 +41,26 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
 
     const { date, time } = formatDate(event?.date);
 
-    // participantsList is an array of ApiParticipantInfo
+    // participantsList is an array of ApiParticipantInfo (may include participantStatus)
+    // Find participant record for current user by email (matching behavior follows PublicNavbar userInfo)
+    // avoid `any` lint by using a typed callback
+    type ParticipantWithStatus = ApiParticipantInfo & { participantStatus?: string; client?: { email?: string } };
+    let currentParticipantStatus: string | null = null;
+    if (Array.isArray(participantsList) && userEmail) {
+        for (const p of participantsList as ParticipantWithStatus[]) {
+            if (p?.client?.email === userEmail) {
+                currentParticipantStatus = p.participantStatus ?? null;
+                break;
+            }
+        }
+    }
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
             <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
                 {/* Main Column */}
                 <div className="xl:col-span-3">
-                    <EventDetailsCard event={event} date={date} time={time} userRole={userRole} />
+                    <EventDetailsCard event={event} date={date} time={time} userRole={userRole} currentParticipantStatus={currentParticipantStatus} />
                 </div>
 
                 {/* Right Column - Participants */}
