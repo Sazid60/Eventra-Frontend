@@ -10,7 +10,7 @@ const LogoutButton = () => {
     await logoutUser();
   };
   return (
-    <Button className="w-full" variant={"destructive"} onClick={handleLogout}>
+    <Button className="w-full xl:w-auto" variant={"destructive"} onClick={handleLogout}>
       Logout
     </Button>
   );
