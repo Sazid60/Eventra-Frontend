@@ -396,3 +396,28 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
         };
     }
 }
+
+export async function addReview(transactionId: string, payload: { rating: number; comment: string }) {
+    try {
+        const response = await serverFetch.post(`/review/${transactionId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+            cache: "no-store"
+        });
+        const result = await response.json();
+        if (result.success) {
+            revalidateTag('my-booked-events', { expire: 0 });
+            revalidateTag('all-events', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
+        }
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Failed to add review. Please try again.'}`
+        };
+    }
+}

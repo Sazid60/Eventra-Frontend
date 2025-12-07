@@ -41,15 +41,15 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
 
     const { date, time } = formatDate(event?.date);
 
-    // participantsList is an array of ApiParticipantInfo (may include participantStatus)
-    // Find participant record for current user by email (matching behavior follows PublicNavbar userInfo)
-    // avoid `any` lint by using a typed callback
-    type ParticipantWithStatus = ApiParticipantInfo & { participantStatus?: string; client?: { email?: string } };
+
+    type ParticipantWithStatus = ApiParticipantInfo & { participantStatus?: string; client?: { email?: string }; transactionId?: string };
     let currentParticipantStatus: string | null = null;
+    let currentTransactionId: string | null = null;
     if (Array.isArray(participantsList) && userEmail) {
         for (const p of participantsList as ParticipantWithStatus[]) {
             if (p?.client?.email === userEmail) {
                 currentParticipantStatus = p.participantStatus ?? null;
+                currentTransactionId = p.transactionId ?? null;
                 break;
             }
         }
@@ -60,7 +60,7 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
             <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
                 {/* Main Column */}
                 <div className="xl:col-span-3">
-                    <EventDetailsCard event={event} date={date} time={time} userRole={userRole} currentParticipantStatus={currentParticipantStatus} />
+                    <EventDetailsCard event={event} date={date} time={time} userRole={userRole} currentParticipantStatus={currentParticipantStatus} transactionId={currentTransactionId} />
                 </div>
 
                 {/* Right Column - Participants */}
@@ -73,14 +73,14 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
                                     <Card key={p.id} className="p-2 bg-background">
                                         <CardContent className="flex items-center gap-3">
                                             <div className="w-7 h-7 rounded-full">
-                                                <Image src={p.client?.profilePhoto || '/images/avatar-placeholder.png'} alt={p.client?.name || 'Client'} width={48} height={48} className="object-cover" />
+                                                <Image src={p.client?.profilePhoto || '/images/avatar-placeholder.png'} alt={p.client?.name || 'Client'} width={48} height={48} className="object-cover rounded-full" />
                                             </div>
                                             <div className="flex-1">
                                                 <div className="flex items-center justify-between">
                                                     <div className="text-xs font-semibold">{p.client?.name || 'Participant'}</div>
                                                 </div>
                                                 <div className="mt-2 text-xs text-muted-foreground lowercase">
-                                                    {(p.client?.interests || []).slice(0, 6).map((t: string) => <span key={t} className="mr-2 text-orange-700">#{t}</span>)}
+                                                    {(p.client?.interests || []).slice(0, 3).map((t: string) => <span key={t} className="mr-2 text-orange-700">#{t}</span>)}
                                                 </div>
                                             </div>
                                             {p.client?.contactNumber ? (

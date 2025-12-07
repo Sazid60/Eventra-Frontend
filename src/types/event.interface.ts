@@ -43,6 +43,7 @@ export interface IBookedEvent {
     participantStatus: string
     event: ApiEvent
     client: Client
+    hasReviewed?: boolean;
 }
 
 export type ApiParticipantClient = {
@@ -54,6 +55,7 @@ export type ApiParticipantClient = {
     location?: string | null;
     bio?: string | null;
     interests?: string[];
+    hasReviewed?: boolean; 
 };
 
 export type ApiParticipantInfo = {

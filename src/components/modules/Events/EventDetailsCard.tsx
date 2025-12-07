@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Calendar, Clock } from "lucide-react";
@@ -8,6 +8,7 @@ import ApiEvent from "@/types/event.interface";
 import { joinEvent, leaveEvent } from "@/services/events/events";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import AddReviewDialog from "./AddReviewDialog";
 
 type Props = {
     event: ApiEvent | null;
@@ -15,19 +16,45 @@ type Props = {
     time?: string;
     userRole?: string | null;
     currentParticipantStatus?: string | null;
+    transactionId?: string | null;
 };
 
-export default function EventDetailsCard({ event, date, time, userRole, currentParticipantStatus }: Props) {
+export default function EventDetailsCard({ event, date, time, userRole, currentParticipantStatus, transactionId }: Props) {
     const [isPending, setIsPending] = useState(false);
+    const [showReviewDialog, setShowReviewDialog] = useState(false);
+    const [hasReviewed, setHasReviewed] = useState(false);
     const router = useRouter();
+
+    // Check if review was already submitted (initialize once)
+    const initialReviewStatus = useMemo(() => {
+        if (typeof window === 'undefined' || !transactionId) return false;
+        const reviewedEvents = localStorage.getItem('reviewedEvents');
+        if (reviewedEvents) {
+            const reviewed = JSON.parse(reviewedEvents);
+            return reviewed.includes(transactionId);
+        }
+        return false;
+    }, [transactionId]);
+
+    // Set initial review status
+    useEffect(() => {
+        setHasReviewed(initialReviewStatus);
+    }, [initialReviewStatus]);
+
+    // Check if event date has passed
+    const isEventPast = useMemo(() => {
+        if (!event?.date) return false;
+        return new Date(event.date) < new Date();
+    }, [event?.date]);
 
     if (!event) return null;
     const isAdminOrHost = userRole === 'ADMIN' || userRole === 'HOST';
     const isParticipantActive = currentParticipantStatus === 'PENDING' || currentParticipantStatus === 'CONFIRMED';
     const canJoin = !currentParticipantStatus || currentParticipantStatus === 'LEFT';
+    const isCompleted = event.status === 'COMPLETED';
 
     const joinDisabled = isPending || isAdminOrHost || event.status !== 'OPEN' || (typeof event.capacity === 'number' && event.capacity <= 0) || !canJoin;
-    const leaveDisabled = isPending || isAdminOrHost;
+    const leaveDisabled = isPending || isAdminOrHost || isEventPast;
     const isLeaveAction = !canJoin && isParticipantActive;
     const isActionDisabled = isLeaveAction ? leaveDisabled : joinDisabled;
 
@@ -38,7 +65,7 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
     if (isPending) {
         buttonLabel = isLeaveAction ? 'Leaving...' : 'Booking...';
     } else if (isLeaveAction) {
-        buttonLabel = 'Leave Event';
+        buttonLabel = isEventPast ? 'Event Ended' : 'Leave Event';
     } else if (event.status !== 'OPEN') {
         buttonLabel = 'Not Available';
     }
@@ -135,15 +162,34 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
                 </div>
 
                 <div>
-                    <Button
-                        onClick={isLeaveAction ? handleLeave : handleBook}
-                        disabled={isActionDisabled}
-                        className={buttonClass}
-                    >
-                        {buttonLabel}
-                    </Button>
+                    {isCompleted && transactionId && currentParticipantStatus === 'CONFIRMED' ? (
+                        <Button
+                            onClick={() => setShowReviewDialog(true)}
+                            disabled={hasReviewed}
+                            className={hasReviewed ? "text-white bg-gray-400 hover:bg-gray-400 cursor-not-allowed" : "text-white bg-blue-600 hover:bg-blue-700"}
+                        >
+                            {hasReviewed ? "Reviewed" : "Add Review"}
+                        </Button>
+                    ) : (
+                        <Button
+                            onClick={isLeaveAction ? handleLeave : handleBook}
+                            disabled={isActionDisabled}
+                            className={buttonClass}
+                        >
+                            {buttonLabel}
+                        </Button>
+                    )}
                 </div>
             </div>
+
+            {transactionId && (
+                <AddReviewDialog
+                    open={showReviewDialog}
+                    onClose={() => setShowReviewDialog(false)}
+                    transactionId={transactionId}
+                    onReviewSubmitted={() => setHasReviewed(true)}
+                />
+            )}
         </div>
     );
 }
