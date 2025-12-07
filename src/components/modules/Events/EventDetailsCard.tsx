@@ -3,12 +3,13 @@ import Image from "next/image";
 import React, { useMemo, useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Star, MapPin, Calendar, Clock } from "lucide-react";
+import { Star, MapPin, Calendar, Clock, RefreshCcw } from "lucide-react";
 import ApiEvent from "@/types/event.interface";
 import { joinEvent, leaveEvent } from "@/services/events/events";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import AddReviewDialog from "./AddReviewDialog";
+import { revalidateAllData } from "@/services/revalidate";
 
 type Props = {
     event: ApiEvent | null;
@@ -23,6 +24,7 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
     const [isPending, setIsPending] = useState(false);
     const [showReviewDialog, setShowReviewDialog] = useState(false);
     const [hasReviewed, setHasReviewed] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const router = useRouter();
 
     // Check if review was already submitted (initialize once)
@@ -116,7 +118,7 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
     return (
         <div className="space-y-6">
             <div className="relative w-full rounded-lg overflow-hidden border">
-                <div className="relative w-full h-64 md:h-80 bg-gray-100">
+                <div className="relative w-full h-64 md:h-80 ">
                     <Image src={event.image || '/images/event-placeholder.jpg'} alt={event.title || 'Event'} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 </div>
 
@@ -161,7 +163,7 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
                     </div>
                 </div>
 
-                <div>
+                <div className="flex items-center gap-2">
                     {isCompleted && transactionId && currentParticipantStatus === 'CONFIRMED' ? (
                         <Button
                             onClick={() => setShowReviewDialog(true)}
@@ -179,6 +181,21 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
                             {buttonLabel}
                         </Button>
                     )}
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={async () => {
+                            setIsRefreshing(true);
+                            await revalidateAllData();
+                            const url = new URL(window.location.href);
+                            url.searchParams.set('_t', Date.now().toString());
+                            window.location.href = url.toString();
+                        }}
+                        disabled={isRefreshing}
+                        className="text-muted-foreground"
+                    >
+                        <RefreshCcw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+                    </Button>
                 </div>
             </div>
 
