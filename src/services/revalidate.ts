@@ -20,6 +20,7 @@ export async function revalidateAllData() {
         revalidateTag('all-clients', { expire: 0 });
         revalidateTag('all-hosts', { expire: 0 });
         revalidateTag('all-host-applications', { expire: 0 });
+        revalidateTag('user-payments', { expire: 0 });
 
         return { success: true };
     } catch (error: any) {

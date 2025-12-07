@@ -33,7 +33,13 @@ export const hostNavItems: NavSection[] = [
                 href: "/host/dashboard/manage-events",
                 icon: "Calendar",
                 roles: ["HOST"],
-            }
+            },
+            {
+                title: "All Payments",
+                href: `/host/dashboard/payment-history`,
+                icon: "File",
+                roles: ["HOST"],
+            },
         ],
     }
 ]
@@ -103,6 +109,12 @@ export const adminDashboardItems: NavSection[] = [
             {
                 title: "Event Applications",
                 href: "/admin/dashboard/event-application-management",
+                icon: "File",
+                roles: ["ADMIN"],
+            },
+            {
+                title: "All Payments",
+                href: `/admin/dashboard/payment-history`,
                 icon: "File",
                 roles: ["ADMIN"],
             },
