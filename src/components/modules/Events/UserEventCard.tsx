@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { MapPin, Calendar, Clock } from "lucide-react";
 import { IBookedEvent } from "@/types/event.interface";
 import { leaveEvent } from "@/services/events/events";
 import { toast } from "sonner";
+import AddReviewDialog from "./AddReviewDialog";
 
 type UserEventCardProps = {
     event: IBookedEvent;
@@ -27,6 +28,25 @@ export default function UserEventCard({ event }: UserEventCardProps) {
     const eventData = event.event;
     const participantStatus = event.participantStatus;
     const [isPending, setIsPending] = useState(false);
+    const [showReviewDialog, setShowReviewDialog] = useState(false);
+    const [hasReviewed, setHasReviewed] = useState(false);
+    const isCompleted = eventData?.status === "COMPLETED";
+
+    // Check if review was already submitted (initialize once)
+    const initialReviewStatus = useMemo(() => {
+        if (typeof window === 'undefined') return false;
+        const reviewedEvents = localStorage.getItem('reviewedEvents');
+        if (reviewedEvents) {
+            const reviewed = JSON.parse(reviewedEvents);
+            return reviewed.includes(event.transactionId);
+        }
+        return false;
+    }, [event.transactionId]);
+
+    // Set initial review status
+    useEffect(() => {
+        setHasReviewed(initialReviewStatus);
+    }, [initialReviewStatus]);
 
     const title = eventData?.title || "Untitled Event";
     const image = eventData?.image || "/images/event-placeholder.jpg";
@@ -34,6 +54,12 @@ export default function UserEventCard({ event }: UserEventCardProps) {
     const { date, time } = formatDate(eventData?.date);
     const fee = eventData?.joiningFee ?? 0;
     const capacity = eventData?.capacity ?? null;
+
+    // Check if event date has passed
+    const isEventPast = useMemo(() => {
+        if (!eventData?.date) return false;
+        return new Date(eventData.date) < new Date();
+    }, [eventData.date]);
 
 
     const handleLeave = async () => {
@@ -56,11 +82,15 @@ export default function UserEventCard({ event }: UserEventCardProps) {
         }
     }
 
+    const handleAddReview = () => {
+        setShowReviewDialog(true);
+    };
+
     const status = useMemo(() => {
         if (eventData?.status) return eventData.status;
         const eventDate = new Date(eventData?.date ?? "");
         return eventDate < new Date() ? "Past" : "Upcoming";
-    }, [eventData?.status, eventData?.date]);
+    }, [eventData.status, eventData.date]);
 
     return (
         <Card className="overflow-hidden border rounded-lg p-0 bg-background hover:cursor-pointer hover:scale-101 transition-shadow duration-600 gap-2">
@@ -134,19 +164,36 @@ export default function UserEventCard({ event }: UserEventCardProps) {
                         </div>
                     </div>
                     <div className="ml-auto">
-                        <Button
-                            onClick={handleLeave}
-                            disabled={eventData?.status === "COMPLETED" || participantStatus === "LEFT" || isPending}
-                            className={`text-white ${eventData?.status === "COMPLETED" || participantStatus === "LEFT" || isPending
-                                ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed"
-                                : "bg-red-600 hover:bg-red-700"
-                                }`}
-                        >
-                            {isPending ? "Leaving..." : participantStatus === "LEFT" ? "Left" : "Leave"}
-                        </Button>
+                        {isCompleted && participantStatus === "CONFIRMED" ? (
+                            <Button
+                                onClick={handleAddReview}
+                                disabled={hasReviewed}
+                                className={hasReviewed ? "text-white bg-gray-400 hover:bg-gray-400 cursor-not-allowed" : "text-white bg-blue-600 hover:bg-blue-700"}
+                            >
+                                {hasReviewed ? "Reviewed" : "Add Review"}
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={handleLeave}
+                                disabled={participantStatus === "LEFT" || isPending || isEventPast}
+                                className={`text-white ${participantStatus === "LEFT" || isPending || isEventPast
+                                    ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed"
+                                    : "bg-red-600 hover:bg-red-700"
+                                    }`}
+                            >
+                                {isPending ? "Leaving..." : participantStatus === "LEFT" ? "Left" : isEventPast ? "Event Ended" : "Leave"}
+                            </Button>
+                        )}
                     </div>
                 </div>
             </CardContent>
+
+            <AddReviewDialog
+                open={showReviewDialog}
+                onClose={() => setShowReviewDialog(false)}
+                transactionId={event.transactionId}
+                onReviewSubmitted={() => setHasReviewed(true)}
+            />
         </Card>
     );
 }

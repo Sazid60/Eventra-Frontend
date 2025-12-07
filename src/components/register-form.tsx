@@ -1,5 +1,5 @@
 "use client";
-;
+
 import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import InputFieldError from "./shared/InputFieldError";
@@ -8,12 +8,14 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { registerClient } from "@/services/auth/register";
+import Image from "next/image";
 
 const RegisterForm = () => {
   const [state, formAction, isPending] = useActionState(registerClient, null);
   const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const successToastShownRef = useRef(false);
 
   console.log(state)
 
@@ -23,9 +25,19 @@ const RegisterForm = () => {
   };
 
   useEffect(() => {
-    if (state && !state.success && state.message) {
-      toast.error(state.message);
+    // Reset the toast guard when state becomes falsy so future submissions can show again
+    if (!state) {
+      successToastShownRef.current = false;
+    }
+
+    if (state?.success && !successToastShownRef.current) {
+      successToastShownRef.current = true;
+      toast.success(state.message || "Account created successfully!");
+      // Reset form and file on success
       formRef.current?.reset();
+      setTimeout(() => {
+        setSelectedFile(null);
+      }, 0);
     }
 
     if (selectedFile && fileInputRef.current) {
@@ -120,10 +132,19 @@ const RegisterForm = () => {
               id="profilePhoto"
               name="profilePhoto"
               type="file"
-              accept="image/*"
-              required
+              accept="image/png, image/jpeg, image/jpg"
             />
             <InputFieldError field="profilePhoto" state={state} />
+            {selectedFile && (
+              <div className="relative w-full h-48 mt-3">
+                <Image
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Profile photo preview"
+                  fill
+                  className="object-cover rounded"
+                />
+              </div>
+            )}
           </Field>
 
           {/* Bio */}

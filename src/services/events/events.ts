@@ -51,6 +51,8 @@ export async function leaveEvent(id: string) {
         if (result.success) {
             revalidateTag('my-booked-events', { expire: 0 });
             revalidateTag('all-events', { expire: 0 });
+            revalidateTag('event-participants', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -87,6 +89,63 @@ export async function getEventApplications(queryString?: string) {
             next: { tags: ["event-applications"] }
         });
         const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+export async function getSingleEvent(id: string) {
+    try {
+        const response = await serverFetch.get(`/event/${id}`, {
+            cache: "force-cache",
+            next: { tags: ["single-event"] }
+        });
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+export async function getEventParticipants(id: string, queryString?: string) {
+    try {
+        const response = await serverFetch.get(`/event/participants/${id}${queryString ? `?${queryString}` : ""}`, {
+            cache: "force-cache",
+            next: { tags: ["event-participants"] }
+        });
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+
+export async function joinEvent(id: string) {
+    try {
+        const response = await serverFetch.post(`/event/join/${id}`, {
+            cache: "no-store"
+        });
+        const result = await response.json();
+        if (result.success) {
+            revalidateTag('my-booked-events', { expire: 0 });
+            revalidateTag('all-events', { expire: 0 });
+            revalidateTag('event-participants', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
+        }
         return result;
     } catch (error: any) {
         console.log(error);
@@ -165,6 +224,9 @@ export async function completeEvent(id: string) {
         const result = await response.json();
         if (result.success) {
             revalidateTag('my-hosted-events', { expire: 0 });
+            revalidateTag('all-events', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
+            revalidateTag('event-participants', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -315,6 +377,8 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
         if (result.success) {
             revalidateTag('my-hosted-events', { expire: 0 });
             revalidateTag('all-events', { expire: 0 });
+            revalidateTag('event-participants', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
 
         }
 
@@ -332,3 +396,59 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
         };
     }
 }
+
+export async function addReview(transactionId: string, payload: { rating: number; comment: string }) {
+    try {
+        const response = await serverFetch.post(`/review/${transactionId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+            cache: "no-store"
+        });
+        const result = await response.json();
+        if (result.success) {
+            revalidateTag('my-booked-events', { expire: 0 });
+            revalidateTag('all-events', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
+        }
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Failed to add review. Please try again.'}`
+        };
+    }
+}
+
+export async function revalidateEventData() {
+    try {
+        // Event-related tags
+        revalidateTag('my-booked-events', { expire: 0 });
+        revalidateTag('all-events', { expire: 0 });
+        revalidateTag('event-participants', { expire: 0 });
+        revalidateTag('single-event', { expire: 0 });
+        revalidateTag('my-hosted-events', { expire: 0 });
+        revalidateTag('event-applications', { expire: 0 });
+
+        // User-related tags
+        revalidateTag('user-profile', { expire: 0 });
+
+        // Admin-related tags
+        revalidateTag('all-clients', { expire: 0 });
+        revalidateTag('all-hosts', { expire: 0 });
+        revalidateTag('all-host-applications', { expire: 0 });
+
+        // Payment-related tags
+        revalidateTag('user-payments', { expire: 0 });
+
+        return { success: true };
+    } catch (error: any) {
+        console.log(error);
+        return { success: false };
+    }
+}
+
+
+

@@ -43,4 +43,26 @@ export interface IBookedEvent {
     participantStatus: string
     event: ApiEvent
     client: Client
+    hasReviewed?: boolean;
 }
+
+export type ApiParticipantClient = {
+    id: string;
+    name: string;
+    email: string;
+    profilePhoto?: string | null;
+    contactNumber?: string | null;
+    location?: string | null;
+    bio?: string | null;
+    interests?: string[];
+    hasReviewed?: boolean; 
+};
+
+export type ApiParticipantInfo = {
+    id: string;
+    joinedAt: string;
+    clientId: string;
+    client: ApiParticipantClient;
+};
+
+export type ApiParticipantInfoList = ApiParticipantInfo[];

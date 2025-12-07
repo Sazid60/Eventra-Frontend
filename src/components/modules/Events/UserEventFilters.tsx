@@ -1,6 +1,7 @@
 "use client";
 
 import ClearFiltersButton from "@/components/shared/ClearFiltersButton"; import DateFilter from "@/components/shared/DateFilter";
+import RefreshButton from "@/components/shared/RefreshButton";
 ;
 import SearchFilter from "@/components/shared/SearchFilter";
 import SelectFilter from "@/components/shared/SelectFilter";
@@ -17,6 +18,8 @@ const UserEventsFilter = () => {
 
                     {/* Search Filter */}
                     <SearchFilter paramName="searchTerm" placeholder="Location Search...." />
+
+                    <RefreshButton/>
                 </div>
 
                 <div className="flex flex-col md:flex-row mt-4 md:mt-0 md:space-x-1 space-y-2">

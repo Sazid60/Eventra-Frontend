@@ -3,13 +3,15 @@ import z from "zod";
 
 export const registerClientValidationZodSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
-    contactNumber: z.string().min(1, { message: "Contact Number is required" }),
+    contactNumber: z.string().min(11, { message: "11 digit Contact Number is required" }),
     location: z.string().min(1, { message: "Location is required" }),
     bio: z.string().min(1, { message: "Bio is required" }),
     interests: z.array(z.string()).min(1, { message: "At least one interest is required" }),
     email: z.email({ message: "Valid email is required" }),
-    profilePhoto: z
-        .instanceof(File).optional(),
+    profilePhoto: z.any().refine(
+            (file) => file instanceof File && file.size > 0,
+            { message: "Image is required" }
+        ),
     password: z.string().min(6, {
         error: "Password is required and must be at least 6 characters long",
     }).max(100, {
