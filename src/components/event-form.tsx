@@ -91,6 +91,11 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
 
     // Handle state changes - error toast and success callback
     useEffect(() => {
+        // Reset the toast guard when state becomes falsy so future submissions can show again
+        if (!state) {
+            successToastShownRef.current = false;
+        }
+
         if (state?.success && !successToastShownRef.current) {
             successToastShownRef.current = true;
             toast.success(state.message || "Event saved successfully!");
@@ -108,10 +113,7 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
             fileInputRef.current.files = dataTransfer.files;
         }
 
-        // Reset the toast guard when state becomes falsy so future submissions can show again
-        if (!state) {
-            successToastShownRef.current = false;
-        }
+
     }, [state, onSuccess, selectedFile]);
 
     return (
@@ -155,7 +157,6 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                             id="date"
                             name="date"
                             type="datetime-local"
-                            min={new Date().toISOString().slice(0, 16)}
                             defaultValue={
                                 state?.formData?.date ||
                                 (isEdit && event?.date
@@ -207,7 +208,7 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                             id="image"
                             name="image"
                             type="file"
-                            accept="image/*"
+                            accept="image/png, image/jpeg, image/jpg"
                             disabled={isPending}
                             className="w-full text-sm"
                         />
