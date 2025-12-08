@@ -27,7 +27,7 @@ const MyBookedEventsPage = async ({ searchParams }: { searchParams: Promise<{ [k
 
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="max-w-7xl mx-auto px-4 py-8 mt-16 lg:mt-20">
                 <h1 className="text-2xl font-semibold mb-6">My Booked Events</h1>
                 <p className="text-sm text-muted-foreground mb-6">Browse your booked events - filter by category, date, or location to find what interests you.</p>
 

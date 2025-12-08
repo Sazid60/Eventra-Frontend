@@ -7,6 +7,7 @@ import Head from "next/head";
 import ClientFeatures from "@/components/modules/Home/ClientFeatures";
 import HostFeatures from "@/components/modules/Home/HostFeatures";
 import Breadcrumb from "@/components/modules/Home/Breadcrumb";
+import HomeEventCard from "@/components/modules/Home/HomeEventCard";
 
 export default async function Home() {
   const statsData = await getLandingPageStats();
@@ -51,6 +52,10 @@ export default async function Home() {
             <p className="text-sm md:text-lg text-muted-foreground mb-6">
               Discover the latest events happening around you
             </p>
+
+            {/* map and show home event cards */}
+
+            <HomeEventCard />
           </div>
 
 

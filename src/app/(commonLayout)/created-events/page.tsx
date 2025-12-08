@@ -19,7 +19,7 @@ const MyCreatedEventsPage = async ({ searchParams }: { searchParams: Promise<{ [
 
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-8 ">
+            <div className="max-w-7xl mx-auto px-4 py-8 mt-16 lg:mt-20 ">
                 <div className="flex flex-col md:flex-row md:justify-between items-center mb-6">
                     {/* flex and justify between */}
                     <div>

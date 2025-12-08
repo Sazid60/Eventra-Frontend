@@ -24,7 +24,7 @@ const allEventsPage = async ({ searchParams }: { searchParams: Promise<{ [key: s
 
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="max-w-7xl mx-auto px-4 py-8 mt-16 lg:mt-20">
                 <h1 className="text-2xl font-semibold mb-6">All Events</h1>
                 <p className="text-sm text-muted-foreground mb-6">Browse upcoming events - filter by category, date, or location to find what interests you.</p>
 

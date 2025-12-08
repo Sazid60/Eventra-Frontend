@@ -2,7 +2,6 @@
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch";
-import { revalidateTag } from "next/cache";
 
 export async function getUserPayments(queryString?: string) {
     try {
@@ -21,12 +20,3 @@ export async function getUserPayments(queryString?: string) {
     }
 }
 
-export async function revalidatePaymentData() {
-    try {
-        revalidateTag('user-payments', { expire: 0 });
-        return { success: true };
-    } catch (error: any) {
-        console.log(error);
-        return { success: false };
-    }
-}

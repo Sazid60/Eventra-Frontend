@@ -38,7 +38,7 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
     }
 
     return (
-        <section className="relative w-full py-12 px-4 md:py-16 lg:py-28 overflow-hidden">
+        <section className="relative w-full pt-24 pb-12 px-4 md:pt-28 md:pb-16 lg:pt-32 lg:pb-28 overflow-hidden min-h-screen flex items-center justify-center">
             {/* Background Image */}
             <div className="absolute inset-0 z-0 ">
                 <Image
