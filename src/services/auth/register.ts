@@ -5,6 +5,7 @@ import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { registerClientValidationZodSchema } from "@/zod/auth.validation";
 import { loginUser } from "./loginUser";
+import { revalidateTag } from "next/cache";
 
 
 
@@ -76,6 +77,7 @@ export const registerClient = async (_currentState: any, formData: any): Promise
 
         if (result.success) {
             await loginUser(_currentState, formData);
+            revalidateTag("landing-page-stats", { expire: 0 });
         }
 
         return result;

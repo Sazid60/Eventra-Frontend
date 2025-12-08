@@ -12,6 +12,7 @@ export async function revalidateAllData() {
         revalidateTag('single-event', { expire: 0 });
         revalidateTag('my-hosted-events', { expire: 0 });
         revalidateTag('event-applications', { expire: 0 });
+        revalidateTag('landing-page-stats', { expire: 0 });
 
         // User-related tags
         revalidateTag('user-profile', { expire: 0 });

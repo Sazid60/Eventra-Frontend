@@ -53,6 +53,7 @@ export async function leaveEvent(id: string) {
             revalidateTag('all-events', { expire: 0 });
             revalidateTag('event-participants', { expire: 0 });
             revalidateTag('single-event', { expire: 0 });
+            revalidateTag('landing-page-stats', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -145,6 +146,7 @@ export async function joinEvent(id: string) {
             revalidateTag('all-events', { expire: 0 });
             revalidateTag('event-participants', { expire: 0 });
             revalidateTag('single-event', { expire: 0 });
+            revalidateTag('landing-page-stats', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -166,6 +168,9 @@ export async function approveEventApplication(id: string) {
         if (result.success) {
             revalidateTag('event-applications', { expire: 0 });
             revalidateTag('all-events', { expire: 0 });
+            revalidateTag('single-event', { expire: 0 });
+            revalidateTag('landing-page-stats', { expire: 0 });
+            revalidateTag('analytics', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -186,6 +191,7 @@ export async function rejectEventApplication(id: string) {
         const result = await response.json();
         if (result.success) {
             revalidateTag('event-applications', { expire: 0 });
+            revalidateTag('analytics', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -205,6 +211,8 @@ export async function deleteEvent(id: string) {
         const result = await response.json();
         if (result.success) {
             revalidateTag('my-hosted-events', { expire: 0 });
+            revalidateTag('analytics', { expire: 0 });
+            revalidateTag('landing-page-stats', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -227,6 +235,8 @@ export async function completeEvent(id: string) {
             revalidateTag('all-events', { expire: 0 });
             revalidateTag('single-event', { expire: 0 });
             revalidateTag('event-participants', { expire: 0 });
+            revalidateTag('analytics', { expire: 0 });
+            revalidateTag('landing-page-stats', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -297,6 +307,8 @@ export const createEvent = async (_currentState: any, formData: any) => {
         if (result.success) {
             revalidateTag('my-hosted-events', { expire: 0 });
             revalidateTag('all-events', { expire: 0 });
+            revalidateTag('landing-page-stats', { expire: 0 });
+            revalidateTag('analytics', { expire: 0 });
 
         }
 
@@ -379,6 +391,8 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
             revalidateTag('all-events', { expire: 0 });
             revalidateTag('event-participants', { expire: 0 });
             revalidateTag('single-event', { expire: 0 });
+            revalidateTag('landing-page-stats', { expire: 0 });
+            revalidateTag('analytics', { expire: 0 });
 
         }
 
@@ -411,6 +425,8 @@ export async function addReview(transactionId: string, payload: { rating: number
             revalidateTag('my-booked-events', { expire: 0 });
             revalidateTag('all-events', { expire: 0 });
             revalidateTag('single-event', { expire: 0 });
+            revalidateTag('event-participants', { expire: 0 });
+            revalidateTag('landing-page-stats', { expire: 0 });
         }
         return result;
     } catch (error: any) {
@@ -422,33 +438,6 @@ export async function addReview(transactionId: string, payload: { rating: number
     }
 }
 
-export async function revalidateEventData() {
-    try {
-        // Event-related tags
-        revalidateTag('my-booked-events', { expire: 0 });
-        revalidateTag('all-events', { expire: 0 });
-        revalidateTag('event-participants', { expire: 0 });
-        revalidateTag('single-event', { expire: 0 });
-        revalidateTag('my-hosted-events', { expire: 0 });
-        revalidateTag('event-applications', { expire: 0 });
-
-        // User-related tags
-        revalidateTag('user-profile', { expire: 0 });
-
-        // Admin-related tags
-        revalidateTag('all-clients', { expire: 0 });
-        revalidateTag('all-hosts', { expire: 0 });
-        revalidateTag('all-host-applications', { expire: 0 });
-
-        // Payment-related tags
-        revalidateTag('user-payments', { expire: 0 });
-
-        return { success: true };
-    } catch (error: any) {
-        console.log(error);
-        return { success: false };
-    }
-}
 
 
 

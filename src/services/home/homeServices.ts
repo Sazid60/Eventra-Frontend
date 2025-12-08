@@ -3,11 +3,19 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 
-export async function getUserPayments(queryString?: string) {
+
+export interface LandingPageStats {
+    totalClients?: number;
+    totalHosts: number;
+    totalEvents: number;
+    totalCompletedEvents: number;
+}
+
+export async function getLandingPageStats() {
     try {
-        const response = await serverFetch.get(`/payment${queryString ? `?${queryString}` : ""}`, {
+        const response = await serverFetch.get(`/meta/landing-page`, {
             cache: "force-cache",
-            next: { tags: ["user-payments"] }
+            next: { tags: ["landing-page-stats"] }
         });
         const result = await response.json();
         return result;
@@ -19,4 +27,3 @@ export async function getUserPayments(queryString?: string) {
         };
     }
 }
-
