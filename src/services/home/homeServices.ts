@@ -5,7 +5,7 @@ import { serverFetch } from "@/lib/server-fetch";
 
 
 export interface LandingPageStats {
-    totalUsers?: number;
+    totalClients?: number;
     totalHosts: number;
     totalEvents: number;
     totalCompletedEvents: number;

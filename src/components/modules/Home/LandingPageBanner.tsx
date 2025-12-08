@@ -53,7 +53,7 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
             </div>
 
             {/* Content */}
-            <div className="max-w-6xl mx-auto relative z-10 px-4 md:px-0">
+            <div className="max-w-6xl mx-auto relative z-10 px-4">
                 {/* Title and CTA Section */}
                 <div className="mb-12 flex flex-col justify-center items-center text-center">
                     <div>
@@ -66,7 +66,7 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                     </div>
                     <div className="flex gap-4">
                         <Link href="/all-events">
-                            <Button className=" bg-transparent border backdrop-blur-md text-white font-semibold text-md  md:text-lg">
+                            <Button className=" bg-background/30 border backdrop-blur-md text-white font-semibold hover:bg-white/10">
                                 Explore Events
                             </Button>
                         </Link>
@@ -76,7 +76,7 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                             <>
                                 <Button
                                     onClick={() => setOpen(true)}
-                                    className="bg-[#45aaa2] hover:bg-[#3c8f88] text-white font-semibold text-md  md:text-lg"
+                                    className="bg-[#45aaa2] hover:bg-[#3c8f88] text-white font-semibold"
                                 >
                                     Become a Host
                                 </Button>
@@ -98,7 +98,7 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                     {/* Users Stat */}
                     <div className="text-center">
                         <div className="text-3xl md:text-4xl font-bold text-white">
-                            {stats.totalUsers ?? 0}+
+                            {stats.totalClients}+
                         </div>
                         <div className="text-white/80 font-semibold text-sm md:text-base mt-2">Users</div>
                     </div>
