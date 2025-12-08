@@ -116,7 +116,7 @@ export default function EventApplicationCard({ event }: EventCardProps) {
                 <div className="absolute left-1/2 -translate-x-1/2 bottom-4 bg-black/90 backdrop-blur-xs px-3 py-2 rounded-full shadow-sm">
                     <div className="flex gap-3 items-center">
                         {categories.slice(0, 6).map((c: string) => (
-                            <span key={c} className="text-xs text-orange-700 font-semibold">#{c.toLowerCase()}</span>
+                            <span key={c} className="text-[8px] lg:text-xs text-orange-700 font-semibold">#{c.toLowerCase()}</span>
                         ))}
                     </div>
                 </div>

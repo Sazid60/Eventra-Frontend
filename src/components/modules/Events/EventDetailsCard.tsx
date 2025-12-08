@@ -138,7 +138,7 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
                     <div className="bg-black/60 backdrop-blur-xs px-4 py-2 rounded-full text-center">
                         <div className="flex items-center justify-center gap-3 flex-wrap">
                             {(event.category || []).slice(0, 6).map((c: string) => (
-                                <span key={c} className="text-sm text-[#45aaa2] font-semibold">#{c.toLowerCase()}</span>
+                                <span key={c} className="text-xs text-[#45aaa2] font-semibold">#{c.toLowerCase()}</span>
                             ))}
                         </div>
                     </div>
