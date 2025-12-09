@@ -133,6 +133,7 @@ export const ClientProfileCard = ({
             <EditProfileDialog
                 open={open}
                 onClose={() => setOpen(false)}
+                onSuccess={() => setOpen(false)}
                 role="CLIENT"
                 profile={profile}
                 email={email}

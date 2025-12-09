@@ -6,6 +6,24 @@ import { zodValidator } from "@/lib/zodValidator";
 import { createEventValidationZodSchema, updateEventValidationZodSchema } from "@/zod/event.validation";
 import { revalidateTag } from "next/cache";
 
+export async function getRecentEvents() {
+    try {
+        const response = await serverFetch.get(`/event/recent-events`, {
+            cache: "force-cache",
+            next: { tags: ["recent-events"] }
+        });
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+
 export async function getAllEvents(queryString?: string) {
     try {
         const response = await serverFetch.get(`/event/all-events${queryString ? `?${queryString}` : ""}`, {
@@ -54,6 +72,7 @@ export async function leaveEvent(id: string) {
             revalidateTag('event-participants', { expire: 0 });
             revalidateTag('single-event', { expire: 0 });
             revalidateTag('landing-page-stats', { expire: 0 });
+            revalidateTag('recent-events', { expire: 0 })
         }
         return result;
     } catch (error: any) {
@@ -147,6 +166,7 @@ export async function joinEvent(id: string) {
             revalidateTag('event-participants', { expire: 0 });
             revalidateTag('single-event', { expire: 0 });
             revalidateTag('landing-page-stats', { expire: 0 });
+            revalidateTag('recent-events', { expire: 0 })
         }
         return result;
     } catch (error: any) {
@@ -171,6 +191,7 @@ export async function approveEventApplication(id: string) {
             revalidateTag('single-event', { expire: 0 });
             revalidateTag('landing-page-stats', { expire: 0 });
             revalidateTag('analytics', { expire: 0 });
+            revalidateTag('recent-events', { expire: 0 })
         }
         return result;
     } catch (error: any) {
@@ -237,6 +258,7 @@ export async function completeEvent(id: string) {
             revalidateTag('event-participants', { expire: 0 });
             revalidateTag('analytics', { expire: 0 });
             revalidateTag('landing-page-stats', { expire: 0 });
+            revalidateTag('recent-events', { expire: 0 })
         }
         return result;
     } catch (error: any) {
@@ -309,6 +331,7 @@ export const createEvent = async (_currentState: any, formData: any) => {
             revalidateTag('all-events', { expire: 0 });
             revalidateTag('landing-page-stats', { expire: 0 });
             revalidateTag('analytics', { expire: 0 });
+            revalidateTag('recent-events', { expire: 0 })
 
         }
 
@@ -339,6 +362,7 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
         category: formData.getAll('category'),
         image: formData.get('image'),
     }
+    
 
     const validatedPayload = zodValidator(validationPayload, updateEventValidationZodSchema);
 
@@ -393,6 +417,7 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
             revalidateTag('single-event', { expire: 0 });
             revalidateTag('landing-page-stats', { expire: 0 });
             revalidateTag('analytics', { expire: 0 });
+            revalidateTag('recent-events', { expire: 0 })
 
         }
 

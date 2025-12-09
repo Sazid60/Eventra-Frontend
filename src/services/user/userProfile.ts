@@ -2,6 +2,8 @@
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch";
+import { zodValidator } from "@/lib/zodValidator";
+import { updateAdminProfileValidationZodSchema, updateHostProfileValidationZodSchema, updateProfileValidationZodSchema } from "@/zod/auth.validation";
 import { revalidateTag } from "next/cache";
 
 export async function getMe() {
@@ -23,29 +25,62 @@ export async function getMe() {
 
 export async function updateMyProfile(_currentState: any, formData: FormData): Promise<any> {
     try {
-        // Extract all form fields
-        const profileData: any = {
-            name: formData.get('name'),
-            contactNumber: formData.get('contactNumber'),
-            location: formData.get('location'),
-            bio: formData.get('bio'),
+        const role = (formData.get("role") as string) || "CLIENT";
+
+        const validationPayload = {
+            name: formData.get("name"),
+            contactNumber: formData.get("contactNumber"),
+            location: formData.get("location"),
+            bio: formData.get("bio"),
+            interests: formData.getAll("interests"),
+            profilePhoto: formData.get("profilePhoto"),
         };
 
-        // Get interests if they exist (for client)
-        const interests = formData.getAll('interests');
-        if (interests && interests.length > 0) {
-            profileData.interests = interests;
+        const schema = role === "HOST"
+            ? updateHostProfileValidationZodSchema
+            : role === "ADMIN"
+                ? updateAdminProfileValidationZodSchema
+                : updateProfileValidationZodSchema;
+
+        const validatedPayload = zodValidator(validationPayload, schema);
+
+        if (!validatedPayload.success && validatedPayload.errors) {
+            return {
+                success: false,
+                message: "Validation failed",
+                formData: validationPayload,
+                errors: validatedPayload.errors,
+            };
         }
 
-        // Remove undefined/null fields
-        Object.keys(profileData).forEach(key => {
-            if (profileData[key] === null || profileData[key] === '' || profileData[key] === 'null') {
-                delete profileData[key];
-            }
-        });
+        if (!validatedPayload.data) {
+            return {
+                success: false,
+                message: "Validation failed",
+                formData: validationPayload,
+            };
+        }
 
-        // Create new FormData with proper structure
         const newFormData = new FormData();
+        const profileData = role === "ADMIN"
+            ? {
+                contactNumber: validatedPayload.data.contactNumber,
+            }
+            : role === "HOST"
+                ? {
+                    name: validatedPayload.data.name,
+                    contactNumber: validatedPayload.data.contactNumber,
+                    location: validatedPayload.data.location,
+                    bio: validatedPayload.data.bio,
+                }
+                : {
+                    name: validatedPayload.data.name,
+                    contactNumber: validatedPayload.data.contactNumber,
+                    location: validatedPayload.data.location,
+                    bio: validatedPayload.data.bio,
+                    interests: validatedPayload.data.interests,
+                };
+
         newFormData.append("data", JSON.stringify(profileData));
 
         // Add file if exists

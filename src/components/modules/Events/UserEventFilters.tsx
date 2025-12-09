@@ -9,14 +9,11 @@ import SelectFilter from "@/components/shared/SelectFilter";
 const UserEventsFilter = () => {
     return (
         <div className="space-y-3 mb-6">
-            {/*  Controls */}
             <div className="flex flex-col md:flex-row justify-between gap-3">
-                {/* Email Filter */}
 
                 <div className="flex items-center gap-2 ">
                     <SearchFilter paramName="searchTerm" placeholder="Title Search...." />
 
-                    {/* Search Filter */}
                     <SearchFilter paramName="searchTerm" placeholder="Location Search...." />
 
                     <RefreshButton/>

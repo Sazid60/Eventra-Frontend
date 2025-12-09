@@ -41,7 +41,6 @@ export default function AddReviewDialog({ open, onClose, transactionId, onReview
             if (result.success) {
                 toast.success("Review added successfully");
 
-                // Mark this transaction as reviewed
                 const reviewedEvents = localStorage.getItem('reviewedEvents');
                 const reviewed = reviewedEvents ? JSON.parse(reviewedEvents) : [];
                 if (!reviewed.includes(transactionId)) {
@@ -80,7 +79,6 @@ export default function AddReviewDialog({ open, onClose, transactionId, onReview
                     <DialogTitle>Add Review</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
-                    {/* Star Rating */}
                     <div>
                         <label className="text-sm font-medium mb-2 block">Rating</label>
                         <div className="flex gap-2">
@@ -110,7 +108,6 @@ export default function AddReviewDialog({ open, onClose, transactionId, onReview
                         )}
                     </div>
 
-                    {/* Comment */}
                     <div>
                         <label htmlFor="comment" className="text-sm font-medium mb-2 block">
                             Comment

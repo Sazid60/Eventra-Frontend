@@ -7,7 +7,7 @@ import Head from "next/head";
 import ClientFeatures from "@/components/modules/Home/ClientFeatures";
 import HostFeatures from "@/components/modules/Home/HostFeatures";
 import Breadcrumb from "@/components/modules/Home/Breadcrumb";
-import HomeEventCard from "@/components/modules/Home/HomeEventCard";
+import HomeEvents from "@/components/modules/Home/HomeEvents";
 
 export default async function Home() {
   const statsData = await getLandingPageStats();
@@ -55,7 +55,7 @@ export default async function Home() {
 
             {/* map and show home event cards */}
 
-            <HomeEventCard />
+            <HomeEvents />
           </div>
 
 

@@ -24,15 +24,12 @@ const formatDate = (iso?: string) => {
 };
 
 export default function UserEventCard({ event }: UserEventCardProps) {
-    // Extract the nested event data
     const eventData = event.event;
     const participantStatus = event.participantStatus;
     const [isPending, setIsPending] = useState(false);
     const [showReviewDialog, setShowReviewDialog] = useState(false);
     const [hasReviewed, setHasReviewed] = useState(false);
     const isCompleted = eventData?.status === "COMPLETED";
-
-    // Check if review was already submitted (initialize once)
     const initialReviewStatus = useMemo(() => {
         if (typeof window === 'undefined') return false;
         const reviewedEvents = localStorage.getItem('reviewedEvents');
@@ -43,7 +40,6 @@ export default function UserEventCard({ event }: UserEventCardProps) {
         return false;
     }, [event.transactionId]);
 
-    // Set initial review status
     useEffect(() => {
         setHasReviewed(initialReviewStatus);
     }, [initialReviewStatus]);
@@ -55,7 +51,6 @@ export default function UserEventCard({ event }: UserEventCardProps) {
     const fee = eventData?.joiningFee ?? 0;
     const capacity = eventData?.capacity ?? null;
 
-    // Check if event date has passed
     const isEventPast = useMemo(() => {
         if (!eventData?.date) return false;
         return new Date(eventData.date) < new Date();
@@ -94,7 +89,6 @@ export default function UserEventCard({ event }: UserEventCardProps) {
 
     return (
         <Card className="overflow-hidden border rounded-lg p-0 bg-background hover:cursor-pointer hover:scale-101 transition-shadow duration-600 gap-2">
-            {/* Image area with overlays */}
             <div className="relative w-full h-56">
                 <div className="relative w-full h-56 overflow-hidden rounded-lg border">
                     <Image
@@ -105,7 +99,6 @@ export default function UserEventCard({ event }: UserEventCardProps) {
                         sizes="(max-width: 768px) 100vw, 50vw"
                     />
                 </div>
-                {/* Left stacked badges: status, capacity, fee, participant status */}
                 <div className="absolute left-4 top-4 flex flex-col items-start gap-2">
                     <Badge className="bg-black/60 backdrop-blur-xs text-white px-3 py-1 rounded-md">{status}</Badge>
                     <Badge className="bg-black/60 backdrop-blur-xs text-white px-3 py-1 rounded-md">Capacity: {capacity ?? 'N/A'}</Badge>
@@ -116,7 +109,6 @@ export default function UserEventCard({ event }: UserEventCardProps) {
                         }`}>{participantStatus}</Badge>
                 </div>
 
-                {/* Right stacked small info: location, date, time */}
                 <div className="absolute right-4 top-4 flex flex-col items-end gap-2">
                     <div className="flex flex-col items-end gap-2">
                         <div className="flex items-center gap-2 bg-black/60 backdrop-blur-xs text-white px-3 py-1 rounded-md">
@@ -133,29 +125,36 @@ export default function UserEventCard({ event }: UserEventCardProps) {
                         </div>
                     </div>
                 </div>
-
-                {/* Category strip centered at bottom of image */}
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-4 bg-black/90 backdrop-blur-xs px-3 py-2 rounded-full shadow-sm">
-                    <div className="flex gap-3 items-center">
-                        {categories.slice(0, 6).map((c: string) => (
-                            <span key={c} className="text-[8px] lg:text-xs text-orange-700 font-semibold">#{c.toLowerCase()}</span>
-                        ))}
-                    </div>
-                </div>
+                
             </div>
 
             {/* Content below image */}
             <CardContent className="space-y-2 mb-6 mt-3">
-                <h3 className="text-lg font-semibold line-clamp-2 min-h-[3.2rem]">
-                    {title}
-                </h3>
-                <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.8rem]">
-                    {eventData?.description
-                        ? (eventData.description.length > 160
-                            ? `${eventData.description.slice(0, 157)}...`
-                            : eventData.description)
-                        : ""}
-                </p>
+                    <div className="text-center">
+                        <h3 className="text-lg font-semibold line-clamp-2 min-h-[3.2rem]">
+                            {title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.8rem]">
+                            {eventData?.description
+                                ? (eventData.description.length > 160
+                                    ? `${eventData.description.slice(0, 157)}...`
+                                    : eventData.description)
+                                : ""}
+                        </p>
+                    </div>
+
+                    <div className="h-14 flex flex-wrap gap-2 items-center  justify-center text-center mb-7 ">
+                        {categories.slice(0, 10).map((c: string) => (
+                            <span key={c} className="text-xs text-orange-700 rounded whitespace-nowrap">
+                                #{c.toLowerCase()}
+                            </span>
+                        ))}
+                        {
+                            categories.length > 6 && (
+                                <p className="text-orange-700">...</p>
+                            )
+                        }
+                    </div>
 
                 <div className="flex items-center justify-between gap-4">
                     <div className="flex flex-col gap-1">

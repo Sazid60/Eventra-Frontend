@@ -69,7 +69,6 @@ export default function UpdateEventModal({
                 </DialogHeader>
 
                 <div className="space-y-4 py-4">
-                    {/* Title Input */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground">
                             Event Title
@@ -84,7 +83,6 @@ export default function UpdateEventModal({
                         />
                     </div>
 
-                    {/* Location Input */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground">
                             Location
@@ -99,7 +97,6 @@ export default function UpdateEventModal({
                         />
                     </div>
 
-                    {/* Description Textarea */}
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-foreground">
                             Description

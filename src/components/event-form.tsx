@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { startTransition, useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import InputFieldError from "./shared/InputFieldError";
 import { Button } from "./ui/button";
@@ -14,6 +14,7 @@ import Image from "next/image";
 interface EventFormProps {
     event?: ApiEvent;
     onSuccess?: () => void;
+    onCancel?: () => void;
 }
 
 const EVENT_CATEGORIES = [
@@ -69,7 +70,7 @@ const EVENT_CATEGORIES = [
     "OTHER",
 ];
 
-const EventForm = ({ event, onSuccess }: EventFormProps) => {
+const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
     const isEdit = !!event;
     const [state, formAction, isPending] = useActionState(
         isEdit && event?.id ? updateEvent.bind(null, event.id) : createEvent,
@@ -80,18 +81,64 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const successToastShownRef = useRef(false);
 
-    console.log(state);
+    const baseValues = useMemo(() => ({
+        title: event?.title || "",
+        location: event?.location || "",
+        date: event?.date ? new Date(event.date).toISOString().slice(0, 16) : "",
+        capacity: event?.capacity !== undefined && event?.capacity !== null ? String(event.capacity) : "",
+        joiningFee: event?.joiningFee !== undefined && event?.joiningFee !== null ? String(event.joiningFee) : "",
+        description: event?.description || "",
+        category: Array.isArray(event?.category) ? event.category : [],
+        fileToken: "",
+    }), [event]);
+
+    const [formValues, setFormValues] = useState(baseValues);
+
+    useEffect(() => {
+        setFormValues(baseValues);
+    }, [baseValues]);
+
+    const normalizeCategories = (value: unknown): string[] => {
+        if (Array.isArray(value)) return value;
+        if (typeof value === "string" && value.length > 0) return [value];
+        return [];
+    };
+
+    const isDirty = useMemo(() => {
+        if (!isEdit) return true; 
+        const baseCats = (baseValues.category || []).slice().sort().join("|");
+        const currentCats = (formValues.category || []).slice().sort().join("|");
+        return (
+            formValues.fileToken !== "" ||
+            formValues.title !== baseValues.title ||
+            formValues.location !== baseValues.location ||
+            formValues.date !== baseValues.date ||
+            formValues.capacity !== baseValues.capacity ||
+            formValues.joiningFee !== baseValues.joiningFee ||
+            formValues.description !== baseValues.description ||
+            currentCats !== baseCats
+        );
+    }, [baseValues, formValues, isEdit]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         setSelectedFile(file || null);
+        setFormValues((prev) => ({ ...prev, fileToken: file ? file.name : "" }));
     };
 
-    // Handle file persistence in input
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormValues((prev) => ({ ...prev, [name]: value }));
+    };
 
-    // Handle state changes - error toast and success callback
+    const handleCategoryToggle = (category: string) => {
+        setFormValues((prev) => {
+            const exists = prev.category.includes(category);
+            const next = exists ? prev.category.filter((c) => c !== category) : [...prev.category, category];
+            return { ...prev, category: next };
+        });
+    };
     useEffect(() => {
-        // Reset the toast guard when state becomes falsy so future submissions can show again
         if (!state) {
             successToastShownRef.current = false;
         }
@@ -104,6 +151,7 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
             setTimeout(() => {
                 setSelectedFile(null);
             }, 0);
+            startTransition(() => setFormValues(baseValues));
             onSuccess?.();
         }
 
@@ -114,7 +162,24 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
         }
 
 
-    }, [state, onSuccess, selectedFile]);
+    }, [state, onSuccess, selectedFile, baseValues]);
+
+    useEffect(() => {
+        if (state?.formData) {
+            startTransition(() => {
+                setFormValues((prev) => ({
+                    ...prev,
+                    title: state.formData.title ?? prev.title,
+                    location: state.formData.location ?? prev.location,
+                    date: state.formData.date ?? prev.date,
+                    capacity: state.formData.capacity ?? prev.capacity,
+                    joiningFee: state.formData.joiningFee ?? prev.joiningFee,
+                    description: state.formData.description ?? prev.description,
+                    category: normalizeCategories(state.formData.category ?? prev.category),
+                }));
+            });
+        }
+    }, [state]);
 
     return (
         <form ref={formRef} action={formAction} className="w-full">
@@ -128,7 +193,8 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                             name="title"
                             type="text"
                             placeholder="Enter event title"
-                            defaultValue={state?.formData?.title || (isEdit ? event?.title : "")}
+                            value={formValues.title}
+                            onChange={handleChange}
                             disabled={isPending}
                             className="w-full text-sm"
                         />
@@ -143,7 +209,8 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                             name="location"
                             type="text"
                             placeholder="City, Country"
-                            defaultValue={state?.formData?.location || (isEdit ? event?.location : "")}
+                            value={formValues.location}
+                            onChange={handleChange}
                             disabled={isPending}
                             className="w-full text-sm"
                         />
@@ -157,12 +224,8 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                             id="date"
                             name="date"
                             type="datetime-local"
-                            defaultValue={
-                                state?.formData?.date ||
-                                (isEdit && event?.date
-                                    ? new Date(event.date).toISOString().slice(0, 16)
-                                    : "")
-                            }
+                            value={formValues.date}
+                            onChange={handleChange}
                             disabled={isPending}
                             className="w-full text-sm"
                         />
@@ -177,8 +240,10 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                             name="capacity"
                             type="number"
                             placeholder="Number of attendees"
-                            defaultValue={state?.formData?.capacity || (isEdit ? event?.capacity : "")}
+                            value={formValues.capacity}
+                            onChange={handleChange}
                             disabled={isPending}
+                            min={0}
                             className="w-full text-sm"
                         />
                         <InputFieldError field="capacity" state={state} />
@@ -192,8 +257,10 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                             name="joiningFee"
                             type="number"
                             placeholder="Fee amount"
-                            defaultValue={state?.formData?.joiningFee || (isEdit ? event?.joiningFee : "")}
+                            value={formValues.joiningFee}
+                            onChange={handleChange}
                             disabled={isPending}
+                            min={0}
                             className="w-full text-sm"
                         />
                         <InputFieldError field="joiningFee" state={state} />
@@ -251,10 +318,8 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                                         name="category"
                                         value={category}
                                         className="h-4 w-4 accent-[#45aaa2]"
-                                        defaultChecked={
-                                            state?.formData?.category?.includes(category) ||
-                                            (isEdit && event?.category?.includes(category))
-                                        }
+                                        checked={formValues.category.includes(category)}
+                                        onChange={() => handleCategoryToggle(category)}
                                         disabled={isPending}
                                     />
                                     <span className="select-none truncate">{category.toLowerCase()}</span>
@@ -271,7 +336,8 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                             id="description"
                             name="description"
                             placeholder="Event description"
-                            defaultValue={state?.formData?.description || (isEdit ? event?.description : "")}
+                            value={formValues.description}
+                            onChange={handleChange}
                             disabled={isPending}
                             className="w-full text-sm resize-none min-h-[100px]"
                             rows={3}
@@ -282,11 +348,20 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
 
                 {/* Submit Button */}
                 <FieldGroup className="mt-5 sm:mt-6 w-full">
-                    <Field className="w-full">
+                    <div className="flex gap-3 justify-end">
+
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={onCancel}
+                            disabled={isPending}
+                        >
+                            Cancel
+                        </Button>
                         <Button
                             type="submit"
-                            disabled={isPending}
-                            className="w-full bg-[#45aaa2] hover:bg-[#3c8f88] text-white font-medium text-sm sm:text-base py-2 sm:py-2.5 rounded-lg transition-colors duration-200"
+                            disabled={isPending || (isEdit && !isDirty)}
+                            className="bg-[#45aaa2] hover:bg-[#3c8f88] text-white font-medium text-sm sm:text-base px-4 py-2 sm:py-2.5 rounded-lg transition-colors duration-200"
                         >
                             {isPending
                                 ? isEdit
@@ -296,7 +371,7 @@ const EventForm = ({ event, onSuccess }: EventFormProps) => {
                                     ? "Update Event"
                                     : "Create Event"}
                         </Button>
-                    </Field>
+                    </div>
                 </FieldGroup>
             </FieldGroup>
         </form>

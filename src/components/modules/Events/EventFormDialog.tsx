@@ -25,10 +25,8 @@ const EventFormDialog = ({
     const [formKey, setFormKey] = useState(0);
     const prevOpenRef = useRef(open);
 
-    // Reset form state when dialog closes
     useEffect(() => {
         if (!open && prevOpenRef.current) {
-            // Dialog just closed - increment key to reset form
             setTimeout(() => {
                 setFormKey(prev => prev + 1);
             }, 0);
@@ -58,7 +56,7 @@ const EventFormDialog = ({
                 </DialogHeader>
 
                 <div key={formKey} className="py-4">
-                    <EventForm event={event} onSuccess={handleSuccess} />
+                    <EventForm event={event} onSuccess={handleSuccess} onCancel={handleClose} />
                 </div>
             </DialogContent>
         </Dialog>

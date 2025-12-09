@@ -93,6 +93,7 @@ export const AdminProfileCard = ({
             <EditProfileDialog
                 open={open}
                 onClose={() => setOpen(false)}
+                onSuccess={() => setOpen(false)}
                 role="ADMIN"
                 profile={profile}
                 email={email}
