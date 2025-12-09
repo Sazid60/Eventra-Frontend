@@ -13,6 +13,14 @@ import ReviewCard from "@/components/modules/Home/ReviewCard";
 import ContactForm from "@/components/modules/Home/ContactForm";
 import FAQ from "@/components/modules/Home/FAQ";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Eventra - Discover & Book Amazing Events Near You",
+  description: "Discover and book amazing events tailored to your interests. Join concerts, workshops, sports, festivals, and more with Eventra's seamless event management platform.",
+  keywords: ["events", "activities", "concerts", "workshops", "festivals", "local events", "event booking", "community"],
+  authors: [{ name: "Eventra Team" }],
+};
 
 export default async function Home() {
   const statsData = await getLandingPageStats();
@@ -22,7 +30,7 @@ export default async function Home() {
   return (
     <>
       <Head>
-        <title>This is home page</title>
+        <title>EVENTRA</title>
         <meta
           name="description"
           content="Discover and book amazing events tailored to your interests. Join concerts, workshops, sports, festivals, and more with Eventra's seamless event management platform."

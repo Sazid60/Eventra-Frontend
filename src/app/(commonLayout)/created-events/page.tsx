@@ -7,6 +7,16 @@ import HostEventCardFilter from "@/components/modules/Events/HostEventCardFilter
 import CreatedEventCard from "@/components/modules/Events/CreatedEventCard";
 import AddEventButton from "@/components/modules/Events/AddEventButton";
 
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+    title: "My Created Events - Manage Your Hosted Events | Eventra",
+    description: "Manage your hosted events on Eventra. Filter by status, category, or date to organize your events and connect with participants.",
+    keywords: ["my created events", "hosted events", "event management", "event organization", "event participation", "community events"],
+    authors: [{ name: "Eventra Team" }],
+};
+
 const MyCreatedEventsPage = async ({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }>; }) => {
 
     const searchParamsObj = await searchParams;

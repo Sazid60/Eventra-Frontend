@@ -5,6 +5,15 @@ import { getSingleEvent, getEventParticipants } from "@/services/events/events";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 import { ApiParticipantInfo } from "@/types/event.interface";
 import EventDetailsCard from "@/components/modules/Events/EventDetailsCard";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+    title: "Event-Details - Explore Event Info & Participants | Eventra",
+    description: "Explore detailed information about events, including date, time, location, and participant list. Connect with other attendees and get involved in exciting activities through Eventra's event management platform.",
+    keywords: ["all events", "upcoming events", "browse events", "event listing", "event filter", "concerts", "workshops", "sports events", "festivals"],
+    authors: [{ name: "Eventra Team" }],
+};
 
 const formatDate = (iso?: string) => {
     if (!iso) return { date: "", time: "" };
