@@ -47,7 +47,7 @@ export default function Error({
           }
         }
 
-        @keyframes glow-destructive {
+        @keyframes glow-brand {
           0%,
           100% {
             transform: scale(1);
@@ -71,29 +71,29 @@ export default function Error({
           animation: pulse-error 2s ease-in-out infinite;
         }
 
-        .glow-destructive {
-          animation: glow-destructive 4s ease-in-out infinite;
+        .glow-brand {
+          animation: glow-brand 4s ease-in-out infinite;
         }
       `}</style>
       <div className="flex min-h-screen items-center justify-center bg-linear-to-b from-background to-muted/20 p-4">
         <div className="w-full max-w-2xl fade-up">
-          <Card className="border-destructive/50 shadow-lg">
+          <Card className="border-[#45aaa2]/30 shadow-xl bg-card/95 backdrop-blur">
             <CardContent className="pt-6">
               <div className="flex flex-col items-center text-center space-y-6">
                 {/* Animated Error Icon */}
                 <div className="relative scale-in">
-                  <div className="absolute inset-0 rounded-full bg-destructive/10 pulse-error" />
-                  <div className="relative z-10 rounded-full bg-destructive/10 p-6">
-                    <AlertTriangle className="h-16 w-16 text-destructive" />
+                  <div className="absolute inset-0 rounded-full bg-[#45aaa2]/15 pulse-error" />
+                  <div className="relative z-10 rounded-full bg-[#45aaa2]/10 p-6 ring-2 ring-[#45aaa2]/20">
+                    <AlertTriangle className="h-16 w-16 text-[#45aaa2]" />
                   </div>
                 </div>
 
                 {/* Error Message */}
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tight">
+                  <h1 className="text-4xl font-bold tracking-tight text-foreground">
                     Oops! Something went wrong
                   </h1>
-                  <p className="text-muted-foreground">
+                  <p className="text-lg text-muted-foreground max-w-md">
                     We encountered an unexpected error. Don&apos;t worry,
                     it&apos;s not your fault.
                   </p>
@@ -101,7 +101,7 @@ export default function Error({
 
                 {/* Error Details (Development Only) */}
                 {process.env.NODE_ENV === "development" && (
-                  <div className="w-full rounded-lg bg-muted p-4 text-left">
+                  <div className="w-full rounded-lg bg-muted/50 border border-[#45aaa2]/20 p-4 text-left">
                     <p className="text-sm font-mono text-muted-foreground break-all">
                       {error.message}
                     </p>
@@ -114,12 +114,21 @@ export default function Error({
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                  <Button onClick={reset} size="lg" className="gap-2">
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto pt-2">
+                  <Button
+                    onClick={reset}
+                    size="lg"
+                    className="gap-2 bg-[#45aaa2] hover:bg-[#3c8f88] text-white font-medium"
+                  >
                     <RefreshCcw className="h-4 w-4" />
                     Try Again
                   </Button>
-                  <Button variant="outline" size="lg" asChild className="gap-2">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    asChild
+                    className="gap-2 border-[#45aaa2]/30 hover:bg-[#45aaa2]/10 text-[#45aaa2]"
+                  >
                     <Link href="/">
                       <Home className="h-4 w-4" />
                       Back to Home
@@ -136,7 +145,7 @@ export default function Error({
           </Card>
 
           {/* Decorative Elements */}
-          <div className="absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-destructive/5 blur-3xl -z-10 glow-destructive" />
+          <div className="absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-[#45aaa2]/5 blur-3xl -z-10 glow-brand" />
         </div>
       </div>
     </>
