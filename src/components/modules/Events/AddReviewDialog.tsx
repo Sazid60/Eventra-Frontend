@@ -137,7 +137,7 @@ export default function AddReviewDialog({ open, onClose, transactionId, onReview
                             type="button"
                             onClick={handleSubmit}
                             disabled={isPending || rating === 0}
-                            className="bg-[#45aaa2] hover:bg-[#3c8f88]"
+                            className="bg-[#45aaa2] hover:bg-[#3c8f88] text-white"
                         >
                             {isPending ? "Submitting..." : "Submit Review"}
                         </Button>

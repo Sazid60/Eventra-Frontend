@@ -1,19 +1,20 @@
 
-import { getLandingPageStats } from "@/services/home/homeServices";
+import { getLandingPageStats, getLatestReviews, Review } from "@/services/home/homeServices";
 import LandingPageBanner from "@/components/modules/Home/LandingPageBanner";
 import { getMe } from "@/services/user/userProfile";
+import Marquee from "react-fast-marquee";
 
 import Head from "next/head";
 import ClientFeatures from "@/components/modules/Home/ClientFeatures";
 import HostFeatures from "@/components/modules/Home/HostFeatures";
 import Breadcrumb from "@/components/modules/Home/Breadcrumb";
 import HomeEvents from "@/components/modules/Home/HomeEvents";
+import ReviewCard from "@/components/modules/Home/ReviewCard";
 
 export default async function Home() {
   const statsData = await getLandingPageStats();
   const userInfo = await getMe();
-
-  console.log(userInfo)
+  const reviewsData = await getLatestReviews();
 
   return (
     <>
@@ -68,6 +69,28 @@ export default async function Home() {
             <p className="text-sm md:text-lg text-muted-foreground mb-6">
               Hear from our community of clients and hosts
             </p>
+
+            {reviewsData?.success && reviewsData?.data?.length > 0 ? (
+              <div className="relative overflow-hidden py-4">
+                <div className="absolute left-0 top-0 bottom-0 w-20 bg-linear-to-r from-background to-transparent z-10" />
+                <div className="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-background to-transparent z-10" />
+
+                <Marquee
+                  gradient={false}
+                  speed={40}
+                  pauseOnHover={true}
+                  className="py-4"
+                >
+                  {reviewsData.data.map((review: Review) => (
+                    <ReviewCard key={review.id} review={review} />
+                  ))}
+                </Marquee>
+              </div>
+            ) : (
+              <div className="text-center py-12 text-muted-foreground">
+                <p>No reviews yet. Be the first to share your experience!</p>
+              </div>
+            )}
           </div>
 
           {/* host features */}
