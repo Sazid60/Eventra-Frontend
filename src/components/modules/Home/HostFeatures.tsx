@@ -3,7 +3,7 @@ import React from 'react';
 
 const HostFeatures = () => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-12">
 
             <div className="rounded-xl shadow-lg p-6 hover:shadow-xl border">
                 <div className="w-12 h-12 bg-[#45aaa2]/10 rounded-lg flex items-center justify-center mb-4">

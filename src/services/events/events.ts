@@ -452,6 +452,7 @@ export async function addReview(transactionId: string, payload: { rating: number
             revalidateTag('single-event', { expire: 0 });
             revalidateTag('event-participants', { expire: 0 });
             revalidateTag('landing-page-stats', { expire: 0 });
+            revalidateTag('latest-reviews', { expire: 0 })
         }
         return result;
     } catch (error: any) {

@@ -70,3 +70,11 @@ export const updateAdminProfileValidationZodSchema = z.object({
     profilePhoto: z.any().optional(),
 });
 
+export const contactFormValidationZodSchema = z.object({
+    name: z.string().min(1, { message: "Name is required" }).min(2, { message: "Name must be at least 2 characters" }),
+    email: z.email({ message: "Valid email is required" }),
+    contactNumber: z.string().min(10, { message: "Contact number must be at least 10 digits" }),
+    subject: z.string().min(1, { message: "Subject is required" }).min(5, { message: "Subject must be at least 5 characters" }),
+    message: z.string().min(1, { message: "Message is required" }).min(10, { message: "Message must be at least 10 characters" }).max(500, { message: "Message must be at most 500 characters" }),
+});
+

@@ -10,6 +10,9 @@ import HostFeatures from "@/components/modules/Home/HostFeatures";
 import Breadcrumb from "@/components/modules/Home/Breadcrumb";
 import HomeEvents from "@/components/modules/Home/HomeEvents";
 import ReviewCard from "@/components/modules/Home/ReviewCard";
+import ContactForm from "@/components/modules/Home/ContactForm";
+import FAQ from "@/components/modules/Home/FAQ";
+import Link from "next/link";
 
 export default async function Home() {
   const statsData = await getLandingPageStats();
@@ -53,10 +56,10 @@ export default async function Home() {
             <p className="text-sm md:text-lg text-muted-foreground mb-6">
               Discover the latest events happening around you
             </p>
-
-            {/* map and show home event cards */}
-
             <HomeEvents />
+            <div className="flex justify-end">
+              <Link href="/all-events" className="underline text-[#45aaa2]">See All Events</Link>
+            </div>
           </div>
 
 
@@ -108,14 +111,29 @@ export default async function Home() {
           {/* breadcrumb */}
 
           <Breadcrumb />
+
+          {/* FAQ Section */}
+          <div className="mt-6 lg:mt-10 mb-12">
+            <h1 className="text-2xl lg:text-3xl mb-4 uppercase font-semibold">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-sm md:text-lg text-muted-foreground mb-6">
+              Find answers to common questions and concerns
+            </p>
+
+            <FAQ />
+          </div>
+
           {/* Contact Section */}
-          <div className="mt-6 lg:mt-10">
+          <div className="mt-6 lg:mt-10 mb-12">
             <h1 className="text-2xl lg:text-3xl mb-4 uppercase font-semibold">
               Contact Us
             </h1>
             <p className="text-sm md:text-lg text-muted-foreground mb-6">
               Get in touch with us for any inquiries or support
             </p>
+
+            <ContactForm />
           </div>
         </div>
       </main>

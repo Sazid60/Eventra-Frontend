@@ -2,6 +2,8 @@
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch";
+import { contactFormValidationZodSchema } from "@/zod/auth.validation";
+import { zodValidator } from "@/lib/zodValidator";
 
 
 export interface LandingPageStats {
@@ -62,6 +64,49 @@ export async function getLatestReviews() {
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+export async function sendContactEmail(_currentState: any, formData: FormData) {
+    try {
+        const payload = {
+            name: formData.get('name') as string,
+            email: formData.get('email') as string,
+            contactNumber: formData.get('contactNumber') as string,
+            subject: formData.get('subject') as string,
+            message: formData.get('message') as string,
+        };
+
+        // Validate with Zod
+        const validationResult = zodValidator(payload, contactFormValidationZodSchema);
+        if (!validationResult.success) {
+            return {
+                success: false,
+                message: "Validation failed",
+                errors: validationResult.errors,
+                formData: payload
+            };
+        }
+
+        const response = await serverFetch.post(`/user/send-email`, {
+            body: JSON.stringify(payload),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+        if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+            throw error;
+        }
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Failed to send message. Please try again.'}`
         };
     }
 }
