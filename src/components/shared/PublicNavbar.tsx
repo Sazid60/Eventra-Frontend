@@ -79,10 +79,15 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
     }
   }
 
-  const activeClass = (href: string) =>
-    pathname.startsWith(href)
+  const activeClass = (href: string) => {
+    const isActive = href === "/"
+      ? pathname === "/"
+      : pathname.startsWith(href);
+
+    return isActive
       ? "text-[#45aaa2] font-semibold"
       : "text-foreground hover:text-[#45aaa2]";
+  };
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full bg-transparent backdrop-blur-sm">
@@ -172,12 +177,12 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
                 ) : (
                   <div className="border-t pt-4 flex space-y-4 space-x-4">
                     <SheetClose asChild>
-                      <Link href="/login" className="text-lg font-medium text-[#45aaa2]">
+                      <Link href="/login" className="text-sm font-medium text-[#45aaa2]">
                         Login
                       </Link>
                     </SheetClose>
                     <SheetClose asChild>
-                      <Link href="/register" className="text-lg font-medium text-[#45aaa2]">
+                      <Link href="/register" className="text-sm font-medium text-[#45aaa2]">
                         Register
                       </Link>
                     </SheetClose>

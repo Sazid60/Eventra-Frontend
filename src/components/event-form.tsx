@@ -153,6 +153,8 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
             }, 0);
             startTransition(() => setFormValues(baseValues));
             onSuccess?.();
+        } else if (state && !state.success) {
+            toast.error(state.message || "Failed to save event. Please try again.");
         }
 
         if (selectedFile && fileInputRef.current) {

@@ -36,9 +36,7 @@ export const ClientProfileCard = ({
                     </div>
                     <div className="flex-1 pb-2 text-center">
                         <h1 className="text-xl lg:text-3xl font-bold">{profile.name}</h1>
-                        <div className="flex items-center gap-2 mt-2">
-                            <span className="text-slate-100 text-sm">Event Enthusiast</span>
-                        </div>
+                        <h1 className="text-slate-100 text-sm gap-2 mt-2">Event Enthusiast</h1>
                     </div>
                 </div>
             </div>
@@ -90,34 +88,35 @@ export const ClientProfileCard = ({
                         <div className="shrink-0 w-10 h-10 bg-[#45aaa2]/20 rounded-lg flex items-center justify-center">
                             <MapPin className="h-5 w-5 text-[#45aaa2]" />
                         </div>
-                        <div>
+                        <div className="cols-span-2">
                             <p className="text-xs text-slate-400 font-medium">LOCATION</p>
                             <p className="text-sm font-semibold text-slate-200">{profile.location}</p>
                         </div>
                     </div>
+                </div>
 
-                    {/* Interests */}
-                    {profile.interests && profile.interests.length > 0 && (
-                        <div className="flex gap-4">
-                            <div className="shrink-0 w-10 h-10 bg-[#45aaa2]/20 rounded-lg flex items-center justify-center">
-                                <Hash className="h-5 w-5 text-[#45aaa2]" />
-                            </div>
-                            <div>
-                                <p className="text-xs text-slate-400 font-medium mb-2">INTERESTS</p>
-                                <div className="flex flex-wrap gap-2">
-                                    {profile.interests.map((interest) => (
-                                        <span
-                                            key={interest}
-                                            className="inline-block px-2 py-1 bg-[#45aaa2]/20 text-[#45aaa2] text-[8px] font-semibold rounded"
-                                        >
-                                            #{interest.toLowerCase()}
-                                        </span>
-                                    ))}
-                                </div>
+
+                {/* Interests */}
+                {profile.interests && profile.interests.length > 0 && (
+                    <div className="flex gap-4">
+                        <div className="shrink-0 w-10 h-10 bg-[#45aaa2]/20 rounded-lg flex items-center justify-center">
+                            <Hash className="h-5 w-5 text-[#45aaa2]" />
+                        </div>
+                        <div>
+                            <p className="text-xs text-slate-400 font-medium mb-2">INTERESTS</p>
+                            <div className="flex flex-wrap gap-2">
+                                {profile.interests.map((interest) => (
+                                    <span
+                                        key={interest}
+                                        className="inline-block px-2 py-1 bg-[#45aaa2]/20 text-[#45aaa2] text-xs font-semibold rounded"
+                                    >
+                                        #{interest.toLowerCase()}
+                                    </span>
+                                ))}
                             </div>
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
 
                 {/* Update Profile Button */}
                 <div className="pt-4 border-t border-slate-700">

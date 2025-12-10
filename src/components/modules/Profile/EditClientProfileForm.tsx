@@ -136,6 +136,8 @@ export default function EditClientProfileForm({
                     interests: state.formData.interests ?? prev.interests,
                 }));
             });
+        }else if (state && !state.success) {
+            toast.error(state.message || "Failed to update profile. Please try again.");
         }
     }, [state]);
 

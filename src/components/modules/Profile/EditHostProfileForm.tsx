@@ -103,6 +103,8 @@ export default function EditHostProfileForm({
                     bio: state.formData.bio ?? prev.bio,
                 }));
             });
+        }else if (state && !state.success) {
+            toast.error(state.message || "Failed to update profile. Please try again.");
         }
     }, [state]);
 
@@ -112,7 +114,7 @@ export default function EditHostProfileForm({
             <FieldGroup>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Name */}
-                    <Field>
+                    <Field className="col-span-2">
                         <FieldLabel htmlFor="name">Full Name</FieldLabel>
                         <Input
                             id="name"
@@ -127,7 +129,7 @@ export default function EditHostProfileForm({
                     </Field>
 
                     {/* Email - Disabled */}
-                    <Field className="md:col-span-2">
+                    <Field className="col-span-2">
                         <FieldLabel htmlFor="email">Email</FieldLabel>
                         <Input
                             id="email"
@@ -140,7 +142,7 @@ export default function EditHostProfileForm({
                     </Field>
 
                     {/* Profile Photo */}
-                    <Field className="md:col-span-2">
+                    <Field className="col-span-2">
                         <FieldLabel htmlFor="profilePhoto">Profile Photo</FieldLabel>
                         <Input
                             ref={fileInputRef}
@@ -158,7 +160,7 @@ export default function EditHostProfileForm({
                     </Field>
 
                     {/* Contact Number */}
-                    <Field>
+                    <Field className="col-span-2">
                         <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
                         <Input
                             id="contactNumber"
@@ -173,7 +175,7 @@ export default function EditHostProfileForm({
                     </Field>
 
                     {/* Location */}
-                    <Field>
+                    <Field className= "col-span-2">
                         <FieldLabel htmlFor="location">Location</FieldLabel>
                         <Input
                             id="location"
@@ -188,7 +190,7 @@ export default function EditHostProfileForm({
                     </Field>
 
                     {/* Bio */}
-                    <Field className="md:col-span-2">
+                    <Field className="col-span-2">
                         <FieldLabel htmlFor="bio">Bio</FieldLabel>
                         <Textarea
                             id="bio"

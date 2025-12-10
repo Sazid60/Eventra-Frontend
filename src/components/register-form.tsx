@@ -33,11 +33,12 @@ const RegisterForm = () => {
     if (state?.success && !successToastShownRef.current) {
       successToastShownRef.current = true;
       toast.success(state.message || "Account created successfully!");
-      // Reset form and file on success
       formRef.current?.reset();
       setTimeout(() => {
         setSelectedFile(null);
       }, 0);
+    } else if (state && !state.success) {
+      toast.error(state.message || "Failed to create account. Please try again.");
     }
 
     if (selectedFile && fileInputRef.current) {
@@ -232,7 +233,7 @@ const RegisterForm = () => {
         </div>
         <FieldGroup className="mt-4">
           <Field>
-            <Button type="submit" disabled={isPending}>
+            <Button className="bg-[#45aaa2] hover:bg-[#3d8f8a] text-white" type="submit" disabled={isPending}>
               {isPending ? "Creating Account..." : "Create Account"}
             </Button>
 
