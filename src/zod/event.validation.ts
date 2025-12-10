@@ -14,7 +14,7 @@ export const createEventValidationZodSchema = z.object({
         },
         { message: "Event date must be at least tomorrow" }
     ),
-    capacity: z.coerce.number().min(1, { message: "Capacity must be at least 1" }),
+    capacity: z.coerce.number().min(10, { message: "Capacity must be at least 10" }),
     joiningFee: z.coerce.number().min(200, { message: "Joining fee Must be more than 200" }),
     description: z.string().min(1, { message: "Description is required" }),
     category: z.array(z.string()).min(1, { message: "At least one category is required" }),
@@ -38,7 +38,7 @@ export const updateEventValidationZodSchema = z.object({
         },
         { message: "Event date must be at least tomorrow" }
     ),
-    capacity: z.coerce.number().min(1, { message: "Capacity must be at least 1" }),
+    capacity: z.coerce.number().min(10, { message: "Capacity must be at least 10" }),
     joiningFee: z.coerce.number().min(200, { message: "Joining fee Must be more than 200" }),
     description: z.string().min(1, { message: "Description is required" }),
     category: z.array(z.string()).min(1, { message: "At least one category is required" }),

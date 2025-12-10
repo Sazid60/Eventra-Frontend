@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { startTransition, useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -13,39 +13,76 @@ import { updateMyProfile } from "@/services/user/userProfile";
 interface EditHostProfileFormProps {
     profile: HostProfile;
     email: string;
-    onClose: () => void;
+    onSuccess?: () => void;
+    onCancel?: () => void;
 }
 
 export default function EditHostProfileForm({
     profile,
     email,
-    onClose,
+    onSuccess,
+    onCancel,
 }: EditHostProfileFormProps) {
     const [state, formAction, isPending] = useActionState(updateMyProfile, null);
     const formRef = useRef<HTMLFormElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const hasShownToast = useRef(false);
+    const successToastShownRef = useRef(false);
+    const [formValues, setFormValues] = useState({
+        name: profile.name || "",
+        contactNumber: profile.contactNumber || "",
+        location: profile.location || "",
+        bio: profile.bio || "",
+        fileToken: "", // track file selection for dirty check
+    });
+
+    const isDirty = useMemo(() => {
+        const baseName = profile.name || "";
+        const baseContact = profile.contactNumber || "";
+        const baseLocation = profile.location || "";
+        const baseBio = profile.bio || "";
+        const hasFileChange = !!formValues.fileToken;
+
+        return (
+            hasFileChange ||
+            formValues.name !== baseName ||
+            formValues.contactNumber !== baseContact ||
+            formValues.location !== baseLocation ||
+            formValues.bio !== baseBio
+        );
+    }, [formValues, profile.bio, profile.contactNumber, profile.location, profile.name]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         setSelectedFile(file || null);
+        setFormValues((prev) => ({ ...prev, fileToken: file ? file.name : "" }));
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormValues((prev) => ({ ...prev, [name]: value }));
     };
 
     useEffect(() => {
         if (!state) {
-            hasShownToast.current = false;
-            return;
+            successToastShownRef.current = false;
         }
 
-        if (state.success && !hasShownToast.current) {
-            hasShownToast.current = true;
+        if (state?.success && !successToastShownRef.current) {
+            successToastShownRef.current = true;
             toast.success(state.message || "Profile updated successfully!");
             formRef.current?.reset();
-            onClose();
-        } else if (!state.success && state.message) {
-            toast.error(state.message);
-            hasShownToast.current = false;
+            setTimeout(() => setSelectedFile(null), 0);
+            startTransition(() => {
+                setFormValues({
+                    name: profile.name || "",
+                    contactNumber: profile.contactNumber || "",
+                    location: profile.location || "",
+                    bio: profile.bio || "",
+                    fileToken: "",
+                });
+            });
+            onSuccess?.();
         }
 
         if (selectedFile && fileInputRef.current) {
@@ -53,12 +90,42 @@ export default function EditHostProfileForm({
             dataTransfer.items.add(selectedFile);
             fileInputRef.current.files = dataTransfer.files;
         }
-    }, [state, selectedFile, onClose]);
+    }, [state, onSuccess, selectedFile, profile.bio, profile.contactNumber, profile.location, profile.name]);
+
+    useEffect(() => {
+        if (state?.formData) {
+            startTransition(() => {
+                setFormValues((prev) => ({
+                    ...prev,
+                    name: state.formData.name ?? prev.name,
+                    contactNumber: state.formData.contactNumber ?? prev.contactNumber,
+                    location: state.formData.location ?? prev.location,
+                    bio: state.formData.bio ?? prev.bio,
+                }));
+            });
+        }
+    }, [state]);
 
     return (
         <form ref={formRef} action={formAction}>
+            <input type="hidden" name="role" value="HOST" />
             <FieldGroup>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Name */}
+                    <Field>
+                        <FieldLabel htmlFor="name">Full Name</FieldLabel>
+                        <Input
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="John Doe"
+                            value={formValues.name}
+                            onChange={handleChange}
+                            disabled={isPending}
+                        />
+                        <InputFieldError field="name" state={state} />
+                    </Field>
+
                     {/* Email - Disabled */}
                     <Field className="md:col-span-2">
                         <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -82,6 +149,7 @@ export default function EditHostProfileForm({
                             name="profilePhoto"
                             type="file"
                             accept="image/*"
+                            disabled={isPending}
                         />
                         <FieldDescription className="text-xs text-muted-foreground">
                             Leave empty to keep current photo
@@ -97,7 +165,9 @@ export default function EditHostProfileForm({
                             name="contactNumber"
                             type="text"
                             placeholder="e.g. +8801XXXXXXXXX"
-                            defaultValue={profile.contactNumber || ""}
+                            value={formValues.contactNumber}
+                            onChange={handleChange}
+                            disabled={isPending}
                         />
                         <InputFieldError field="contactNumber" state={state} />
                     </Field>
@@ -110,7 +180,9 @@ export default function EditHostProfileForm({
                             name="location"
                             type="text"
                             placeholder="City, Country"
-                            defaultValue={profile.location || ""}
+                            value={formValues.location}
+                            onChange={handleChange}
+                            disabled={isPending}
                         />
                         <InputFieldError field="location" state={state} />
                     </Field>
@@ -122,8 +194,10 @@ export default function EditHostProfileForm({
                             id="bio"
                             name="bio"
                             placeholder="Short bio or description"
-                            defaultValue={profile.bio || ""}
+                            value={formValues.bio}
+                            onChange={handleChange}
                             rows={4}
+                            disabled={isPending}
                         />
                         <InputFieldError field="bio" state={state} />
                     </Field>
@@ -133,15 +207,15 @@ export default function EditHostProfileForm({
                     <Button
                         type="button"
                         variant="outline"
-                        onClick={onClose}
+                        onClick={onCancel}
                         disabled={isPending}
                     >
                         Cancel
                     </Button>
                     <Button
                         type="submit"
-                        disabled={isPending}
-                        className="bg-[#45aaa2] hover:bg-[#3c8f88]"
+                        disabled={isPending || !isDirty}
+                        className="bg-[#45aaa2] hover:bg-[#3c8f88] text-white"
                     >
                         {isPending ? "Updating..." : "Update Profile"}
                     </Button>

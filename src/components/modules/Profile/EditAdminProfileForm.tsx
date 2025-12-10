@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { startTransition, useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -12,39 +12,59 @@ import { updateMyProfile } from "@/services/user/userProfile";
 interface EditAdminProfileFormProps {
     profile: AdminProfile;
     email: string;
-    onClose: () => void;
+    onSuccess?: () => void;
+    onCancel?: () => void;
 }
 
 export default function EditAdminProfileForm({
     profile,
     email,
-    onClose,
+    onSuccess,
+    onCancel,
 }: EditAdminProfileFormProps) {
     const [state, formAction, isPending] = useActionState(updateMyProfile, null);
     const formRef = useRef<HTMLFormElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const hasShownToast = useRef(false);
+    const successToastShownRef = useRef(false);
+    const [formValues, setFormValues] = useState({
+        contactNumber: profile.contactNumber || "",
+        fileToken: "",
+    });
+
+    const isDirty = useMemo(() => {
+        const baseContact = profile.contactNumber || "";
+        return formValues.fileToken !== "" || formValues.contactNumber !== baseContact;
+    }, [formValues, profile.contactNumber]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         setSelectedFile(file || null);
+        setFormValues((prev) => ({ ...prev, fileToken: file ? file.name : "" }));
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormValues((prev) => ({ ...prev, [name]: value }));
     };
 
     useEffect(() => {
         if (!state) {
-            hasShownToast.current = false;
-            return;
+            successToastShownRef.current = false;
         }
 
-        if (state.success && !hasShownToast.current) {
-            hasShownToast.current = true;
+        if (state?.success && !successToastShownRef.current) {
+            successToastShownRef.current = true;
             toast.success(state.message || "Profile updated successfully!");
             formRef.current?.reset();
-            onClose();
-        } else if (!state.success && state.message) {
-            toast.error(state.message);
-            hasShownToast.current = false;
+            setTimeout(() => setSelectedFile(null), 0);
+            startTransition(() => {
+                setFormValues({
+                    contactNumber: profile.contactNumber || "",
+                    fileToken: "",
+                });
+            });
+            onSuccess?.();
         }
 
         if (selectedFile && fileInputRef.current) {
@@ -52,10 +72,22 @@ export default function EditAdminProfileForm({
             dataTransfer.items.add(selectedFile);
             fileInputRef.current.files = dataTransfer.files;
         }
-    }, [state, selectedFile, onClose]);
+    }, [state, onSuccess, selectedFile, profile.contactNumber]);
+
+    useEffect(() => {
+        if (state?.formData) {
+            startTransition(() => {
+                setFormValues((prev) => ({
+                    ...prev,
+                    contactNumber: state.formData.contactNumber ?? prev.contactNumber,
+                }));
+            });
+        }
+    }, [state]);
 
     return (
         <form ref={formRef} action={formAction}>
+            <input type="hidden" name="role" value="ADMIN" />
             <FieldGroup>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Email - Disabled */}
@@ -81,6 +113,7 @@ export default function EditAdminProfileForm({
                             name="profilePhoto"
                             type="file"
                             accept="image/*"
+                            disabled={isPending}
                         />
                         <FieldDescription className="text-xs text-muted-foreground">
                             Leave empty to keep current photo
@@ -96,7 +129,9 @@ export default function EditAdminProfileForm({
                             name="contactNumber"
                             type="text"
                             placeholder="e.g. +8801XXXXXXXXX"
-                            defaultValue={profile.contactNumber || ""}
+                            value={formValues.contactNumber}
+                            onChange={handleChange}
+                            disabled={isPending}
                         />
                         <InputFieldError field="contactNumber" state={state} />
                     </Field>
@@ -106,15 +141,15 @@ export default function EditAdminProfileForm({
                     <Button
                         type="button"
                         variant="outline"
-                        onClick={onClose}
+                        onClick={onCancel}
                         disabled={isPending}
                     >
                         Cancel
                     </Button>
                     <Button
                         type="submit"
-                        disabled={isPending}
-                        className="bg-[#45aaa2] hover:bg-[#3c8f88]"
+                        disabled={isPending || !isDirty}
+                        className="bg-[#45aaa2] hover:bg-[#3c8f88] text-white"
                     >
                         {isPending ? "Updating..." : "Update Profile"}
                     </Button>

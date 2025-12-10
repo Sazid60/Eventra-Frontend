@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { startTransition, useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -13,7 +13,8 @@ import { updateMyProfile } from "@/services/user/userProfile";
 interface EditClientProfileFormProps {
     profile: ClientProfile;
     email: string;
-    onClose: () => void;
+    onSuccess?: () => void;
+    onCancel?: () => void;
 }
 
 const interestOptions = [
@@ -31,33 +32,89 @@ const interestOptions = [
 export default function EditClientProfileForm({
     profile,
     email,
-    onClose,
+    onSuccess,
+    onCancel,
 }: EditClientProfileFormProps) {
     const [state, formAction, isPending] = useActionState(updateMyProfile, null);
     const formRef = useRef<HTMLFormElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const hasShownToast = useRef(false);
+    const successToastShownRef = useRef(false);
+    const [formValues, setFormValues] = useState({
+        name: profile.name || "",
+        location: profile.location || "",
+        contactNumber: profile.contactNumber || "",
+        bio: profile.bio || "",
+        interests: profile.interests || [],
+        fileToken: "",
+    });
+
+    const isDirty = useMemo(() => {
+        const base = {
+            name: profile.name || "",
+            location: profile.location || "",
+            contactNumber: profile.contactNumber || "",
+            bio: profile.bio || "",
+            interests: profile.interests || [],
+        };
+
+        const interestsChanged =
+            (formValues.interests || []).slice().sort().join("|") !==
+            (base.interests || []).slice().sort().join("|");
+
+        return (
+            formValues.fileToken !== "" ||
+            formValues.name !== base.name ||
+            formValues.location !== base.location ||
+            formValues.contactNumber !== base.contactNumber ||
+            formValues.bio !== base.bio ||
+            interestsChanged
+        );
+    }, [formValues, profile.bio, profile.contactNumber, profile.interests, profile.location, profile.name]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         setSelectedFile(file || null);
+        setFormValues((prev) => ({ ...prev, fileToken: file ? file.name : "" }));
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormValues((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleInterestToggle = (interest: string) => {
+        setFormValues((prev) => {
+            const exists = prev.interests.includes(interest);
+            const interests = exists
+                ? prev.interests.filter((i) => i !== interest)
+                : [...prev.interests, interest];
+            return { ...prev, interests };
+        });
     };
 
     useEffect(() => {
+        // Reset toast guard when state clears
         if (!state) {
-            hasShownToast.current = false;
-            return;
+            successToastShownRef.current = false;
         }
 
-        if (state.success && !hasShownToast.current) {
-            hasShownToast.current = true;
+        if (state?.success && !successToastShownRef.current) {
+            successToastShownRef.current = true;
             toast.success(state.message || "Profile updated successfully!");
             formRef.current?.reset();
-            onClose();
-        } else if (!state.success && state.message) {
-            toast.error(state.message);
-            hasShownToast.current = false;
+            setTimeout(() => setSelectedFile(null), 0);
+            startTransition(() => {
+                setFormValues({
+                    name: profile.name || "",
+                    location: profile.location || "",
+                    contactNumber: profile.contactNumber || "",
+                    bio: profile.bio || "",
+                    interests: profile.interests || [],
+                    fileToken: "",
+                });
+            });
+            onSuccess?.();
         }
 
         if (selectedFile && fileInputRef.current) {
@@ -65,10 +122,26 @@ export default function EditClientProfileForm({
             dataTransfer.items.add(selectedFile);
             fileInputRef.current.files = dataTransfer.files;
         }
-    }, [state, selectedFile, onClose]);
+    }, [state, onSuccess, selectedFile, profile.bio, profile.contactNumber, profile.interests, profile.location, profile.name]);
+
+    useEffect(() => {
+        if (state?.formData) {
+            startTransition(() => {
+                setFormValues((prev) => ({
+                    ...prev,
+                    name: state.formData.name ?? prev.name,
+                    location: state.formData.location ?? prev.location,
+                    contactNumber: state.formData.contactNumber ?? prev.contactNumber,
+                    bio: state.formData.bio ?? prev.bio,
+                    interests: state.formData.interests ?? prev.interests,
+                }));
+            });
+        }
+    }, [state]);
 
     return (
         <form ref={formRef} action={formAction}>
+            <input type="hidden" name="role" value="CLIENT" />
             <FieldGroup>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Name */}
@@ -79,7 +152,9 @@ export default function EditClientProfileForm({
                             name="name"
                             type="text"
                             placeholder="John Doe"
-                            defaultValue={profile.name || ""}
+                            value={formValues.name}
+                            onChange={handleChange}
+                            disabled={isPending}
                         />
                         <InputFieldError field="name" state={state} />
                     </Field>
@@ -92,7 +167,9 @@ export default function EditClientProfileForm({
                             name="location"
                             type="text"
                             placeholder="City, Country"
-                            defaultValue={profile.location || ""}
+                            value={formValues.location}
+                            onChange={handleChange}
+                            disabled={isPending}
                         />
                         <InputFieldError field="location" state={state} />
                     </Field>
@@ -118,7 +195,9 @@ export default function EditClientProfileForm({
                             name="contactNumber"
                             type="text"
                             placeholder="e.g. +8801XXXXXXXXX"
-                            defaultValue={profile.contactNumber || ""}
+                            value={formValues.contactNumber}
+                            onChange={handleChange}
+                            disabled={isPending}
                         />
                         <InputFieldError field="contactNumber" state={state} />
                     </Field>
@@ -133,6 +212,7 @@ export default function EditClientProfileForm({
                             name="profilePhoto"
                             type="file"
                             accept="image/*"
+                            disabled={isPending}
                         />
                         <FieldDescription className="text-xs text-muted-foreground">
                             Leave empty to keep current photo
@@ -147,8 +227,10 @@ export default function EditClientProfileForm({
                             id="bio"
                             name="bio"
                             placeholder="Short bio or description"
-                            defaultValue={profile.bio || ""}
+                            value={formValues.bio}
+                            onChange={handleChange}
                             rows={4}
+                            disabled={isPending}
                         />
                         <InputFieldError field="bio" state={state} />
                     </Field>
@@ -163,8 +245,10 @@ export default function EditClientProfileForm({
                                         type="checkbox"
                                         name="interests"
                                         value={interest}
-                                        className="h-4 w-4"
-                                        defaultChecked={profile.interests?.includes(interest)}
+                                        className="h-4 w-4 accent-[#45aaa2]"
+                                        checked={formValues.interests.includes(interest)}
+                                        onChange={() => handleInterestToggle(interest)}
+                                        disabled={isPending}
                                     />
                                     <span className="select-none">{interest.toLowerCase()}</span>
                                 </label>
@@ -181,15 +265,15 @@ export default function EditClientProfileForm({
                     <Button
                         type="button"
                         variant="outline"
-                        onClick={onClose}
+                        onClick={onCancel}
                         disabled={isPending}
                     >
                         Cancel
                     </Button>
                     <Button
                         type="submit"
-                        disabled={isPending}
-                        className="bg-[#45aaa2] hover:bg-[#3c8f88]"
+                        disabled={isPending || !isDirty}
+                        className="bg-[#45aaa2] hover:bg-[#3c8f88] text-white"
                     >
                         {isPending ? "Updating..." : "Update Profile"}
                     </Button>

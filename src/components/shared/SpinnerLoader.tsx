@@ -9,13 +9,15 @@ interface LoaderProps {
   className?: string;
   animated?: boolean;
   showIcon?: boolean;
+  fullScreen?: boolean;
+  compact?: boolean;
 }
 
 const SIZE_MAP = {
-  sm: 20,
-  md: 35,
-  lg: 50,
-  xl: 70,
+  sm: 40,
+  md: 60,
+  lg: 80,
+  xl: 100,
 } as const;
 
 export default function SpinnerLoader({
@@ -24,28 +26,32 @@ export default function SpinnerLoader({
   className = "",
   animated = true,
   showIcon = false,
+  fullScreen = true,
+  compact = false,
 }: LoaderProps) {
   const spinnerSize = SIZE_MAP[size];
+  const containerClass = fullScreen ? "min-h-screen" : "py-12";
+  const gapClass = compact ? "gap-2" : "gap-4";
 
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-4 min-h-screen ${className}`}
+      className={`flex flex-col items-center justify-center ${containerClass} ${gapClass} ${className}`}
     >
       {/* Spinner */}
       <ClipLoader
         size={spinnerSize}
-        color="#3B82F6"
+        color="#45aaa2"
         speedMultiplier={animated ? 1 : 0}
       />
 
       {/* Optional icon instead of spinner */}
       {showIcon && (
-        <Activity className="text-blue-500" size={spinnerSize - 10} />
+        <Activity className="text-[#45aaa2] animate-pulse" size={spinnerSize - 10} />
       )}
 
       {/* Text */}
       {text && (
-        <p className="font-medium text-gray-600 text-center text-[16px]">
+        <p className={`font-medium text-white text-center ${compact ? "text-lg" : "text-2xl"}`}>
           {text}
         </p>
       )}

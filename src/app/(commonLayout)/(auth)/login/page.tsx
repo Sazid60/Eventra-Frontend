@@ -1,6 +1,16 @@
 import LoginForm from "@/components/login-form";
 
 
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: "Login - Access Your Account | Eventra",
+  description: "Login to your Eventra account to explore and participate in exciting events and activities around you. Connect with the community and stay updated with the latest happenings.",
+  keywords: ["login", "user access", "eventra account", "event participation", "community events"],
+  authors: [{ name: "Eventra Team" }],
+};
+
 const LoginPage = async ({
   searchParams,
 }: {

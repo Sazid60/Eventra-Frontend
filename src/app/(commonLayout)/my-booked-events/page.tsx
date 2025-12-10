@@ -8,6 +8,17 @@ import { queryStringFormatter } from "@/lib/formatters";
 import UserEventCard from "@/components/modules/Events/UserEventCard";
 import UserEventsFilter from "@/components/modules/Events/UserEventFilters";
 
+
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+    title: "My Booked Events - Browse Your Booked Events | Eventra",
+    description: "Browse your booked events on Eventra. Filter by category, date, or location to find events that interest you and connect with other attendees.",
+    keywords: ["my booked events", "booked events", "event participation", "event browsing", "community events"],
+    authors: [{ name: "Eventra Team" }],
+};
+
 const MyBookedEventsPage = async ({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }>; }) => {
 
     const searchParamsObj = await searchParams;

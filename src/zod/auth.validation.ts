@@ -9,9 +9,9 @@ export const registerClientValidationZodSchema = z.object({
     interests: z.array(z.string()).min(1, { message: "At least one interest is required" }),
     email: z.email({ message: "Valid email is required" }),
     profilePhoto: z.any().refine(
-            (file) => file instanceof File && file.size > 0,
-            { message: "Image is required" }
-        ),
+        (file) => file instanceof File && file.size > 0,
+        { message: "Image is required" }
+    ),
     password: z.string().min(6, {
         error: "Password is required and must be at least 6 characters long",
     }).max(100, {
@@ -47,4 +47,34 @@ export const resetPasswordSchema = z
         message: "Passwords don't match",
         path: ["confirmPassword"],
     });
+
+export const updateProfileValidationZodSchema = z.object({
+    name: z.string().min(1, { message: "Name is required" }),
+    contactNumber: z.string().min(11, { message: "11 digit Contact Number is required" }),
+    location: z.string().min(1, { message: "Location is required" }),
+    bio: z.string().min(1, { message: "Bio is required" }),
+    interests: z.array(z.string()).min(1, { message: "At least one interest is required" }),
+    profilePhoto: z.any().optional(),
+});
+
+export const updateHostProfileValidationZodSchema = z.object({
+    name: z.string().min(1, { message: "Name is required" }),
+    contactNumber: z.string().min(11, { message: "11 digit Contact Number is required" }),
+    location: z.string().min(1, { message: "Location is required" }),
+    bio: z.string().min(1, { message: "Bio is required" }),
+    profilePhoto: z.any().optional(),
+});
+
+export const updateAdminProfileValidationZodSchema = z.object({
+    contactNumber: z.string().min(11, { message: "11 digit Contact Number is required" }),
+    profilePhoto: z.any().optional(),
+});
+
+export const contactFormValidationZodSchema = z.object({
+    name: z.string().min(1, { message: "Name is required" }).min(2, { message: "Name must be at least 2 characters" }),
+    email: z.email({ message: "Valid email is required" }),
+    contactNumber: z.string().min(10, { message: "Contact number must be at least 10 digits" }),
+    subject: z.string().min(1, { message: "Subject is required" }).min(5, { message: "Subject must be at least 5 characters" }),
+    message: z.string().min(1, { message: "Message is required" }).min(10, { message: "Message must be at least 10 characters" }).max(500, { message: "Message must be at most 500 characters" }),
+});
 

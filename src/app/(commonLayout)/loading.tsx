@@ -1,6 +1,6 @@
 import SpinnerLoader from "@/components/shared/SpinnerLoader";
 
-const HostDashboardLoading = () => {
+const HomeLoading = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <SpinnerLoader />
@@ -8,4 +8,4 @@ const HostDashboardLoading = () => {
   );
 };
 
-export default HostDashboardLoading;
+export default HomeLoading;

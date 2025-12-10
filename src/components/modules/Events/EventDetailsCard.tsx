@@ -27,7 +27,6 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
     const [isRefreshing, setIsRefreshing] = useState(false);
     const router = useRouter();
 
-    // Check if review was already submitted (initialize once)
     const initialReviewStatus = useMemo(() => {
         if (typeof window === 'undefined' || !transactionId) return false;
         const reviewedEvents = localStorage.getItem('reviewedEvents');
@@ -38,7 +37,6 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
         return false;
     }, [transactionId]);
 
-    // Set initial review status
     useEffect(() => {
         setHasReviewed(initialReviewStatus);
     }, [initialReviewStatus]);
@@ -103,7 +101,7 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
 
             if (result.success) {
                 toast.success("You have left the event successfully");
-                try { router.refresh(); } catch { /* ignore */ }
+                try { router.refresh(); } catch {  }
             } else {
                 toast.error(result.message || "Failed to leave event");
             }
@@ -116,7 +114,7 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
     };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 border p-4 rounded-md">
             <div className="relative w-full rounded-lg overflow-hidden border">
                 <div className="relative w-full h-64 md:h-80 ">
                     <Image src={event.image || '/images/event-placeholder.jpg'} alt={event.title || 'Event'} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
@@ -133,23 +131,25 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
                     <div className="flex items-center gap-2 bg-black/60 backdrop-blur-xs text-white px-3 py-1 rounded-md"><Calendar className="w-4 h-4 text-orange-400" /> <span className="text-xs">{date}</span></div>
                     <div className="flex items-center gap-2 bg-black/60 backdrop-blur-xs text-white px-3 py-1 rounded-md"><Clock className="w-4 h-4 text-orange-400" /> <span className="text-xs">{time}</span></div>
                 </div>
-
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-4 w-[85%] md:w-2/3">
-                    <div className="bg-black/60 backdrop-blur-xs px-4 py-2 rounded-full text-center">
-                        <div className="flex items-center justify-center gap-3 flex-wrap">
-                            {(event.category || []).slice(0, 6).map((c: string) => (
-                                <span key={c} className="text-xs text-[#45aaa2] font-semibold">#{c.toLowerCase()}</span>
-                            ))}
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <div>
-                <h1 className="text-2xl md:text-3xl font-semibold text-[#45aaa2] mb-3">{event.title}</h1>
+            <div className="text-center">
+                <h1 className="text-2xl md:text-3xl font-semibold text-white mb-6">{event.title}</h1>
                 <div className="mb-4">
                     <div className=" border rounded-lg p-4 text-sm text-muted-foreground">{event.description || 'No description provided.'}</div>
                 </div>
+            </div>
+            <div className="h-14 flex flex-wrap gap-2 items-center  justify-center text-center mb-6 ">
+                {event.category.slice(0, 10).map((c: string) => (
+                    <span key={c} className="text-xs text-orange-700 rounded whitespace-nowrap">
+                        #{c.toLowerCase()}
+                    </span>
+                ))}
+                {
+                    event.category.length > 6 && (
+                        <p className="text-orange-700">...</p>
+                    )
+                }
             </div>
 
             <div className="flex items-center justify-between gap-4">

@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import SpinnerLoader from "./SpinnerLoader";
 
 export interface Column<T> {
   header: string;
@@ -24,6 +25,7 @@ interface ManagementTableProps<T> {
   getRowKey: (row: T) => string;
   emptyMessage?: string;
   isRefreshing?: boolean;
+  isLoading?: boolean;
 }
 
 function ManagementTable<T>({
@@ -33,8 +35,22 @@ function ManagementTable<T>({
   onDelete,
   getRowKey,
   emptyMessage = "No records found.",
+  isLoading = false,
 }: ManagementTableProps<T>) {
   const hasActions = onEdit || onDelete;
+
+  if (isLoading) {
+    return (
+      <div className="rounded-lg border p-4">
+        <SpinnerLoader
+          text="Loading data..."
+          fullScreen={false}
+          compact={true}
+          size="md"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-lg border relative p-4">
@@ -43,7 +59,7 @@ function ManagementTable<T>({
           <TableRow>
             {columns?.map((column, colIndex) => (
               <TableHead key={colIndex} className={column.className}>
-                  {column.header}
+                {column.header}
               </TableHead>
             ))}
             {hasActions && (

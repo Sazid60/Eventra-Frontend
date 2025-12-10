@@ -1,11 +1,17 @@
 import { getAllEvents } from "@/services/events/events";
-
-
 import EventCard from '@/components/modules/Events/EventCard';
 import ApiEvent from "@/types/event.interface";
 import Pagination from "@/components/shared/Pagination";
 import { queryStringFormatter } from "@/lib/formatters";
 import EventsFilter from "@/components/modules/Events/EventsFilters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "All Events - Browse & Book Events | Eventra",
+    description: "Browse all upcoming events in your area. Filter by category, date, and location to find concerts, workshops, sports events, festivals, and more. Book your next adventure on Eventra.",
+    keywords: ["all events", "upcoming events", "browse events", "event listing", "event filter", "concerts", "workshops", "sports events", "festivals"],
+    authors: [{ name: "Eventra Team" }],
+};
 
 const allEventsPage = async ({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }>; }) => {
 

@@ -112,23 +112,37 @@ export default function EventApplicationCard({ event }: EventCardProps) {
                         <span className="text-xs">{time}</span>
                     </div>
                 </div>
-
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-4 bg-black/90 backdrop-blur-xs px-3 py-2 rounded-full shadow-sm">
-                    <div className="flex gap-3 items-center">
-                        {categories.slice(0, 6).map((c: string) => (
-                            <span key={c} className="text-[8px] lg:text-xs text-orange-700 font-semibold">#{c.toLowerCase()}</span>
-                        ))}
-                    </div>
-                </div>
             </div>
 
             <CardContent className="space-y-2 mb-6 mt-3">
-                <h3 className="text-lg font-semibold line-clamp-2 min-h-[3.2rem]">{title}</h3>
-                <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.8rem]">{event?.description || ''}</p>
+                <div className="text-center mb-6">
+                    <h3 className="text-lg font-semibold line-clamp-2 min-h-[3.2rem]">
+                        {title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.8rem]">
+                        {event?.description
+                            ? (event.description.length > 160
+                                ? `${event.description.slice(0, 157)}...`
+                                : event.description)
+                            : ""}
+                    </p>
+                </div>
+                <div className="h-14 flex flex-wrap gap-2 items-center  justify-center text-center mb-7 ">
+                    {categories.slice(0, 10).map((c: string) => (
+                        <span key={c} className="text-xs text-orange-700 rounded whitespace-nowrap">
+                            #{c.toLowerCase()}
+                        </span>
+                    ))}
+                    {
+                        categories.length > 6 && (
+                            <p className="text-orange-700">...</p>
+                        )
+                    }
+                </div>
 
                 <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3 rounded-md">
-                        <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gray-200">
+                        <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-200">
                             <Image
                                 src={host.profilePhoto || "/images/avatar-placeholder.png"}
                                 alt={host.name || "Host"}
@@ -136,11 +150,19 @@ export default function EventApplicationCard({ event }: EventCardProps) {
                                 className="object-cover"
                             />
                         </div>
+
                         <div>
-                            <div className="text-sm font-semibold ">Host : {host.name || "Host"}</div>
+                            <div className="text-xs">
+                                {host.name || "Host"}
+                            </div>
                             <div className="flex items-center gap-2 text-xs text-gray-600 mt-1">
                                 <Star className="w-4 h-4 text-yellow-500" />
-                                <span>{typeof host.rating === "number" ? host.rating.toFixed(1) : "0.0"} ({host.ratingCount ?? 0})</span>
+                                <span>
+                                    {typeof host.rating === "number"
+                                        ? host.rating.toFixed(1)
+                                        : "0.0"}{" "}
+                                    ({host.ratingCount ?? 0})
+                                </span>
                             </div>
                         </div>
                     </div>

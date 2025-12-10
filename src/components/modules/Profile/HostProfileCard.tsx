@@ -125,6 +125,7 @@ export const HostProfileCard = ({
             <EditProfileDialog
                 open={open}
                 onClose={() => setOpen(false)}
+                onSuccess={() => setOpen(false)}
                 role="HOST"
                 profile={profile}
                 email={email}

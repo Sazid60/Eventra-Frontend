@@ -34,7 +34,6 @@ export default function CreatedEventCard({ event }: CreatedEventCardProps) {
     const capacity = event?.capacity ?? null;
     const status = event?.status || "PENDING";
 
-    // Check if event is today or in the past
     const isEventTodayOrPast = useMemo(() => {
         if (!event?.date) return false;
         const eventDate = new Date(event.date);
@@ -44,7 +43,6 @@ export default function CreatedEventCard({ event }: CreatedEventCardProps) {
         return eventDate <= today;
     }, [event.date]);
 
-    // Check if event is strictly in the past (today > eventDate)
     const isEventPast = useMemo(() => {
         if (!event?.date) return false;
         const eventDate = new Date(event.date);
@@ -54,22 +52,21 @@ export default function CreatedEventCard({ event }: CreatedEventCardProps) {
         return today > eventDate;
     }, [event.date]);
 
-    // Show "Mark as Complete" button if OPEN or FULL and today or past
     const showMarkComplete = useMemo(() => {
         return (status === "OPEN" || status === "FULL") && isEventTodayOrPast;
     }, [status, isEventTodayOrPast]);
 
-    // For PENDING + past date: show Delete only, hide Update
+
     const showPendingDeleteOnly = useMemo(() => {
         return status === "PENDING" && isEventPast;
     }, [status, isEventPast]);
 
-    // Delete is allowed for PENDING and REJECTED events
+
     const isDeleteDisabled = useMemo(() => {
         return status !== "PENDING" && status !== "REJECTED";
     }, [status]);
 
-    // Update is disabled for COMPLETED and REJECTED events
+
     const isUpdateDisabled = useMemo(() => {
         return status === "COMPLETED" || status === "REJECTED";
     }, [status]);
@@ -108,7 +105,6 @@ export default function CreatedEventCard({ event }: CreatedEventCardProps) {
     return (
         <>
             <Card className="overflow-hidden border rounded-lg p-0 bg-background hover:cursor-pointer hover:scale-101 transition-shadow duration-600 gap-2">
-                {/* Image area with overlays */}
                 <div className="relative w-full h-56">
                     <div className="relative w-full h-56 overflow-hidden rounded-lg border">
                         <Image
@@ -119,7 +115,6 @@ export default function CreatedEventCard({ event }: CreatedEventCardProps) {
                             sizes="(max-width: 768px) 100vw, 50vw"
                         />
                     </div>
-                    {/* Left stacked badges: status, capacity, fee */}
                     <div className="absolute left-4 top-4 flex flex-col items-start gap-2">
                         <Badge className={`backdrop-blur-xs px-3 py-1 rounded-md ${status === 'OPEN' ? 'bg-green-600/80 text-white' :
                             status === 'FULL' ? 'bg-orange-600/80 text-white' :
@@ -131,8 +126,6 @@ export default function CreatedEventCard({ event }: CreatedEventCardProps) {
                         <Badge className="bg-black/60 backdrop-blur-xs text-white px-3 py-1 rounded-md">Capacity: {capacity ?? 'N/A'}</Badge>
                         <Badge className="bg-black/60 backdrop-blur-xs text-emerald-600 px-3 py-1 rounded-md">Fee: {fee ? `${fee} BDT` : 'Free'}</Badge>
                     </div>
-
-                    {/* Right stacked small info: location, date, time */}
                     <div className="absolute right-4 top-4 flex flex-col items-end gap-2">
                         <div className="flex flex-col items-end gap-2">
                             <div className="flex items-center gap-2 bg-black/60 backdrop-blur-xs text-white px-3 py-1 rounded-md">
@@ -150,28 +143,32 @@ export default function CreatedEventCard({ event }: CreatedEventCardProps) {
                         </div>
                     </div>
 
-                    {/* Category strip centered at bottom of image */}
-                    <div className="absolute left-1/2 -translate-x-1/2 bottom-4 bg-black/90 backdrop-blur-xs px-3 py-2 rounded-full shadow-sm">
-                        <div className="flex gap-3 items-center">
-                            {categories.slice(0, 6).map((c: string) => (
-                                <span key={c} className="text-[8px] lg:text-xs text-orange-700 font-semibold">#{c.toLowerCase()}</span>
-                            ))}
-                        </div>
-                    </div>
                 </div>
-
-                {/* Content below image */}
                 <CardContent className="space-y-2 mb-6 mt-3">
-                    <h3 className="text-lg font-semibold line-clamp-2 min-h-[3.2rem]">
-                        {title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.8rem]">
-                        {event?.description
-                            ? (event.description.length > 160
-                                ? `${event.description.slice(0, 157)}...`
-                                : event.description)
-                            : ""}
-                    </p>
+                    <div className="text-center mb-6">
+                        <h3 className="text-lg font-semibold line-clamp-2 min-h-[3.2rem]">
+                            {title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.8rem]">
+                            {event?.description
+                                ? (event.description.length > 160
+                                    ? `${event.description.slice(0, 157)}...`
+                                    : event.description)
+                                : ""}
+                        </p>
+                    </div>
+                    <div className="h-14 flex flex-wrap gap-2 items-center  justify-center text-center mb-7 ">
+                        {categories.slice(0, 10).map((c: string) => (
+                            <span key={c} className="text-xs text-orange-700 rounded whitespace-nowrap">
+                                #{c.toLowerCase()}
+                            </span>
+                        ))}
+                        {
+                            categories.length > 6 && (
+                                <p className="text-orange-700">...</p>
+                            )
+                        }
+                    </div>
 
                     <div className="flex items-center justify-between gap-4">
                         <div className="flex flex-col gap-1">
@@ -179,8 +176,6 @@ export default function CreatedEventCard({ event }: CreatedEventCardProps) {
                                 Event ID: <span className="font-semibold text-foreground">{event.id.slice(0, 8)}...</span>
                             </div>
                         </div>
-
-                        {/* Conditionally show buttons based on status and date */}
                         {showMarkComplete ? (
                             <div className="ml-auto">
                                 <Button

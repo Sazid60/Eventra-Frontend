@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Eventra- Connect & Explore",
+  title: "EVENTRA- Connect & Explore",
   description: "an event management platform to connect with locals for events, meetups, and activities.",
 };
 

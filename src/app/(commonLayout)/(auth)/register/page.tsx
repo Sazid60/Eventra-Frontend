@@ -7,6 +7,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+    title: "Register - Create Your Account | Eventra",
+    description: "Register for a new Eventra account to start exploring and participating in exciting events and activities around you. Join the community and stay connected with the latest happenings.",
+    keywords: ["register", "create account", "eventra signup", "new user", "event participation", "community events"],
+    authors: [{ name: "Eventra Team" }],
+};
+
 const RegisterPage = () => {
   return (
     <>

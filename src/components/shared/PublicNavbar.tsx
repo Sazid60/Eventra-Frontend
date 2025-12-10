@@ -29,11 +29,10 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
   const router = useRouter();
 
   const navItems = [
+    { href: "/", role: "COMMON", label: "Home" },
     { href: "/all-events", role: "COMMON", label: "View All Events" },
     { href: "/created-events", role: "HOST", label: "My Created Events" },
     { href: "/my-booked-events", role: "CLIENT", label: "My Booked Events" },
-    { href: "/about", role: "COMMON", label: "About" },
-    { href: "/contact", role: "COMMON", label: "Contact" },
   ];
 
   const dashboardRoute =
