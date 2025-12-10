@@ -50,7 +50,7 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
         </div>
         <FieldGroup className="mt-4">
           <Field>
-            <Button type="submit" disabled={isPending}>
+            <Button className="bg-[#45aaa2] hover:bg-[#3d8f8a] text-white" type="submit" disabled={isPending}>
               {isPending ? "Logging in..." : "Login"}
             </Button>
 

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
-import { serverFetch } from "@/lib/server-fetch";
 import { contactFormValidationZodSchema } from "@/zod/auth.validation";
 import { zodValidator } from "@/lib/zodValidator";
+import { serverFetch } from "@/lib/server-fetch";
+
 
 
 export interface LandingPageStats {
@@ -36,7 +37,7 @@ export interface Review {
 
 export async function getLandingPageStats() {
     try {
-        const response = await serverFetch.get(`/meta/landing-page`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL || "https://eventra-backend.vercel.app/api/v1"}/meta/landing-page`, {
             cache: "force-cache",
             next: { tags: ["landing-page-stats"] }
         });
@@ -53,7 +54,7 @@ export async function getLandingPageStats() {
 
 export async function getLatestReviews() {
     try {
-        const response = await serverFetch.get(`/review`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL || "https://eventra-backend.vercel.app/api/v1"}/review`, {
             cache: "force-cache",
             next: { tags: ["latest-reviews"] }
         });

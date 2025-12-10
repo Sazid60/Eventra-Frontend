@@ -4,7 +4,7 @@ import Logo from "@/assets/icon/Logo";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { SheetTitle } from "@/components/ui/sheet";
+import { SheetClose, SheetTitle } from "@/components/ui/sheet";
 import { getIconComponent } from "@/lib/icon-mapper";
 import { cn } from "@/lib/utils";
 import { NavSection } from "@/types/dashboard.interface";
@@ -27,7 +27,7 @@ const DashboardMobileSidebar = ({
     <div className=" flex h-full flex-col">
       {/* Logo */}
       <div className="flex h-16 items-center border-b px-6">
-        <Link href={dashboardHome}>
+        <Link href="/">
           <span className="text-xl font-bold text-primary flex items-center gap-2 pt-1">
             <Logo />
             <h1>Eventra</h1>
@@ -52,24 +52,25 @@ const DashboardMobileSidebar = ({
                   const Icon = getIconComponent(item.icon);
 
                   return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={cn(
-                        "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all",
-                        isActive
-                          ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                      )}
-                    >
-                      <Icon className="h-4 w-4" />
-                      <span className="flex-1">{item.title}</span>
-                      {item.badge && (
-                        <Badge variant={isActive ? "secondary" : "default"}>
-                          {item.badge}
-                        </Badge>
-                      )}
-                    </Link>
+                    <SheetClose asChild key={item.href}>
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all",
+                          isActive
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                        )}
+                      >
+                        <Icon className="h-4 w-4" />
+                        <span className="flex-1">{item.title}</span>
+                        {item.badge && (
+                          <Badge variant={isActive ? "secondary" : "default"}>
+                            {item.badge}
+                          </Badge>
+                        )}
+                      </Link>
+                    </SheetClose>
                   );
                 })}
               </div>

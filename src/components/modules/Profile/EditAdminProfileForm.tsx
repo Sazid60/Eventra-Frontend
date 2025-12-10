@@ -65,6 +65,8 @@ export default function EditAdminProfileForm({
                 });
             });
             onSuccess?.();
+        }else if (state && !state.success) {
+            toast.error(state.message || "Failed to update profile. Please try again.");
         }
 
         if (selectedFile && fileInputRef.current) {
