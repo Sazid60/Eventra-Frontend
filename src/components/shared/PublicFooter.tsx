@@ -19,7 +19,7 @@ export default function PublicFooter() {
         {/* Navigation Links */}
         <ul className="flex justify-center gap-6 mt-6 text-sm">
           <li><Link href="/" className="text-zinc-300 hover:text-[#00ffea]">Home</Link></li>
-          <li><Link href="/events" className="text-zinc-300 hover:text-[#00ffea]">Explore Events</Link></li>
+          <li><Link href="/all-events" className="text-zinc-300 hover:text-[#00ffea]">Explore Events</Link></li>
         </ul>
 
         {/* Social icons (lucide-react) */}

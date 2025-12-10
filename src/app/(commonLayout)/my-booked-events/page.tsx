@@ -43,7 +43,7 @@ const MyBookedEventsPage = async ({ searchParams }: { searchParams: Promise<{ [k
                 <p className="text-sm text-muted-foreground mb-6">Browse your booked events - filter by category, date, or location to find what interests you.</p>
 
                 <UserEventsFilter />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6">
                     {Array.isArray(allEvents?.data?.data) && (allEvents.data.data as IBookedEvent[]).length > 0 ? (
                         (allEvents.data.data as IBookedEvent[]).map((ev) => (
                             <UserEventCard key={ev.id} event={ev} />

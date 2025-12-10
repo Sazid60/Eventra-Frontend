@@ -22,6 +22,7 @@ const DashboardMobileSidebar = ({
   navItems,
   dashboardHome,
 }: DashboardMobileSidebarContentProps) => {
+  console.log(dashboardHome)
   const pathname = usePathname();
   return (
     <div className=" flex h-full flex-col">

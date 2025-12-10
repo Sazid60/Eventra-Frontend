@@ -9,7 +9,7 @@ import SelectFilter from "@/components/shared/SelectFilter";
 const AdminEventCardFilter = () => {
     return (
         <div className="space-y-3 mb-6">
-            <div className="flex flex-col md:flex-row justify-between md:gap-3">
+            <div className="flex flex-col lg:flex-row justify-between gap-3">
                 <div className="flex items-center gap-2 ">
                     <SearchFilter paramName="searchTerm" placeholder="Search by title, location..." />
                     <RefreshButton/>
