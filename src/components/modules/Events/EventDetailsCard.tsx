@@ -196,6 +196,7 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
                     >
                         <RefreshCcw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
                     </Button>
+                    {/* add a note bellow  */}
                 </div>
             </div>
 

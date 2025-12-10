@@ -4,7 +4,7 @@
 
 #### Live Backend: [eventra-backend.vercel.app](https://eventra-backend.vercel.app)
 
-#### Backend Repository: [Eventra-Backend](https://github.com/Sazid60/Eventra-Backend.git)
+#### Backend Repository: [https://github.com/Sazid60/Eventra-Backend.git](https://github.com/Sazid60/Eventra-Backend.git)
 
 #### Demo Video: [Watch Demo]()
 

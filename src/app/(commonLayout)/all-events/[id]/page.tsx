@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Phone } from "lucide-react";
+// import { Phone } from "lucide-react";
 import { getSingleEvent, getEventParticipants } from "@/services/events/events";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 import { ApiParticipantInfo } from "@/types/event.interface";
@@ -92,7 +92,7 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
                                                     {(p.client?.interests || []).slice(0, 3).map((t: string) => <span key={t} className="mr-2 text-orange-700">#{t}</span>)}
                                                 </div>
                                             </div>
-                                            {p.client?.contactNumber ? (
+                                            {/* {p.client?.contactNumber ? (
                                                 <a href={`tel:${p.client.contactNumber}`} className="text-sm text-[#45aaa2] flex items-center gap-1" aria-label={`Call ${p.client?.name || 'participant'}`}>
                                                     <Phone className="w-4 h-4" />
                                                 </a>
@@ -100,7 +100,7 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
                                                 <button disabled className="text-sm text-muted-foreground flex items-center gap-1" aria-hidden="true">
                                                     <Phone className="w-4 h-4" />
                                                 </button>
-                                            )}
+                                            )} */}
                                         </CardContent>
                                     </Card>
                                 ))

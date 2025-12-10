@@ -7,7 +7,7 @@ import { revalidateTag } from "next/cache";
 export async function getAllClients(queryString?: string) {
     try {
         const response = await serverFetch.get(`/admin/clients${queryString ? `?${queryString}` : ""}`, {
-            cache: "force-cache",
+            cache: "no-store",
             next: { tags: ["all-clients"] }
         })
         const result = await response.json();

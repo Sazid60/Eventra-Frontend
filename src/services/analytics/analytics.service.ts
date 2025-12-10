@@ -10,7 +10,7 @@ export type AnalyticsData = AdminAnalyticsData | HostAnalyticsData;
 export async function getAnalytics() {
     try {
         const response = await serverFetch.get("/meta", {
-            cache: "force-cache",
+            cache: "no-store",
             next: { tags: ["analytics"] }
         });
         const result = await response.json();

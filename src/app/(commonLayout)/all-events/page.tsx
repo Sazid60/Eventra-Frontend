@@ -26,7 +26,6 @@ const allEventsPage = async ({ searchParams }: { searchParams: Promise<{ [key: s
         (allEvents?.data?.meta?.total || 1) / (allEvents?.data?.meta?.limit || 1)
     );
 
-    console.log(totalPages)
 
     return (
         <>
@@ -35,9 +34,9 @@ const allEventsPage = async ({ searchParams }: { searchParams: Promise<{ [key: s
                 <p className="text-sm text-muted-foreground mb-6">Browse upcoming events - filter by category, date, or location to find what interests you.</p>
 
                 <EventsFilter />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {Array.isArray(allEvents?.data?.allEvents) && (allEvents.data.allEvents as ApiEvent[]).length > 0 ? (
-                        (allEvents.data.allEvents as ApiEvent[]).map((ev) => (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {Array.isArray(allEvents?.data?.eventRequests) && (allEvents.data.eventRequests as ApiEvent[]).length > 0 ? (
+                        (allEvents.data.eventRequests as ApiEvent[]).map((ev) => (
                             <EventCard key={ev.id} event={ev} />
                         ))
                     ) : (

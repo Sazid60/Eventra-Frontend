@@ -13,17 +13,29 @@ type EventCardProps = {
     event: ApiEvent;
 };
 
+// Fixed locale + timezone keeps server/client markup identical and avoids hydration mismatches
 const formatDate = (iso?: string) => {
     if (!iso) return { date: "", time: "" };
     const d = new Date(iso);
+    const dateFormatter = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC",
+    });
+    const timeFormatter = new Intl.DateTimeFormat("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "UTC",
+    });
     return {
-        date: d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }),
-        time: d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" }),
+        date: dateFormatter.format(d),
+        time: timeFormatter.format(d),
     };
 };
 
 export default function EventCard({ event }: EventCardProps) {
-    console.log(event)
     const host: Host = (event?.host as Host) || ({} as Host);
     const title = event?.title || "Untitled Event";
     const image = event?.image || "/images/event-placeholder.jpg";
