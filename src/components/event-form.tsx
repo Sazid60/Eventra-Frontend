@@ -84,7 +84,15 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
     const baseValues = useMemo(() => ({
         title: event?.title || "",
         location: event?.location || "",
-        date: event?.date ? new Date(event.date).toISOString().slice(0, 16) : "",
+        date: event?.date ? (() => {
+            const d = new Date(event.date);
+            const year = d.getUTCFullYear();
+            const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(d.getUTCDate()).padStart(2, '0');
+            const hours = String(d.getUTCHours()).padStart(2, '0');
+            const minutes = String(d.getUTCMinutes()).padStart(2, '0');
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        })() : "",
         capacity: event?.capacity !== undefined && event?.capacity !== null ? String(event.capacity) : "",
         joiningFee: event?.joiningFee !== undefined && event?.joiningFee !== null ? String(event.joiningFee) : "",
         description: event?.description || "",
@@ -105,7 +113,7 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
     };
 
     const isDirty = useMemo(() => {
-        if (!isEdit) return true; 
+        if (!isEdit) return true;
         const baseCats = (baseValues.category || []).slice().sort().join("|");
         const currentCats = (formValues.category || []).slice().sort().join("|");
         return (

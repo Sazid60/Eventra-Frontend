@@ -47,7 +47,7 @@ export async function getLandingPageStats() {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message 
         };
     }
 }
@@ -64,7 +64,7 @@ export async function getLatestReviews() {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -79,7 +79,7 @@ export async function sendContactEmail(_currentState: any, formData: FormData) {
             message: formData.get('message') as string,
         };
 
-        // Validate with Zod
+
         const validationResult = zodValidator(payload, contactFormValidationZodSchema);
         if (!validationResult.success) {
             return {
@@ -100,14 +100,13 @@ export async function sendContactEmail(_currentState: any, formData: FormData) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Failed to send message. Please try again.'}`
+            message: error.message
         };
     }
 }

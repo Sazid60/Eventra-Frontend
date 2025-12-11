@@ -33,7 +33,7 @@ export default function EditHostProfileForm({
         contactNumber: profile.contactNumber || "",
         location: profile.location || "",
         bio: profile.bio || "",
-        fileToken: "", // track file selection for dirty check
+        fileToken: "", 
     });
 
     const isDirty = useMemo(() => {

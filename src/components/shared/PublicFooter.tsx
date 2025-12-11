@@ -57,7 +57,7 @@ export default function PublicFooter() {
         </div>
 
         <div className="mt-4 text-sm text-zinc-400">
-          &copy; {new Date().getFullYear()} <span className="text-[#00ffea]">Events & Activities Inc.</span>. All rights reserved.
+          &copy; 2025 <span className="text-[#00ffea]">Events & Activities Inc.</span>. All rights reserved.
         </div>
       </div>
     </footer>

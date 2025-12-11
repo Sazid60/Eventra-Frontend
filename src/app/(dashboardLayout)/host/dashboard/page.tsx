@@ -46,7 +46,7 @@ const HostDashboardPage = async () => {
           color="bg-gradient-to-br from-teal-500 to-teal-600"
         />
         <StatCard
-          title="Total Events"
+          title="Upcoming Events"
           value={analytics.totalEvents}
           icon={Calendar}
           color="bg-gradient-to-br from-indigo-500 to-indigo-600"

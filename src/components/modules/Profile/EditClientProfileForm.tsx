@@ -94,7 +94,7 @@ export default function EditClientProfileForm({
     };
 
     useEffect(() => {
-        // Reset toast guard when state clears
+
         if (!state) {
             successToastShownRef.current = false;
         }

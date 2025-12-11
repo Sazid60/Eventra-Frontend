@@ -9,9 +9,9 @@ export type RouteConfig = {
 export const authRoutes = ["/login", "/register", "/forgot-password"];
 
 export const commonProtectedRoutes: RouteConfig = {
-    exact: ["/my-profile", "/settings", "/change-password", "/reset-password", "/my-events", "/payment"],
+    exact: ["/my-profile", "/settings", "/change-password", "/reset-password", "/my-booked-events", "/created-events"],
      patterns: [
-        /^\/all-events\/[^/]+$/, /^\/payment\/[^/]+$/, /^\/created-events\/[^/]+$/, /^\/my-booked-events\/[^/]+$/
+        /^\/all-events\/[^/]+$/
     ], 
 }
 

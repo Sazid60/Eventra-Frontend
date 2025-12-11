@@ -116,7 +116,7 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                         <div className="text-3xl md:text-4xl font-bold text-white">
                             {stats.totalEvents}+
                         </div>
-                        <div className="text-white/80 font-semibold text-sm md:text-base mt-2">Total Events</div>
+                        <div className="text-white/80 font-semibold text-sm md:text-base mt-2">Upcoming Events</div>
                     </div>
 
                     {/* Completed Events Stat */}

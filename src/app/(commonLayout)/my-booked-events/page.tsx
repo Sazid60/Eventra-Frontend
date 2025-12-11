@@ -2,7 +2,7 @@
 import { getMyBookedEvents } from "@/services/events/events";
 
 
-import  { IBookedEvent } from "@/types/event.interface";
+import { IBookedEvent } from "@/types/event.interface";
 import Pagination from "@/components/shared/Pagination";
 import { queryStringFormatter } from "@/lib/formatters";
 import UserEventCard from "@/components/modules/Events/UserEventCard";
@@ -25,16 +25,9 @@ const MyBookedEventsPage = async ({ searchParams }: { searchParams: Promise<{ [k
     const queryString = queryStringFormatter(searchParamsObj);
     const allEvents = await getMyBookedEvents(queryString);
 
-    console.log(allEvents)
-
-    console.log(allEvents)
-
-
     const totalPages = Math.ceil(
         (allEvents?.data?.meta?.total || 1) / (allEvents?.data?.meta?.limit || 1)
     );
-
-    console.log(totalPages)
 
     return (
         <>

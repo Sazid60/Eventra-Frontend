@@ -15,7 +15,7 @@ export async function getUserPayments(queryString?: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }

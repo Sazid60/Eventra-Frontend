@@ -18,7 +18,7 @@ export async function getMe() {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+           message: error.message 
         };
     }
 }
@@ -83,7 +83,7 @@ export async function updateMyProfile(_currentState: any, formData: FormData): P
 
         newFormData.append("data", JSON.stringify(profileData));
 
-        // Add file if exists
+  
         const file = formData.get("profilePhoto");
         if (file && file instanceof File && file.size > 0) {
             newFormData.append("file", file);
@@ -98,18 +98,19 @@ export async function updateMyProfile(_currentState: any, formData: FormData): P
 
         if (result.success) {
             revalidateTag("user-profile", { expire: 0 });
+            revalidateTag('all-events', { expire: 0 });
         }
 
         return result;
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message:  error.message
         };
     }
 }

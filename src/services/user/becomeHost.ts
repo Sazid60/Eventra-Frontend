@@ -12,7 +12,7 @@ export async function becomeHost() {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
-        };
+            message:  error.message
+        }
     }
 }

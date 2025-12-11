@@ -18,7 +18,7 @@ export async function getRecentEvents() {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -36,7 +36,7 @@ export async function getAllEvents(queryString?: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -54,7 +54,7 @@ export async function getMyBookedEvents(queryString?: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -79,7 +79,7 @@ export async function leaveEvent(id: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -97,7 +97,7 @@ export async function getMyHostedEvents(queryString?: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -114,7 +114,7 @@ export async function getEventApplications(queryString?: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -131,7 +131,7 @@ export async function getSingleEvent(id: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -148,7 +148,7 @@ export async function getEventParticipants(id: string, queryString?: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -173,7 +173,7 @@ export async function joinEvent(id: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -198,7 +198,7 @@ export async function approveEventApplication(id: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -219,7 +219,7 @@ export async function rejectEventApplication(id: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -240,7 +240,7 @@ export async function deleteEvent(id: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -265,7 +265,7 @@ export async function completeEvent(id: string) {
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -338,14 +338,14 @@ export const createEvent = async (_currentState: any, formData: any) => {
         return result
 
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : "Event creation failed. Please try again."}`
+            message: error.message
         };
     }
 }
@@ -362,7 +362,7 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
         category: formData.getAll('category'),
         image: formData.get('image'),
     }
-    
+
 
     const validatedPayload = zodValidator(validationPayload, updateEventValidationZodSchema);
 
@@ -397,7 +397,7 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
 
     newFormData.append("data", JSON.stringify(eventData));
 
-    // Only append file if it exists
+
     const imageFile = formData.get("image") as Blob;
     if (imageFile && imageFile.size > 0) {
         newFormData.append("file", imageFile);
@@ -424,14 +424,37 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
         return result
 
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : "Event update failed. Please try again."}`
+            message: error.message
+        };
+    }
+}
+
+export async function checkReviewExists(transactionId: string) {
+    try {
+        const response = await serverFetch.get(`/review/check/${transactionId}`, {
+            cache: "no-store"
+        });
+        const result = await response.json();
+
+        return {
+            success: !!result?.success,
+            hasReviewed: !!result?.data?.hasReviewed,
+            review: result?.data?.review ?? null,
+            message: result?.message,
+        };
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            hasReviewed: false,
+            message: error.message
         };
     }
 }
@@ -459,7 +482,7 @@ export async function addReview(transactionId: string, payload: { rating: number
         console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Failed to add review. Please try again.'}`
+            message: error.message
         };
     }
 }

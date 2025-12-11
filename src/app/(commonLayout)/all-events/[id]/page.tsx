@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-// import { Phone } from "lucide-react";
+
 import { getSingleEvent, getEventParticipants } from "@/services/events/events";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 import { ApiParticipantInfo } from "@/types/event.interface";
@@ -18,16 +18,20 @@ export const metadata: Metadata = {
 const formatDate = (iso?: string) => {
     if (!iso) return { date: "", time: "" };
     const d = new Date(iso);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = months[d.getUTCMonth()];
+    const day = d.getUTCDate();
+    const year = d.getUTCFullYear();
+    const hours = String(d.getUTCHours()).padStart(2, "0");
+    const minutes = String(d.getUTCMinutes()).padStart(2, "0");
     return {
-        date: d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }),
-        time: d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" }),
+        date: `${month} ${day}, ${year}`,
+        time: `${hours}:${minutes}`,
     };
 };
 
 const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
     const { id } = await params;
-
-    console.log(params)
 
     const result = await getSingleEvent(id);
     const participantsResult = await getEventParticipants(id);
@@ -37,8 +41,6 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
     const userInfo = await getUserInfo();
     const userRole = userInfo?.role ?? null;
     const userEmail = userInfo?.email ?? null;
-
-    console.log(result)
 
     if (!event) {
         return (

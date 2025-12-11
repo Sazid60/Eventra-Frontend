@@ -17,15 +17,12 @@ const RegisterForm = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const successToastShownRef = useRef(false);
 
-  console.log(state)
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setSelectedFile(file || null);
   };
 
   useEffect(() => {
-    // Reset the toast guard when state becomes falsy so future submissions can show again
     if (!state) {
       successToastShownRef.current = false;
     }
