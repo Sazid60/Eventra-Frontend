@@ -45,7 +45,7 @@ Eventra is a full-featured event management platform frontend built with Next.js
 - Admins have comprehensive dashboards for user, host, event, and payment management
 
 
-### No Previous date selection while creating event or updating event. You wont be able to test the review and mark as complete feature unless you use my `Client` and `Host` credential. Two events are created and date has been changed accordingly for testing purpose. If you login as host the mark as complete option you can do it. And If You Login as client you can give review for the completed event only (after mark as complete the review button will appear and you can test).
+### No Previous date selection while creating event or updating event. You wont be able to test the review and mark as complete feature unless you use my `Client` and `Host` credential. Two events are created and date has been changed accordingly for testing purpose. If you login as host the mark as complete option you can do it. And If You Login as client you can give review for the completed event only (after mark as complete the review button will appear and you can test). For Testing use host@gmail.com (not the host1@gmail.com) its added added in client@gmail.com.
 
 
 ## Credentials for Testing
@@ -55,9 +55,14 @@ Eventra is a full-featured event management platform frontend built with Next.js
 - _Admin Email_: admin@gmail.com
 - _Admin Password_: Admin@12345
 
-##### Host Login
+##### Host Login (host-1)
 
 - _Host Email_: host@gmail.com
+- _Host Password_: Host@12345
+
+##### Host Login (host-2)
+
+- _Host Email_: host1@gmail.com
 - _Host Password_: Host@12345
 
 ##### Client Login
