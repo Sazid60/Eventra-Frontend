@@ -6,7 +6,7 @@
 
 #### Backend Repository: [https://github.com/Sazid60/Eventra-Backend.git](https://github.com/Sazid60/Eventra-Backend.git)
 
-#### Demo Video: [Watch Demo]()
+#### Video Demonstration: [Video_link](https://drive.google.com/file/d/1eeQLkki_Evg1nFA_3IS3wPqMEEpBY5z9/view)
 
 Eventra is a full-featured event management platform frontend built with Next.js 16 and TypeScript. It supports three distinct roles (Admin, Host, Client) with role-based navigation and dashboards, secure JWT authentication with HTTP-only cookies, SSLCommerz payment integration with automated revenue splitting (90% host, 10% admin), peer-to-peer review system with host ratings, comprehensive analytics dashboards, and responsive UI. Features include: interest-based event discovery with advanced search & filtering, event booking with online payment options, host/event application system with admin approval, event lifecycle management (Open/Full/Cancelled/Completed status), image uploads via Cloudinary, email notifications (booking confirmations, host application email (confirm/rejection), payment receipts), contact form integration, user/host/event/payment management for admins, revenue tracking dashboards for hosts, participant management, SEO optimization with meta tags, mobile-first responsive design with adaptive navigation, and real-time stats display across all dashboard types.
 
@@ -33,6 +33,7 @@ Eventra is a full-featured event management platform frontend built with Next.js
 - *For giving reviews you have to wait until admin mark the event as 'Completed'*
 -  *For Host if the event is approved the events cant be deleted. It can be deleted only if not approved. but you can update unless the event date has not passed*
 
+
 #### Logical Cores
 
 - Clients can browse all available events with advanced search and filtering
@@ -42,6 +43,10 @@ Eventra is a full-featured event management platform frontend built with Next.js
 - Review and rating system allows clients to rate hosts after event completion
 - Event Management: Hosts can create, edit, delete events; view participants; manage status
 - Admins have comprehensive dashboards for user, host, event, and payment management
+
+
+### No Previous date selection while creating event or updating event. You wont be able to test the review and mark as complete feature unless you use my `Client` and `Host` credential. Two events are created and date has been changed accordingly for testing purpose. If you login as host the mark as complete option you can do it. And If You Login as client you can give review for the completed event only (after mark as complete the review button will appear and you can test).
+
 
 ## Credentials for Testing
 
