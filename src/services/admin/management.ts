@@ -13,10 +13,9 @@ export async function getAllClients(queryString?: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message
         };
     }
 }
@@ -35,10 +34,9 @@ export async function suspendClient(clientId: string) {
         }
         return result;
     } catch (error: any) {
-        console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message:  error.message
         };
     }
 }
@@ -57,10 +55,9 @@ export async function unsuspendClient(clientId: string) {
         }
         return result;
     } catch (error: any) {
-        console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message 
         };
     }
 }
@@ -74,10 +71,9 @@ export async function getAllHosts(queryString?: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message 
         };
     }
 }
@@ -91,10 +87,9 @@ export async function getAllHostApplications(queryString?: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message 
         };
     }
 }
@@ -113,10 +108,9 @@ export async function approveHostApplication(applicationId: string) {
         }
         return result;
     } catch (error: any) {
-        console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message 
         };
     }
 }
@@ -135,10 +129,9 @@ export async function rejectHostApplication(applicationId: string) {
         }
         return result;
     } catch (error: any) {
-        console.log(error);
         return {
             success: false,
-            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+            message: error.message 
         };
     }
 }

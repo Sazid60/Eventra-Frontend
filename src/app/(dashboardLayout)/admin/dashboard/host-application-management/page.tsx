@@ -11,7 +11,6 @@ const HostApplicationManagementPage = async ({ searchParams }: { searchParams: P
     const queryString = queryStringFormatter(searchParamsObj);
     const allApplications = await getAllHostApplications(queryString);
 
-    console.log(allApplications)
 
     const totalPages = Math.ceil(
         (allApplications?.data?.meta?.total || 1) / (allApplications?.data?.meta?.limit || 1)

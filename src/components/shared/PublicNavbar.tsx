@@ -61,8 +61,6 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
       setIsRequesting(true);
       const result = await becomeHost();
 
-      console.log(result)
-
       if (result.success) {
         toast.success(result.message || "Your Host Request has Been Successful! Please Wait For The Approval of the of Admin!");
 

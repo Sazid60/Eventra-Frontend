@@ -90,6 +90,6 @@ export const registerClient = async (_currentState: any, formData: any): Promise
             throw error;
         }
         console.log(error);
-        return { success: false, message: `${process.env.NODE_ENV === 'development' ? error.message : "Registration Failed. Please try again."}` };
+        return { success: false, message: error.message};
     }
 }

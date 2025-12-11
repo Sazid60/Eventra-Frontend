@@ -18,8 +18,6 @@ const HostDashboardPage = async () => {
   const response = await getAnalytics();
   const analytics = response.data as HostAnalyticsData;
 
-  console.log(analytics)
-
   return (
     <div className="space-y-4">
       <div className="mb-4">

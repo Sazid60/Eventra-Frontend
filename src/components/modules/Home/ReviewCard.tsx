@@ -23,11 +23,11 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-        });
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const month = months[date.getUTCMonth()];
+        const day = date.getUTCDate();
+        const year = date.getUTCFullYear();
+        return `${month} ${day}, ${year}`;
     };
 
     return (

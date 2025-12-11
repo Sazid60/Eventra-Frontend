@@ -14,8 +14,6 @@ const DateFilter = ({ placeholder = "Date", paramName = "date" }: DateFilterProp
     const [, startTransition] = useTransition();
     const searchParams = useSearchParams();
     const initial = searchParams.get(paramName) || "";
-
-    console.log(placeholder)
     const [value, setValue] = useState<string>(initial);
 
     // Keep local value in sync when search params change externally

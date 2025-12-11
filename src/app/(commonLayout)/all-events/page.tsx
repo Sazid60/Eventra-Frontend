@@ -19,9 +19,6 @@ const allEventsPage = async ({ searchParams }: { searchParams: Promise<{ [key: s
     const queryString = queryStringFormatter(searchParamsObj);
     const allEvents = await getAllEvents(queryString);
 
-    console.log(allEvents)
-
-
     const totalPages = Math.ceil(
         (allEvents?.data?.meta?.total || 1) / (allEvents?.data?.meta?.limit || 1)
     );
