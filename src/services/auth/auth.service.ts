@@ -90,7 +90,7 @@ export async function resetPassword(_prevState: any, formData: FormData) {
         }
 
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+
         if (error?.digest?.startsWith("NEXT_REDIRECT")) {
             throw error;
         }
@@ -107,14 +107,14 @@ export async function getNewAccessToken() {
         const accessToken = await getCookie("accessToken");
         const refreshToken = await getCookie("refreshToken");
 
-        //Case 1: Both tokens are missing - user is logged out
+
         if (!accessToken && !refreshToken) {
             return {
                 tokenRefreshed: false,
             }
         }
 
-        // Case 2 : Access Token exist- and need to verify
+    
         if (accessToken) {
             const verifiedToken = await verifyAccessToken(accessToken);
 
@@ -125,22 +125,17 @@ export async function getNewAccessToken() {
             }
         }
 
-        //Case 3 : refresh Token is missing- user is logged out
+
         if (!refreshToken) {
             return {
                 tokenRefreshed: false,
             }
         }
 
-        //Case 4: Access Token is invalid/expired- try to get a new one using refresh token
-        // This is the only case we need to call the API
 
-        // Now we know: accessToken is invalid/missing AND refreshToken exists
-        // Safe to call the API
         let accessTokenObject: null | any = null;
         let refreshTokenObject: null | any = null;
 
-        // API Call - serverFetch will skip getNewAccessToken for /auth/refresh-token endpoint
         const response = await serverFetch.post("/auth/refresh-token", {
             headers: {
                 Cookie: `refreshToken=${refreshToken}`,

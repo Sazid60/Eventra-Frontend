@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-// import { Phone } from "lucide-react";
+
 import { getSingleEvent, getEventParticipants } from "@/services/events/events";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 import { ApiParticipantInfo } from "@/types/event.interface";

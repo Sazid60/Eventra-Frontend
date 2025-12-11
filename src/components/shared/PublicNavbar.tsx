@@ -38,7 +38,6 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
   const dashboardRoute =
     accessToken && role ? getDefaultDashboardRoute(role as any) : null;
 
-  // Filter role based routes + append dashboard
   const filteredNav = [
     ...navItems.filter((item) => {
       if (item.role === "COMMON") return true;

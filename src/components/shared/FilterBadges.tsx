@@ -36,23 +36,23 @@ const FilterBadges = ({
   const removeFilter = (paramName: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    // Get all values for this param
+
     const allValues = params.getAll(paramName);
 
-    // Remove the specific value
+
     params.delete(paramName);
     allValues
       .filter((v) => v !== value)
       .forEach((v) => params.append(paramName, v));
 
-    // Reset to page 1
+ 
     params.set("page", "1");
 
     startTransition(() => {
       router.push(`?${params.toString()}`);
     });
 
-    // Callback
+ 
     onRemove?.(paramName, value);
   };
 

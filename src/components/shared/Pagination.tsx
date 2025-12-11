@@ -27,21 +27,6 @@ const Pagination = ({ currentPage, totalPages }: TablePaginationProps) => {
     });
   };
 
-  // const changeLimit = (newLimit: string) => {
-  //   const params = new URLSearchParams(searchParams.toString());
-  //   params.set("limit", newLimit);
-  //   params.set("page", "1"); // Reset to first page when changing limit
-
-  //   startTransition(() => {
-  //     router.push(`?${params.toString()}`);
-  //   });
-  // };
-
-  // const currentLimit = searchParams.get("limit") || "10";
-
-  // if (totalPages <= 1) {
-  //   return null;
-  // }
 
   return (
     <div className="flex items-center justify-center gap-2">

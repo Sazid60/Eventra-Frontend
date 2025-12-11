@@ -338,7 +338,7 @@ export const createEvent = async (_currentState: any, formData: any) => {
         return result
 
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
@@ -397,7 +397,7 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
 
     newFormData.append("data", JSON.stringify(eventData));
 
-    // Only append file if it exists
+
     const imageFile = formData.get("image") as Blob;
     if (imageFile && imageFile.size > 0) {
         newFormData.append("file", imageFile);
@@ -424,7 +424,7 @@ export const updateEvent = async (eventId: string, _currentState: any, formData:
         return result
 
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
@@ -442,7 +442,7 @@ export async function checkReviewExists(transactionId: string) {
             cache: "no-store"
         });
         const result = await response.json();
-        // Normalize shape: backend returns { success, data: { hasReviewed, review } }
+
         return {
             success: !!result?.success,
             hasReviewed: !!result?.data?.hasReviewed,

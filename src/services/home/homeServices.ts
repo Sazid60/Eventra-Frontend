@@ -79,7 +79,7 @@ export async function sendContactEmail(_currentState: any, formData: FormData) {
             message: formData.get('message') as string,
         };
 
-        // Validate with Zod
+
         const validationResult = zodValidator(payload, contactFormValidationZodSchema);
         if (!validationResult.success) {
             return {
@@ -100,7 +100,6 @@ export async function sendContactEmail(_currentState: any, formData: FormData) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }

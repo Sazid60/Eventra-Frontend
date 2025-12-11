@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-// import { Calendar } from "lucide-react";
 import { Input } from "../ui/input";
 
 interface DateFilterProps {
@@ -16,7 +15,7 @@ const DateFilter = ({ placeholder = "Date", paramName = "date" }: DateFilterProp
     const initial = searchParams.get(paramName) || "";
     const [value, setValue] = useState<string>(initial);
 
-    // Keep local value in sync when search params change externally
+
     useEffect(() => {
         const newVal = searchParams.get(paramName) || "";
         if (newVal !== value) {
@@ -32,7 +31,7 @@ const DateFilter = ({ placeholder = "Date", paramName = "date" }: DateFilterProp
         if (value === initialValue) return;
 
         if (value) {
-            params.set(paramName, value); // ?date=YYYY-MM-DD
+            params.set(paramName, value); 
             params.set("page", "1");
         } else {
             params.delete(paramName);

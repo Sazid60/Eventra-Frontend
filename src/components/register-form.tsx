@@ -23,7 +23,6 @@ const RegisterForm = () => {
   };
 
   useEffect(() => {
-    // Reset the toast guard when state becomes falsy so future submissions can show again
     if (!state) {
       successToastShownRef.current = false;
     }

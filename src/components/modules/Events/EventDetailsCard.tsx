@@ -41,7 +41,7 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
         setHasReviewed(initialReviewStatus);
     }, [initialReviewStatus]);
 
-    // Check if event date has passed
+
     const isEventPast = useMemo(() => {
         if (!event?.date) return false;
         return new Date(event.date) < new Date();
@@ -196,7 +196,6 @@ export default function EventDetailsCard({ event, date, time, userRole, currentP
                     >
                         <RefreshCcw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
                     </Button>
-                    {/* add a note bellow  */}
                 </div>
             </div>
 

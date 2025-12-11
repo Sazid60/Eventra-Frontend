@@ -85,7 +85,7 @@ export const registerClient = async (_currentState: any, formData: any): Promise
 
 
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }

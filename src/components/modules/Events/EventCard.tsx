@@ -13,7 +13,7 @@ type EventCardProps = {
     event: ApiEvent;
 };
 
-// Fixed locale + timezone keeps server/client markup identical and avoids hydration mismatches
+
 const formatDate = (iso?: string) => {
     if (!iso) return { date: "", time: "" };
     const d = new Date(iso);

@@ -119,7 +119,7 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
                 redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
             }
         } else {
-            // redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+
             if (userRole === "CLIENT") {
                 redirect(`/all-events?loggedIn=true`);
             }
@@ -127,7 +127,7 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
         }
 
     } catch (error: any) {
-        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
