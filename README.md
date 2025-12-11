@@ -55,9 +55,14 @@ Eventra is a full-featured event management platform frontend built with Next.js
 - _Admin Email_: admin@gmail.com
 - _Admin Password_: Admin@12345
 
-##### Host Login
+##### Host Login (host-1)
 
 - _Host Email_: host@gmail.com
+- _Host Password_: Host@12345
+
+##### Host Login (host-2)
+
+- _Host Email_: host1@gmail.com
 - _Host Password_: Host@12345
 
 ##### Client Login
