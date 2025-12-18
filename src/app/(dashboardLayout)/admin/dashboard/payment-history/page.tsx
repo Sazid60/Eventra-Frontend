@@ -15,7 +15,7 @@ const PaymentHistoryPage = async ({ searchParams }: { searchParams: Promise<{ [k
 
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="px-4 py-8">
                 <h1 className="text-2xl font-semibold mb-6">Payment History</h1>
                 <p className="text-sm text-muted-foreground mb-6">
                     View and manage all payment transactions. Filter by status or search by transaction ID.

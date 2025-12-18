@@ -18,9 +18,13 @@ const Breadcrumb = () => {
             <div className="flex flex-row gap-4 justify-center">
 
                 <Link href="/all-events">
-                    <Button variant="outline" className="bg-[#45aaa2] hover:bg-[#3c8f88] transition-colors">
-                        Browse Events
-                    </Button>
+                    <div className="rainbow relative z-0 overflow-hidden p-0.5 flex items-center justify-center rounded-md hover:scale-105 transition duration-300 active:scale-100">
+                        <Button
+                            className="px-8 text-sm py-3 text-white rounded-md font-medium bg-transparent border backdrop-blur-md relative z-10 hover:bg-transparent"
+                        >
+                            Explore Events
+                        </Button>
+                    </div>
                 </Link>
             </div>
         </div>

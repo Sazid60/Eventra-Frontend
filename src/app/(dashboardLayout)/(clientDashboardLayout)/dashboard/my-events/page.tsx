@@ -20,7 +20,7 @@ const MyBookedEventsDashboardPage = async ({ searchParams }: { searchParams: Pro
 
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className=" px-4 py-8">
                 <h1 className="text-2xl font-semibold mb-6">My Booked Events</h1>
                 <p className="text-sm text-muted-foreground mb-6">Browse your booked events - filter by category, date, or location to find what interests you.</p>
 

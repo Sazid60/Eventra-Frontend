@@ -20,7 +20,7 @@ const EventApplicationPage = async ({ searchParams }: { searchParams: Promise<{ 
 
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-8 ">
+            <div className=" px-4 py-8 ">
                 <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center mb-6">
                     <div>
                         <h1 className="text-2xl font-semibold mb-2">Event Applications</h1>
