@@ -70,7 +70,7 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
           </div>
 
 
-          <div className="flex  justify-between ">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-0  justify-between ">
             <Button type="button" variant="outline" className="border-[#45aaa2] text-[#45aaa2] hover:bg-[#e0f7f4]" onClick={() => handleDemoLogin("client")}>Client Login</Button>
             <Button type="button" variant="outline" className="border-[#45aaa2] text-[#45aaa2] hover:bg-[#e0f7f4]" onClick={() => handleDemoLogin("host")}>Host Login</Button>
             <Button type="button" variant="outline" className="border-[#45aaa2] text-[#45aaa2] hover:bg-[#e0f7f4]" onClick={() => handleDemoLogin("admin")}>Admin Login</Button>
