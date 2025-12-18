@@ -4,15 +4,6 @@ import React from 'react';
 const HostFeatures = () => {
     return (
         <div>
-            <div className="text-center mb-12 mt-10">
-                <h1 className="text-4xl md:text-5xl font-bold text-[#45aaa2] mb-4">
-                    Host Features
-                </h1>
-                <p className="text-lg md:text-xl max-w-2xl mx-auto">
-                    Tools and insights for event hosts to manage, analyze, and grow their events on the platform.
-                </p>
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-12">
 
                 <div className="rounded-xl shadow-lg p-6 hover:shadow-xl border transition-transform duration-300 hover:scale-101">
