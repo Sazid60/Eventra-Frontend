@@ -13,6 +13,7 @@ import {
   FileText,
 } from "lucide-react";
 import { AdminAnalyticsData } from "@/types/meta.interface";
+import AdminFeatures from "@/components/modules/Admin/AdminFeatures";
 
 const AdminDashboardPage = async () => {
   const response = await getAnalytics();
@@ -90,6 +91,7 @@ const AdminDashboardPage = async () => {
           color="bg-gradient-to-br from-teal-500 to-teal-600"
         />
       </div>
+      <AdminFeatures/>
     </div>
   );
 };

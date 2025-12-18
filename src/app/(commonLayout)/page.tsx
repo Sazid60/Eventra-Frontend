@@ -43,7 +43,7 @@ export default async function Home() {
           stats={statsData.data}
           userRole={userInfo?.data?.role}
         />
-        <div className="max-w-6xl mx-auto px-5 md:px-7">
+        <div className="max-w-7xl mx-auto px-5 md:px-7">
           {/* client features */}
           <div className="mt-6 lg:mt-10">
             <h1 className="text-2xl lg:text-3xl mb-4 uppercase font-semibold">

@@ -5,7 +5,7 @@ import ClientFeatures from "@/components/modules/Home/ClientFeatures";
 const ClientDashboardPage = () => {
   return (
     <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-[#45aaa2] mb-4">
             Welcome to Eventra

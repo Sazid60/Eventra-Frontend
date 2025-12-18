@@ -4,7 +4,7 @@ import React from 'react';
 const ClientFeatures = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <div className=" rounded-xl shadow-lg p-6 hover:shadow-xl  border">
+            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl border transition-transform duration-300 hover:scale-101">
                 <div className="w-12 h-12 bg-[#45aaa2]/10 rounded-lg flex items-center justify-center mb-4">
                     <Search className="w-6 h-6 text-[#45aaa2]" />
                 </div>
@@ -16,7 +16,7 @@ const ClientFeatures = () => {
                 </p>
             </div>
 
-            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl  border">
+            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl border transition-transform duration-300 hover:scale-101">
                 <div className="w-12 h-12 bg-[#45aaa2]/10 rounded-lg flex items-center justify-center mb-4">
                     <Ticket className="w-6 h-6 text-[#45aaa2]" />
                 </div>
@@ -28,7 +28,7 @@ const ClientFeatures = () => {
                 </p>
             </div>
 
-            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl  border">
+            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl border transition-transform duration-300 hover:scale-101">
                 <div className="w-12 h-12 bg-[#45aaa2]/10 rounded-lg flex items-center justify-center mb-4">
                     <Calendar className="w-6 h-6 text-[#45aaa2]" />
                 </div>
@@ -40,7 +40,7 @@ const ClientFeatures = () => {
                 </p>
             </div>
 
-            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl  border">
+            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl border transition-transform duration-300 hover:scale-101">
                 <div className="w-12 h-12 bg-[#45aaa2]/10 rounded-lg flex items-center justify-center mb-4">
                     <Users className="w-6 h-6 text-[#45aaa2]" />
                 </div>
@@ -52,7 +52,7 @@ const ClientFeatures = () => {
                 </p>
             </div>
 
-            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl  border">
+            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl border transition-transform duration-300 hover:scale-101">
                 <div className="w-12 h-12 bg-[#45aaa2]/10 rounded-lg flex items-center justify-center mb-4">
                     <Stars className="w-6 h-6 text-[#45aaa2]" />
                 </div>
@@ -64,7 +64,7 @@ const ClientFeatures = () => {
                 </p>
             </div>
 
-            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl  border">
+            <div className="rounded-xl shadow-lg p-6 hover:shadow-xl border transition-transform duration-300 hover:scale-101">
                 <div className="w-12 h-12 bg-[#45aaa2]/10 rounded-lg flex items-center justify-center mb-4">
                     <MapPin className="w-6 h-6 text-[#45aaa2]" />
                 </div>

@@ -1,5 +1,6 @@
 
 import { StatCard } from "@/components/modules/Analytics/StatCard";
+import HostFeatures from "@/components/modules/Home/HostFeatures";
 import { getAnalytics } from "@/services/analytics/analytics.service";
 import { HostAnalyticsData } from "@/types/meta.interface";
 import {
@@ -86,6 +87,7 @@ const HostDashboardPage = async () => {
           color="bg-gradient-to-br from-purple-500 to-purple-600"
         />
       </div>
+      <HostFeatures/>
     </div>
   );
 };
