@@ -48,7 +48,7 @@ const AdminFeatures = () => {
                 <h1 className="text-4xl md:text-5xl font-bold text-[#45aaa2] mb-4">
                     Admin Features
                 </h1>
-                <p className="text-lg md:text-xl  max-w-2xl mx-auto">
+                <p className="text-md md:text-lg  max-w-2xl mx-auto">
                     Your gateway to discovering, joining, and experiencing amazing events
                 </p>
             </div>

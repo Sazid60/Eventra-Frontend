@@ -87,7 +87,18 @@ const HostDashboardPage = async () => {
           color="bg-gradient-to-br from-purple-500 to-purple-600"
         />
       </div>
-      <HostFeatures/>
+
+      <div>
+        <div className="text-center mb-12 mt-10">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#45aaa2] mb-4">
+            Host Features
+          </h1>
+          <p className="text-md md:text-lg max-w-2xl mx-auto">
+            Tools and insights for event hosts to manage, analyze, and grow their events on the platform.
+          </p>
+        </div>
+        <HostFeatures />
+      </div>
     </div>
   );
 };
