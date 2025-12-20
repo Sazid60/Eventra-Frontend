@@ -22,7 +22,7 @@ export const ClientProfileCard = ({
 
     return (
         <div className="w-full md:max-w-2xl mx-auto rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-            {/* Header Section */}
+
             <div className="relative flex flex-col items-center pt-10 pb-6">
                 <div className="absolute top-4 right-4">
                     <Button
@@ -53,9 +53,9 @@ export const ClientProfileCard = ({
                 </span>
             </div>
 
-            {/* Details Section */}
+
             <div className="p-4 md:p-10 space-y-4 md:space-y-8">
-                {/* Bio */}
+
                 {profile.bio && (
                     <div className="border rounded-xl p-4">
                         <p className="text-xs text-slate-400 font-medium mb-2">Bio</p>
@@ -65,9 +65,9 @@ export const ClientProfileCard = ({
                     </div>
                 )}
 
-                {/* Info Grid */}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Email */}
+
                     <div className="flex gap-4 items-center border rounded-xl p-4 shadow">
                         <div className="shrink-0 w-12 h-12 border rounded-lg flex items-center justify-center">
                             <Mail className="h-6 w-6 text-slate-500 dark:text-slate-400" />
@@ -80,7 +80,7 @@ export const ClientProfileCard = ({
                         </div>
                     </div>
 
-                    {/* Contact Number */}
+
                     <div className="flex gap-4 items-center border rounded-xl p-4 shadow">
                         <div className="shrink-0 w-12 h-12 border rounded-lg flex items-center justify-center">
                             <Phone className="h-6 w-6 text-slate-500 dark:text-slate-400" />
@@ -95,7 +95,7 @@ export const ClientProfileCard = ({
                         </div>
                     </div>
 
-                    {/* Location */}
+
                     <div className="flex gap-4 items-center border rounded-xl p-4 shadow col-span-2">
                         <div className="shrink-0 w-12 h-12 border rounded-lg flex items-center justify-center">
                             <MapPin className="h-6 w-6 text-slate-500 dark:text-slate-400" />
@@ -109,7 +109,7 @@ export const ClientProfileCard = ({
                     </div>
                 </div>
 
-                {/* Interests */}
+
                 {profile.interests && profile.interests.length > 0 && (
                     <div className="flex gap-4 border rounded-xl p-4">
                         <div className="shrink-0 w-12 h-12 border rounded-lg flex items-center justify-center">

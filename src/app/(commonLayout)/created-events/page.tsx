@@ -31,7 +31,6 @@ const MyCreatedEventsPage = async ({ searchParams }: { searchParams: Promise<{ [
         <>
             <div className="max-w-7xl mx-auto px-4 py-8 mt-16 lg:mt-20 ">
                 <div className="flex flex-col md:flex-row md:justify-between items-center mb-6">
-                    {/* flex and justify between */}
                     <div>
                         <h1 className="text-2xl font-semibold mb-6">My Created Events</h1>
                         <p className="text-sm text-muted-foreground mb-6">Manage your hosted events - filter by status, category, or date to organize your events.</p>

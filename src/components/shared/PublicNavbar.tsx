@@ -96,7 +96,6 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
           <h1>EVENTRA</h1>
         </Link>
 
-        {/* Desktop Menu */}
         <div className="hidden xl:flex items-center space-x-6 ">
           <nav className="flex items-center space-x-6 text-sm">
             {filteredNav.map((link) => (
@@ -131,7 +130,6 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
             )}
           </div>
         </div>
-        {/* become host dialog */}
         <BecomeHostConfirmationDialog
           open={open}
           onOpenChange={(v) => setOpen(v)}
@@ -141,7 +139,7 @@ const PublicNavbar = ({ accessToken, role }: NavbarProps) => {
           onConfirm={async () => confirmHost()}
         />
 
-        {/* Mobile Menu */}
+ 
         <div className="xl:hidden">
           <Sheet>
             <SheetTrigger asChild>

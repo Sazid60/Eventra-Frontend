@@ -92,7 +92,7 @@ export default function EditAdminProfileForm({
             <input type="hidden" name="role" value="ADMIN" />
             <FieldGroup>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Email - Disabled */}
+
                     <Field className="md:col-span-2">
                         <FieldLabel htmlFor="email">Email</FieldLabel>
                         <Input
@@ -105,7 +105,7 @@ export default function EditAdminProfileForm({
                         />
                     </Field>
 
-                    {/* Profile Photo */}
+
                     <Field className="md:col-span-2">
                         <FieldLabel htmlFor="profilePhoto">Profile Photo</FieldLabel>
                         <Input
@@ -123,7 +123,7 @@ export default function EditAdminProfileForm({
                         <InputFieldError field="profilePhoto" state={state} />
                     </Field>
 
-                    {/* Contact Number - Only editable field for admin */}
+
                     <Field className="md:col-span-2">
                         <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
                         <Input

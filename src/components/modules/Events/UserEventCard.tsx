@@ -132,8 +132,6 @@ export default function UserEventCard({ event }: UserEventCardProps) {
                 </div>
 
             </div>
-
-            {/* Content below image */}
             <CardContent className="space-y-2 mb-6 mt-3">
                 <div className="text-center">
                     <h3 className="text-lg font-semibold line-clamp-2 min-h-[3.2rem]">

@@ -42,7 +42,6 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
         {redirect && <input type="hidden" name="redirect" value={redirect} />}
         <FieldGroup>
           <div className="grid grid-cols-1 gap-4">
-            {/* Email */}
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input
@@ -54,8 +53,6 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
               />
               <InputFieldError field="email" state={state} />
             </Field>
-
-            {/* Password */}
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
               <Input

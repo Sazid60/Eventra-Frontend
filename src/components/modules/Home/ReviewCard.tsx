@@ -33,10 +33,10 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
     return (
         <div className="mx-3 min-w-[320px] max-w-[380px] h-full">
             <div className="relative rounded-md p-6 shadow-lg border  hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
-                {/* Decorative gradient corner */}
+
                 <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-[#2ed8ca]/20 to-transparent rounded-bl-full" />
 
-                {/* Header: Client Info */}
+   
                 <div className="flex items-start gap-4 mb-4 relative z-10">
                     <div className="relative w-14 h-14 rounded-full overflow-hidden ring-2 ring-[#45aaa2]/30 shrink-0">
                         <Image
@@ -56,17 +56,17 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
                     </div>
                 </div>
 
-                {/* Rating */}
+
                 <div className="flex gap-1 mb-3">
                     {renderStars(review.rating)}
                 </div>
 
-                {/* Comment */}
+   
                 <p className="text-sm text-slate-700 dark:text-slate-300 mb-4 line-clamp-2 flex-1 min-h-10 mt-4 ">
                     &ldquo;{review.comment.length > 70 ? `${review.comment.slice(0, 70)}...` : review.comment}&rdquo;
                 </p>
 
-                {/* Event Info */}
+
                 <div className="pt-4 border-t border-slate-200 dark:border-slate-700 mt-auto">
                     <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-[#45aaa2]" />
@@ -76,7 +76,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
                     </div>
                 </div>
 
-                {/* Quote decoration */}
+
                 <div className="absolute bottom-4 right-4 text-[#45aaa2]/10 text-6xl font-serif">
                     &rdquo;
                 </div>

@@ -35,7 +35,6 @@ const CareerPage = () => {
     return (
         <section className=" flex items-center justify-center pt-28 md:pt-32 px-4 ">
             <div className="max-w-7xl w-full mx-auto">
-                {/* Header */}
                 <div className="mb-12 border-b pb-8 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold text-[#3c8f88] mb-4">Work With Us</h1>
                     <p className="text-base md:text-md text-gray-700 dark:text-gray-200 ">
@@ -44,7 +43,6 @@ const CareerPage = () => {
                 </div>
 
 
-                {/* Open Positions */}
                 <div className="mb-16">
                     <h2 className="text-2xl font-bold text-[#3c8f88] mb-8 text-center">Current Openings</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -61,7 +59,6 @@ const CareerPage = () => {
                     </div>
                 </div>
 
-                {/* Contact Section */}
                 <div className="mt-20 flex flex-col items-center justify-center">
                     <div className="relative bg-white dark:bg-[#101c1b] rounded-2xl shadow-2xl p-10 flex flex-col items-center min-w-[280px] max-w-lg w-full border-2 border-dashed border-[#45aaa2]">
                         <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#3c8f88] rounded-full w-16 h-16 flex items-center justify-center shadow-lg border-4 border-white dark:border-[#101c1b]">

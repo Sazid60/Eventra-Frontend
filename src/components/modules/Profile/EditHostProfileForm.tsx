@@ -113,7 +113,7 @@ export default function EditHostProfileForm({
             <input type="hidden" name="role" value="HOST" />
             <FieldGroup>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Name */}
+
                     <Field className="col-span-2">
                         <FieldLabel htmlFor="name">Full Name</FieldLabel>
                         <Input
@@ -128,7 +128,7 @@ export default function EditHostProfileForm({
                         <InputFieldError field="name" state={state} />
                     </Field>
 
-                    {/* Email - Disabled */}
+ 
                     <Field className="col-span-2">
                         <FieldLabel htmlFor="email">Email</FieldLabel>
                         <Input
@@ -141,7 +141,7 @@ export default function EditHostProfileForm({
                         />
                     </Field>
 
-                    {/* Profile Photo */}
+
                     <Field className="col-span-2">
                         <FieldLabel htmlFor="profilePhoto">Profile Photo</FieldLabel>
                         <Input
@@ -159,7 +159,7 @@ export default function EditHostProfileForm({
                         <InputFieldError field="profilePhoto" state={state} />
                     </Field>
 
-                    {/* Contact Number */}
+
                     <Field className="col-span-2">
                         <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
                         <Input
@@ -174,7 +174,7 @@ export default function EditHostProfileForm({
                         <InputFieldError field="contactNumber" state={state} />
                     </Field>
 
-                    {/* Location */}
+
                     <Field className= "col-span-2">
                         <FieldLabel htmlFor="location">Location</FieldLabel>
                         <Input
@@ -189,7 +189,7 @@ export default function EditHostProfileForm({
                         <InputFieldError field="location" state={state} />
                     </Field>
 
-                    {/* Bio */}
+
                     <Field className="col-span-2">
                         <FieldLabel htmlFor="bio">Bio</FieldLabel>
                         <Textarea

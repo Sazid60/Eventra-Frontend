@@ -44,7 +44,7 @@ export default async function Home() {
           userRole={userInfo?.data?.role}
         />
         <div className="max-w-7xl mx-auto px-5 md:px-7">
-          {/* client features */}
+
           <div className="mt-6 lg:mt-10">
             <h1 className="text-2xl lg:text-3xl mb-4 uppercase font-semibold">
               How It Works
@@ -56,7 +56,7 @@ export default async function Home() {
             <ClientFeatures />
           </div>
 
-          {/* events */}
+
           <div className="mt-6 lg:mt-10">
             <h1 className="text-2xl lg:text-3xl mb-4 uppercase font-semibold">
               Recent Events
@@ -71,8 +71,6 @@ export default async function Home() {
           </div>
 
 
-
-          {/* review marquee */}
           <div className="mt-6 lg:mt-10">
             <h1 className="text-2xl lg:text-3xl mb-4 uppercase font-semibold">
               Reviews
@@ -104,7 +102,7 @@ export default async function Home() {
             )}
           </div>
 
-          {/* host features */}
+
           <div className="mt-6 lg:mt-10">
             <h1 className="text-2xl lg:text-3xl mb-4 uppercase font-semibold">
               Host Features
@@ -116,11 +114,8 @@ export default async function Home() {
             <HostFeatures />
           </div>
 
-          {/* breadcrumb */}
-
           <Breadcrumb />
 
-          {/* FAQ Section */}
           <div className="mt-6 lg:mt-10 mb-12">
             <h1 className="text-2xl lg:text-3xl mb-4 uppercase font-semibold">
               Frequently Asked Questions
@@ -132,7 +127,7 @@ export default async function Home() {
             <FAQ />
           </div>
 
-          {/* Contact Section */}
+
           <div className="mt-6 lg:mt-10 mb-12">
             <h1 className="text-2xl lg:text-3xl mb-4 uppercase font-semibold">
               Contact Us

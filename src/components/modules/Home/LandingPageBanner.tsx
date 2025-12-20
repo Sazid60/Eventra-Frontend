@@ -39,7 +39,6 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
 
     return (
         <section className="relative w-full pt-24 pb-12 px-4 md:pt-28 md:pb-16 lg:pt-32 lg:pb-28 overflow-hidden min-h-screen flex items-center justify-center">
-            {/* Background Image */}
             <div className="absolute inset-0 z-0 ">
                 <Image
                     src={bannerImage}
@@ -48,13 +47,11 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                     className="object-cover "
                     priority
                 />
-                {/* Overlay for better text readability */}
+
                 <div className="absolute inset-0 bg-black/70" />
             </div>
 
-            {/* Content */}
             <div className="max-w-6xl mx-auto relative z-10 px-4">
-                {/* Title and CTA Section */}
                 <div className="mb-12 flex flex-col justify-center items-center text-center">
                     <div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -66,7 +63,7 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                     </div>
                     <div className="flex gap-4">
                         <Link href="/all-events">
-                            <div className="rainbow relative z-0 overflow-hidden p-0.5 flex items-center justify-center rounded-md hover:scale-105 transition duration-300 active:scale-100">
+                            <div className="rainbow relative z-0 overflow-hidden p-0.5 flex items-center justify-center rounded-md hover:scale-101 transition duration-300 active:scale-100">
                                 <Button
                                     className="px-8 text-sm py-3 text-white rounded-md font-medium bg-transparent border backdrop-blur-md relative z-10 hover:bg-transparent"
                                 >
@@ -75,7 +72,6 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                             </div>
                         </Link>
 
-                        {/* Become Host Button - Only for CLIENT role */}
                         {userRole === "CLIENT" && (
                             <>
                                 <Button
@@ -97,9 +93,7 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                     </div>
                 </div>
 
-                {/* Stats Bar */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/20">
-                    {/* Users Stat */}
                     <div className="text-center">
                         <div className="text-3xl md:text-4xl font-bold text-white">
                             {stats.totalClients}+
@@ -107,7 +101,6 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                         <div className="text-white/80 font-semibold text-sm md:text-base mt-2">Users</div>
                     </div>
 
-                    {/* Hosts Stat */}
                     <div className="text-center">
                         <div className="text-3xl md:text-4xl font-bold text-white">
                             {stats.totalHosts}+
@@ -115,7 +108,6 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                         <div className="text-white/80 font-semibold text-sm md:text-base mt-2">Hosts</div>
                     </div>
 
-                    {/* Total Events Stat */}
                     <div className="text-center">
                         <div className="text-3xl md:text-4xl font-bold text-white">
                             {stats.totalEvents}+
@@ -123,7 +115,6 @@ const LandingPageBanner = ({ stats, userRole }: Props) => {
                         <div className="text-white/80 font-semibold text-sm md:text-base mt-2">Upcoming Events</div>
                     </div>
 
-                    {/* Completed Events Stat */}
                     <div className="text-center">
                         <div className="text-3xl md:text-4xl font-bold text-white">
                             {stats.totalCompletedEvents}+

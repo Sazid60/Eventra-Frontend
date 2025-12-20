@@ -29,7 +29,6 @@ const ContactForm = () => {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Contact Info Section */}
             <div className="space-y-6">
                 <div className="flex flex-col justify-center  h-full p-6 lg:p-8 rounded-md bg-linear-to-br from-[#45aaa2]/10 to-transparent border border-[#45aaa2]/20">
                     <h2 className="text-2xl lg:text-3xl font-bold mb-4 relative z-10">
@@ -63,12 +62,10 @@ const ContactForm = () => {
                 </div>
             </div>
 
-            {/* Contact Form Section */}
             <div className="p-6 lg:p-8 rounded-md border shadow-lg bg-background">
                 <form ref={formRef} action={formAction}>
                     <FieldGroup>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {/* Name */}
                             <Field className="sm:col-span-2">
                                 <FieldLabel htmlFor="name">
                                     <div className="flex items-center gap-2">
@@ -88,7 +85,6 @@ const ContactForm = () => {
                                 <InputFieldError field="name" state={state} />
                             </Field>
 
-                            {/* Email */}
                             <Field>
                                 <FieldLabel htmlFor="email">
                                     <div className="flex items-center gap-2">
@@ -108,7 +104,6 @@ const ContactForm = () => {
                                 <InputFieldError field="email" state={state} />
                             </Field>
 
-                            {/* Contact Number */}
                             <Field>
                                 <FieldLabel htmlFor="contactNumber">
                                     <div className="flex items-center gap-2">
@@ -128,7 +123,6 @@ const ContactForm = () => {
                                 <InputFieldError field="contactNumber" state={state} />
                             </Field>
 
-                            {/* Subject */}
                             <Field className="sm:col-span-2">
                                 <FieldLabel htmlFor="subject">
                                     <div className="flex items-center gap-2">
@@ -147,8 +141,6 @@ const ContactForm = () => {
                                 />
                                 <InputFieldError field="subject" state={state} />
                             </Field>
-
-                            {/* Message */}
                             <Field className="sm:col-span-2">
                                 <FieldLabel htmlFor="message">Message</FieldLabel>
                                 <Textarea
@@ -164,7 +156,6 @@ const ContactForm = () => {
                             </Field>
                         </div>
 
-                        {/* Submit Button */}
                         <div className="mt-6">
                             <Button
                                 type="submit"

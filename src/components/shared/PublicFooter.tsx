@@ -10,19 +10,18 @@ export default function PublicFooter() {
           <Logo />
         </div>
 
-        {/* Description */}
         <p className="max-w-2xl mx-auto text-sm text-zinc-300">
           Connect with locals for events, meetups, and activities - discover nearby gatherings, create your own experiences, and find people who share your interests. Build new friendships, explore your city, and be part of a growing community that brings people together.
         </p>
 
 
-        {/* Navigation Links */}
+
         <ul className="flex justify-center gap-6 mt-6 text-sm">
           <li><Link href="/" className="text-zinc-300 hover:text-[#00ffea]">Home</Link></li>
           <li><Link href="/all-events" className="text-zinc-300 hover:text-[#00ffea]">Explore Events</Link></li>
         </ul>
 
-        {/* Social icons (lucide-react) */}
+
         <div className="flex justify-center gap-6 mt-6">
           <a
             href="https://www.linkedin.com/in/shahnawaz-sazid/"
@@ -51,7 +50,7 @@ export default function PublicFooter() {
           </a>
         </div>
 
-        {/* Divider and bottom */}
+
         <div className="mt-8">
           <hr className="border-zinc-700" />
         </div>

@@ -44,7 +44,6 @@ const DashboardNavbarContent = ({
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
-          {/* Hide the overlay on medium and larger screens */}
           <SheetContent side="left" className="w-64 p-0">
             <DashboardMobileSidebar
               userInfo={userInfo}
