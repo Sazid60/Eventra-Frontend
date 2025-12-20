@@ -146,7 +146,7 @@ export default function EditClientProfileForm({
             <input type="hidden" name="role" value="CLIENT" />
             <FieldGroup>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Name */}
+
                     <Field>
                         <FieldLabel htmlFor="name">Full Name</FieldLabel>
                         <Input
@@ -161,7 +161,7 @@ export default function EditClientProfileForm({
                         <InputFieldError field="name" state={state} />
                     </Field>
 
-                    {/* Location */}
+
                     <Field>
                         <FieldLabel htmlFor="location">Location</FieldLabel>
                         <Input
@@ -176,7 +176,7 @@ export default function EditClientProfileForm({
                         <InputFieldError field="location" state={state} />
                     </Field>
 
-                    {/* Email - Disabled */}
+
                     <Field>
                         <FieldLabel htmlFor="email">Email</FieldLabel>
                         <Input
@@ -189,7 +189,7 @@ export default function EditClientProfileForm({
                         />
                     </Field>
 
-                    {/* Contact Number */}
+
                     <Field>
                         <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
                         <Input
@@ -204,7 +204,7 @@ export default function EditClientProfileForm({
                         <InputFieldError field="contactNumber" state={state} />
                     </Field>
 
-                    {/* Profile Photo */}
+
                     <Field className="md:col-span-2">
                         <FieldLabel htmlFor="profilePhoto">Profile Photo</FieldLabel>
                         <Input
@@ -222,7 +222,7 @@ export default function EditClientProfileForm({
                         <InputFieldError field="profilePhoto" state={state} />
                     </Field>
 
-                    {/* Bio */}
+
                     <Field className="md:col-span-2">
                         <FieldLabel htmlFor="bio">Bio</FieldLabel>
                         <Textarea
@@ -237,7 +237,7 @@ export default function EditClientProfileForm({
                         <InputFieldError field="bio" state={state} />
                     </Field>
 
-                    {/* Interests */}
+
                     <Field className="md:col-span-2">
                         <FieldLabel>Interests</FieldLabel>
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2 max-h-60 overflow-y-auto p-2 border rounded">

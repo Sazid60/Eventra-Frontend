@@ -80,7 +80,6 @@ export default function Error({
           <Card className="border-[#45aaa2]/30 shadow-xl bg-card/95 backdrop-blur">
             <CardContent className="pt-6">
               <div className="flex flex-col items-center text-center space-y-6">
-                {/* Animated Error Icon */}
                 <div className="relative scale-in">
                   <div className="absolute inset-0 rounded-full bg-[#45aaa2]/15 pulse-error" />
                   <div className="relative z-10 rounded-full bg-[#45aaa2]/10 p-6 ring-2 ring-[#45aaa2]/20">
@@ -88,7 +87,6 @@ export default function Error({
                   </div>
                 </div>
 
-                {/* Error Message */}
                 <div className="space-y-2">
                   <h1 className="text-4xl font-bold tracking-tight text-foreground">
                     Oops! Something went wrong
@@ -99,7 +97,6 @@ export default function Error({
                   </p>
                 </div>
 
-                {/* Error Details (Development Only) */}
                 {process.env.NODE_ENV === "development" && (
                   <div className="w-full rounded-lg bg-muted/50 border border-[#45aaa2]/20 p-4 text-left">
                     <p className="text-sm font-mono text-muted-foreground break-all">
@@ -113,7 +110,6 @@ export default function Error({
                   </div>
                 )}
 
-                {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto pt-2">
                   <Button
                     onClick={reset}
@@ -136,7 +132,6 @@ export default function Error({
                   </Button>
                 </div>
 
-                {/* Help Text */}
                 <p className="text-sm text-muted-foreground">
                   If this problem persists, please contact our support team.
                 </p>
@@ -144,7 +139,6 @@ export default function Error({
             </CardContent>
           </Card>
 
-          {/* Decorative Elements */}
           <div className="absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-[#45aaa2]/5 blur-3xl -z-10 glow-brand" />
         </div>
       </div>

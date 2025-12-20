@@ -21,7 +21,6 @@ const MyCreatedEventsDashboardPage = async ({ searchParams }: { searchParams: Pr
         <>
             <div className=" px-4 py-8 ">
                 <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center mb-6">
-                    {/* flex and justify between */}
                     <div>
                         <h1 className="text-2xl font-semibold mb-6">My Created Events</h1>
                         <p className="text-sm text-muted-foreground mb-6">Manage your hosted events - filter by status, category, or date to organize your events.</p>

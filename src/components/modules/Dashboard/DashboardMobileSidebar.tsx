@@ -25,7 +25,6 @@ const DashboardMobileSidebar = ({
   const pathname = usePathname();
   return (
     <div className=" flex h-full flex-col">
-      {/* Logo */}
       <div className="flex h-16 items-center border-b px-6">
         <Link href="/">
           <span className="text-xl font-bold text-primary flex items-center gap-2 pt-1">
@@ -36,7 +35,6 @@ const DashboardMobileSidebar = ({
       </div>
       <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
 
-      {/* Navigation */}
       <ScrollArea className="flex-1 px-3 py-4">
         <nav className="space-y-6">
           {navItems.map((section, sectionIdx) => (

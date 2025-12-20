@@ -195,7 +195,6 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
         <form ref={formRef} action={formAction} className="w-full">
             <FieldGroup className="w-full">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4">
-                    {/* Title */}
                     <Field className="col-span-1 sm:col-span-2">
                         <FieldLabel htmlFor="title">Event Title</FieldLabel>
                         <Input
@@ -211,7 +210,6 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
                         <InputFieldError field="title" state={state} />
                     </Field>
 
-                    {/* Location */}
                     <Field className="col-span-1">
                         <FieldLabel htmlFor="location">Location</FieldLabel>
                         <Input
@@ -227,7 +225,6 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
                         <InputFieldError field="location" state={state} />
                     </Field>
 
-                    {/* Date */}
                     <Field className="col-span-1">
                         <FieldLabel htmlFor="date">Event Date & Time</FieldLabel>
                         <Input
@@ -242,7 +239,6 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
                         <InputFieldError field="date" state={state} />
                     </Field>
 
-                    {/* Capacity */}
                     <Field className="col-span-1">
                         <FieldLabel htmlFor="capacity">Capacity</FieldLabel>
                         <Input
@@ -259,7 +255,6 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
                         <InputFieldError field="capacity" state={state} />
                     </Field>
 
-                    {/* Joining Fee */}
                     <Field className="col-span-1">
                         <FieldLabel htmlFor="joiningFee">Joining Fee</FieldLabel>
                         <Input
@@ -276,7 +271,7 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
                         <InputFieldError field="joiningFee" state={state} />
                     </Field>
 
-                    {/* Event Image */}
+
                     <Field className="col-span-1 sm:col-span-2">
                         <FieldLabel htmlFor="image">Event Image</FieldLabel>
                         <Input
@@ -314,7 +309,6 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
                         </div>
                     </Field>
 
-                    {/* Categories - checkboxes */}
                     <Field className="col-span-1 sm:col-span-2">
                         <FieldLabel>Categories</FieldLabel>
                         <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 mt-2">
@@ -339,7 +333,6 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
                         <InputFieldError field="category" state={state} />
                     </Field>
 
-                    {/* Description */}
                     <Field className="col-span-1 sm:col-span-2">
                         <FieldLabel htmlFor="description">Description</FieldLabel>
                         <Textarea
@@ -356,7 +349,6 @@ const EventForm = ({ event, onSuccess, onCancel }: EventFormProps) => {
                     </Field>
                 </div>
 
-                {/* Submit Button */}
                 <FieldGroup className="mt-5 sm:mt-6 w-full">
                     <div className="flex gap-3 justify-end">
 

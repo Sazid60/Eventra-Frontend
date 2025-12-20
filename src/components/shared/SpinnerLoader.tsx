@@ -44,12 +44,12 @@ export default function SpinnerLoader({
         speedMultiplier={animated ? 1 : 0}
       />
 
-      {/* Optional icon instead of spinner */}
+
       {showIcon && (
         <Activity className="text-[#45aaa2] animate-pulse" size={spinnerSize - 10} />
       )}
 
-      {/* Text */}
+
       {text && (
         <p className={`font-medium text-white text-center ${compact ? "text-lg" : "text-2xl"}`}>
           {text}

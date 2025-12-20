@@ -69,12 +69,11 @@ const EventDetailsPage = async ({ params }: { params: { id: string } }) => {
     return (
         <div className="max-w-7xl mx-auto px-4 py-8 mt-16 lg:mt-20">
             <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-                {/* Main Column */}
+
                 <div className="xl:col-span-3">
                     <EventDetailsCard event={event} date={date} time={time} userRole={userRole} currentParticipantStatus={currentParticipantStatus} transactionId={currentTransactionId} />
                 </div>
 
-                {/* Right Column - Participants */}
                 <aside className="xl:col-span-1">
                     <div className="sticky top-24">
                         <h3 className="text-lg font-semibold mb-3">Participants ({participantsList?.length || 0})</h3>

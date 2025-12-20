@@ -8,7 +8,7 @@ const AboutPage = () => {
     return (
         <section className=" flex items-center justify-center pt-32 md:pt-32 px-4">
             <div className="max-w-7xl w-full mx-auto ">
-                {/* Hero Section */}
+
                 <div className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-extrabold text-[#45aaa2] mb-4 drop-shadow-lg tracking-tight">Welcome to Eventra</h1>
                     <p className="text-lg md:text-xl text-gray-700 dark:text-gray-200 mb-6 ">
@@ -16,7 +16,6 @@ const AboutPage = () => {
                     </p>
                 </div>
 
-                {/* Mission & Vision */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                     <div className=" border rounded-xl p-6 shadow">
                         <h2 className="text-2xl font-bold text-[#3c8f88] mb-2">Our Mission</h2>
@@ -32,7 +31,6 @@ const AboutPage = () => {
                     </div>
                 </div>
 
-                {/* Features Section */}
                 <div className="mb-12">
                     <h2 className="text-2xl font-bold text-[#3c8f88] mb-6 text-center">Why Choose Eventra?</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -59,7 +57,6 @@ const AboutPage = () => {
                     </div>
                 </div>
 
-                {/* Team Section */}
                 <div className="mb-12">
                     <h2 className="text-2xl font-bold text-[#3c8f88] mb-6 text-center">Meet the Team</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-4">

@@ -48,7 +48,6 @@ const RegisterForm = () => {
     <form ref={formRef} action={formAction}>
       <FieldGroup>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Name */}
           <Field>
             <FieldLabel htmlFor="name">Full Name</FieldLabel>
             <Input
@@ -60,7 +59,6 @@ const RegisterForm = () => {
             />
             <InputFieldError field="name" state={state} />
           </Field>
-          {/* Location */}
           <Field>
             <FieldLabel htmlFor="location">Location</FieldLabel>
             <Input
@@ -72,7 +70,6 @@ const RegisterForm = () => {
             />
             <InputFieldError field="location" state={state} />
           </Field>
-          {/* Email */}
           <Field>
             <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
@@ -84,7 +81,6 @@ const RegisterForm = () => {
             />
             <InputFieldError field="email" state={state} />
           </Field>
-          {/* Contact Number */}
           <Field>
             <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
             <Input
@@ -96,7 +92,6 @@ const RegisterForm = () => {
             />
             <InputFieldError field="contactNumber" state={state} />
           </Field>
-          {/* Password */}
           <Field>
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input
@@ -108,7 +103,6 @@ const RegisterForm = () => {
 
             <InputFieldError field="password" state={state} />
           </Field>
-          {/* Confirm Password */}
           <Field className="">
             <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
             <Input
@@ -120,8 +114,6 @@ const RegisterForm = () => {
 
             <InputFieldError field="confirmPassword" state={state} />
           </Field>
-
-          {/* Profile Photo (file) */}
           <Field className="md:col-span-2">
             <FieldLabel htmlFor="profilePhoto">Profile Photo</FieldLabel>
             <Input
@@ -144,8 +136,6 @@ const RegisterForm = () => {
               </div>
             )}
           </Field>
-
-          {/* Bio */}
           <Field className="md:col-span-2">
             <FieldLabel htmlFor="bio">Bio</FieldLabel>
             <Textarea
@@ -155,7 +145,6 @@ const RegisterForm = () => {
             <InputFieldError field="bio" state={state} />
           </Field>
 
-          {/* Interests - checkboxes */}
           <Field className="md:col-span-2">
             <FieldLabel>Interests</FieldLabel>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
